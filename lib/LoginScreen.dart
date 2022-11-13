@@ -1,7 +1,8 @@
-// ignore_for_file: prefer_const_constructors, avoid_print, sized_box_for_whitespace, non_constant_identifier_names, file_names, library_private_types_in_public_api, use_key_in_widget_constructors
+// ignore_for_file: prefer_const_constructors, avoid_print, sized_box_for_whitespace, non_constant_identifier_names, file_names, library_private_types_in_public_api, use_key_in_widget_constructors, must_call_super
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:fyp/ForgetPassword.dart';
+import 'package:fyp/MainMenu.dart';
 import 'package:fyp/Signup.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,6 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _passwordVisible = false;
   @override
   void initState() {
-    // TODO: implement initState
     _passwordVisible = false;
   }
 
@@ -132,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Text(
               'Forgot Password?',
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -141,25 +141,23 @@ class _LoginScreenState extends State<LoginScreen> {
             width: 80,
           ),
           Theme(
-            data: ThemeData(unselectedWidgetColor: Colors.white),
+            data: ThemeData(unselectedWidgetColor: Colors.black),
             child: Checkbox(
               //title: Text("Remember ME"),
 
               value: Rememberme,
               checkColor: Colors.green,
-              activeColor: Colors.white,
+              activeColor: Colors.black,
               onChanged: (value) {
                 setState(() {
                   Rememberme = value;
                 });
               },
-
-              // controlAffinity: ListTileControlAffinity.leading,
             ),
           ),
           const Text(
             'Remember Me',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           )
         ],
       ),
@@ -174,7 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
           children: <Widget>[
             Text(
               "Already Have An Account?",
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.black),
             ),
             TextButton(
               onPressed: () {
@@ -184,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Text(
                 'Signup',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -208,9 +206,11 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Text('Login'),
           onPressed: () {
             Fluttertoast.showToast(
-                msg: "Login Pressed",
+                msg: "Logged in",
                 toastLength: Toast.LENGTH_SHORT,
                 backgroundColor: Colors.grey);
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => MainMenu()));
           }),
     );
   }

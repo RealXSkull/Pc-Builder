@@ -79,7 +79,7 @@ class RecoverPassword extends State<ForgetPassword> {
           title: Text('RECOVER PASSWORD'),
           backgroundColor: Colors.blueGrey,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: Icon(Icons.arrow_back_ios_new_rounded),
             onPressed: () => Navigator.pop(context, false),
           )),
       body: AnnotatedRegion<SystemUiOverlayStyle>(

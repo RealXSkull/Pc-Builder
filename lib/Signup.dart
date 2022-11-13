@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, file_names, prefer_final_fields, unnecessary_new, use_key_in_widget_constructors, avoid_print, non_constant_identifier_names, sized_box_for_whitespace
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, file_names, prefer_final_fields, unnecessary_new, use_key_in_widget_constructors, avoid_print, non_constant_identifier_names, sized_box_for_whitespace, must_call_super
 
 import 'package:fyp/LoginScreen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -159,7 +159,6 @@ class SignupArea extends State<Signup> {
   }
 
   Widget buildconfirmpassword() {
-    IconData iconchecker = Icons.lock;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -335,7 +334,7 @@ class SignupArea extends State<Signup> {
           title: Text('REGISTRATION'),
           backgroundColor: Colors.blueGrey,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: Icon(Icons.arrow_back_ios_new_rounded),
             onPressed: () => Navigator.pop(context, false),
           )),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
@@ -343,8 +342,8 @@ class SignupArea extends State<Signup> {
         child: Stack(
           children: <Widget>[
             Container(
-              height: double.infinity,
-              width: double.infinity,
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
               decoration: const BoxDecoration(
                   gradient: LinearGradient(
                       begin: Alignment.topLeft,
@@ -381,7 +380,7 @@ class SignupArea extends State<Signup> {
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
