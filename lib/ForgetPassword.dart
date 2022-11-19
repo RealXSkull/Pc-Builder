@@ -76,7 +76,7 @@ class RecoverPassword extends State<ForgetPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('RECOVER PASSWORD'),
+          title: Text('FORGOT PASSWORD?'),
           backgroundColor: Colors.blueGrey,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios_new_rounded),

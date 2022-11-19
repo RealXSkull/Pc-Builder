@@ -171,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Row(
           children: <Widget>[
             Text(
-              "Already Have An Account?",
+              "Don't have an account?",
               style: TextStyle(color: Colors.black),
             ),
             TextButton(
@@ -180,7 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     context, MaterialPageRoute(builder: (context) => Signup()));
               },
               child: Text(
-                'Signup',
+                'Register Now',
                 style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,

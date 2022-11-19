@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, file_names, prefer_final_fields, unnecessary_new, use_key_in_widget_constructors, avoid_print, non_constant_identifier_names, sized_box_for_whitespace, must_call_super, unnecessary_import
 
-import 'package:fyp/LoginScreen.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fyp/LoginScreen.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,8 +12,31 @@ class MainMenu extends StatefulWidget {
   State<MainMenu> createState() => _MainMenuState();
 }
 
+class MenuItem {
+  String title;
+  String icon;
+  Color color;
+  Function func;
+  MenuItem(this.title, this.icon, this.color, this.func);
+}
+
 class _MainMenuState extends State<MainMenu> {
-  @override
+  // @override
+  // Widget _appBarTitle;
+  // Color _appBarBackgroundColor;
+  // MenuItem _selectedMenuItem;
+  // List<MenuItem> _menuItems;
+  // List<Widget> _menuOptionWidgets = [];
+
+  // @override
+  // initState() {
+  //   super.initState();
+
+  //   _menuItems = createMenuItems();
+  //   _selectedMenuItem = _menuItems.first;
+  //   _appBarTitle = new Text(_menuItems.first.title);
+  //   _appBarBackgroundColor = _menuItems.first.color;
+  // }
   int maxLength = 11;
   TextEditingController _controller = new TextEditingController();
   String contactno = "";
