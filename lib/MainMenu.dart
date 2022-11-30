@@ -39,23 +39,22 @@ class _MainMenuState extends State<MainMenu> {
   //   _appBarBackgroundColor = _menuItems.first.color;
   // }
   int maxLength = 11;
-  TextEditingController _controller = new TextEditingController();
   String contactno = "";
   bool obscureTextt = true;
-  bool _passwordVisible = false;
-  bool _passwordVisible2 = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavBar(),
       appBar: AppBar(
-          title: Text('Home Page'),
-          backgroundColor: Colors.blueGrey,
-          leading: IconButton(
-            icon: Icon(Icons.more_horiz_outlined),
-            alignment: Alignment.centerLeft,
-            onPressed: () => Navigator.pop(context, false),
-          )),
+        title: Text('Home Page'),
+        backgroundColor: Colors.blueGrey,
+        // leading: IconButton(
+        //   icon: Icon(Icons.more_horiz_outlined),
+        //   alignment: Alignment.centerLeft,
+        //   onPressed: () => Navigator.pop(context, false),
+        // )
+      ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.dark,
         child: Stack(
