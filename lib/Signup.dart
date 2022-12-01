@@ -387,18 +387,18 @@ class SignupArea extends State<Signup> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        buildname(),
-                        SizedBox(
-                          height: 20,
-                        ),
+                        // buildname(),
+                        // SizedBox(
+                        //   height: 20,
+                        // ),
                         buildemail(),
                         const SizedBox(
                           height: 20,
                         ),
-                        buildphone(),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        // buildphone(),
+                        // const SizedBox(
+                        //   height: 20,
+                        // ),
                         buildpassword(),
                         SizedBox(
                           height: 20,

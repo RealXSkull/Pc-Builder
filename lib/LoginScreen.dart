@@ -64,9 +64,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: Colors.white, blurRadius: 6, offset: Offset(0, 2))
               ]),
           height: 60,
-          child: TextField(
+          child: TextFormField(
             controller: emailcontroller,
             textInputAction: TextInputAction.next,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: (val) {
+              bool emailValid = RegExp(
+                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                  .hasMatch(val!);
+              if (!emailValid) {
+                return 'Invalid Email Address';
+              } else {
+                return null;
+              }
+            },
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(color: Colors.black87),
             decoration: InputDecoration(
@@ -107,9 +118,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: Colors.white, blurRadius: 6, offset: Offset(0, 2))
               ]),
           height: 60,
-          child: TextField(
+          child: TextFormField(
             controller: passcontroller,
             textInputAction: TextInputAction.done,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: (value) {
+              if (value == null)
+                return 'Field Cannot be left Empty';
+              else if (value.length < 6)
+                return 'Enter Minimum 6 characters';
+              else
+                return null;
+            },
             obscureText: !_passwordVisible,
             style: TextStyle(color: Colors.black87),
             decoration: InputDecoration(
