@@ -283,6 +283,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     // ),
                     buildRemembermecb(),
                     buildloginbtn(),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Singupbtn()
                   ],
                 ),
