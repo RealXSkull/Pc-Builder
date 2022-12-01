@@ -1,14 +1,23 @@
 // ignore_for_file: prefer_const_constructors, avoid_print, sized_box_for_whitespace, non_constant_identifier_names, file_names, library_private_types_in_public_api, use_key_in_widget_constructors, must_call_super
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:fyp/ForgetPassword.dart';
 import 'package:fyp/MainMenu.dart';
 import 'package:fyp/Signup.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fyp/main.dart';
 
 class LoginScreen extends StatefulWidget {
+  final VoidCallback onClickedSignup;
+
+  const LoginScreen({
+    Key? key,
+    required this.onClickedSignup,
+  }) : super(key: key);
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -16,6 +25,17 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool? Rememberme = false;
   bool _passwordVisible = false;
+  final emailcontroller = TextEditingController();
+  final passcontroller = TextEditingController();
+
+  @override
+  void dispose() {
+    emailcontroller.dispose();
+    passcontroller.dispose();
+
+    super.dispose();
+  }
+
   @override
   void initState() {
     _passwordVisible = false;
@@ -45,6 +65,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ]),
           height: 60,
           child: TextField(
+            controller: emailcontroller,
+            textInputAction: TextInputAction.next,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(color: Colors.black87),
             decoration: InputDecoration(
@@ -86,6 +108,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ]),
           height: 60,
           child: TextField(
+            controller: passcontroller,
+            textInputAction: TextInputAction.done,
             obscureText: !_passwordVisible,
             style: TextStyle(color: Colors.black87),
             decoration: InputDecoration(
@@ -174,19 +198,15 @@ class _LoginScreenState extends State<LoginScreen> {
               "Don't have an account?",
               style: TextStyle(color: Colors.black),
             ),
-            TextButton(
-              onPressed: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Signup()));
-              },
-              child: Text(
-                'Register Now',
+            RichText(
+              text: TextSpan(
+                recognizer: TapGestureRecognizer()
+                  ..onTap = widget.onClickedSignup,
+                text: 'Sign UP',
                 style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
+                    decoration: TextDecoration.underline, color: Colors.black),
               ),
-            ),
+            )
           ],
         ));
   }
@@ -195,23 +215,30 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
       height: 40,
       width: double.infinity,
-      child: ElevatedButton(
-          style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all<Color>(Colors.lightBlue),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ))),
-          child: Text('Login'),
-          onPressed: () {
+      child: ElevatedButton.icon(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlue),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ))),
+        label: Text('Login'),
+        onPressed: () {
+          if (emailcontroller.text.isNotEmpty &&
+              passcontroller.text.isNotEmpty) {
+            signin();
+          } else {
             Fluttertoast.showToast(
-                msg: "Logged in",
+                msg: "Invalid Credentials",
                 toastLength: Toast.LENGTH_SHORT,
                 backgroundColor: Colors.grey);
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => MainMenu()));
-          }),
+          }
+        },
+        icon: Icon(
+          Icons.lock,
+          size: 24,
+        ),
+      ),
     );
   }
 
@@ -265,5 +292,33 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  Future signin() async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => Center(
+              child: Image.asset(
+                'assets/Eater_loading.gif',
+                width: 100,
+                height: 100,
+              ),
+            ));
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailcontroller.text.trim(),
+          password: passcontroller.text.trim());
+    } on FirebaseAuthException catch (e) {
+      Fluttertoast.showToast(
+          msg: "Logged in",
+          toastLength: Toast.LENGTH_SHORT,
+          backgroundColor: Colors.grey);
+    }
+    Navigator.pop(context);
+    Fluttertoast.showToast(
+        msg: "Logged in",
+        toastLength: Toast.LENGTH_SHORT,
+        backgroundColor: Colors.grey);
   }
 }

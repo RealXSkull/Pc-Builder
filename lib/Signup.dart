@@ -1,11 +1,19 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, file_names, prefer_final_fields, unnecessary_new, use_key_in_widget_constructors, avoid_print, non_constant_identifier_names, sized_box_for_whitespace, must_call_super
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:fyp/LoginScreen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class Signup extends StatefulWidget {
+  final VoidCallback onClickedLogin;
+
+  const Signup({
+    Key? key,
+    required this.onClickedLogin,
+  }) : super(key: key);
   @override
   SignupArea createState() => SignupArea();
 }
@@ -17,6 +25,15 @@ class SignupArea extends State<Signup> {
   bool obscureTextt = true;
   bool _passwordVisible = false;
   bool _passwordVisible2 = false;
+  final emailcontroller = TextEditingController();
+  final passcontroller = TextEditingController();
+  @override
+  void dispose() {
+    emailcontroller.dispose();
+    passcontroller.dispose();
+
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -91,6 +108,7 @@ class SignupArea extends State<Signup> {
               ]),
           height: 40,
           child: TextField(
+            controller: emailcontroller,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(color: Colors.black87),
             decoration: InputDecoration(
@@ -131,6 +149,7 @@ class SignupArea extends State<Signup> {
               ]),
           height: 40,
           child: TextField(
+            controller: passcontroller,
             obscureText: !_passwordVisible,
             style: TextStyle(color: Colors.black87),
             decoration: InputDecoration(
@@ -260,29 +279,25 @@ class SignupArea extends State<Signup> {
 
   Widget AlreadyAccountbtn() {
     return Container(
-        padding: EdgeInsets.only(left: 60.0),
-        width: double.infinity,
-        child: Row(
-          children: <Widget>[
-            Text(
-              "Already Have An Account?",
-              style: TextStyle(color: Colors.black),
+      padding: EdgeInsets.only(left: 60.0),
+      width: double.infinity,
+      child: Row(
+        children: <Widget>[
+          Text(
+            "Don't have an account?",
+            style: TextStyle(color: Colors.black),
+          ),
+          RichText(
+            text: TextSpan(
+              recognizer: TapGestureRecognizer()..onTap = widget.onClickedLogin,
+              text: 'LOGIN',
+              style: TextStyle(
+                  decoration: TextDecoration.underline, color: Colors.black),
             ),
-            TextButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()));
-              },
-              child: Text(
-                'Login',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ],
-        ));
+          )
+        ],
+      ),
+    );
   }
 
   Widget Registerbtn() {
@@ -299,10 +314,7 @@ class SignupArea extends State<Signup> {
               ))),
           child: Text('Register'),
           onPressed: () {
-            Fluttertoast.showToast(
-                msg: "Registration Succesful",
-                toastLength: Toast.LENGTH_SHORT,
-                backgroundColor: Colors.grey);
+            signup();
           }),
     );
   }
@@ -321,8 +333,8 @@ class SignupArea extends State<Signup> {
               ))),
           child: Text('<-'),
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => LoginScreen()));
+            // Navigator.push(context,
+            //     MaterialPageRoute(builder: (context) => LoginScreen()));
           }),
     );
   }
@@ -385,5 +397,29 @@ class SignupArea extends State<Signup> {
         ),
       ),
     );
+  }
+
+  Future signup() async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => Center(
+              child: Image.asset(
+                'assets/Eater_loading.gif',
+                width: 100,
+                height: 100,
+              ),
+            ));
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailcontroller.text.trim(),
+          password: passcontroller.text.trim());
+    } on FirebaseAuthException catch (e) {
+      Fluttertoast.showToast(
+          msg: "Signup Succesful",
+          toastLength: Toast.LENGTH_SHORT,
+          backgroundColor: Colors.grey);
+    }
+    Navigator.pop(context);
   }
 }

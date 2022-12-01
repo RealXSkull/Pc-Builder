@@ -1,19 +1,22 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, file_names, unused_import
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/LoginScreen.dart';
 import 'package:fyp/MainMenu.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class NavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
             accountName: Text('Danish'),
-            accountEmail: Text('Danish.shk09@gmail.com'),
+            accountEmail: Text(user.email!),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
                 child: Image.asset(
@@ -69,9 +72,7 @@ class NavBar extends StatelessWidget {
             leading: Icon(Icons.logout),
             title: Text('Logout'),
             onTap: () {
-              Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (ctx) => LoginScreen()),
-                  (route) => false);
+              FirebaseAuth.instance.signOut();
             },
           ),
         ],

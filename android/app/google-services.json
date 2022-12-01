@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "8175198105",
+    "firebase_url": "https://pc-builder-2c0a4-default-rtdb.firebaseio.com",
+    "project_id": "pc-builder-2c0a4",
+    "storage_bucket": "pc-builder-2c0a4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:8175198105:android:878cc4bdf5caae2449fd08",
+        "android_client_info": {
+          "package_name": "com.example.fyp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "8175198105-dcqbut1ek1d2sv18e5ulsbh8g270nu8h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdqvqTfuCoF2NtGWzzzC3a95tJdy-Jalw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "8175198105-dcqbut1ek1d2sv18e5ulsbh8g270nu8h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

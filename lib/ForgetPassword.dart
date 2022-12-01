@@ -31,8 +31,8 @@ class RecoverPassword extends State<ForgetPassword> {
               ))),
           child: Text('<-'),
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => LoginScreen()));
+            // Navigator.push(context,
+            //     MaterialPageRoute(builder: (context) => LoginScreen()));
           }),
     );
   }
