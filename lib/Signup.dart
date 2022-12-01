@@ -21,6 +21,7 @@ class Signup extends StatefulWidget {
 class SignupArea extends State<Signup> {
   int maxLength = 11;
   TextEditingController _controller = new TextEditingController();
+  TextEditingController _namecontroller = new TextEditingController();
   String contactno = "";
   bool obscureTextt = true;
   bool _passwordVisible = false;
@@ -55,7 +56,7 @@ class SignupArea extends State<Signup> {
           'Full Name',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 12,
+            fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -71,6 +72,7 @@ class SignupArea extends State<Signup> {
               ]),
           height: 40,
           child: TextField(
+            controller: _namecontroller,
             keyboardType: TextInputType.text,
             style: TextStyle(color: Colors.black87),
             decoration: InputDecoration(
@@ -387,10 +389,10 @@ class SignupArea extends State<Signup> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        // buildname(),
-                        // SizedBox(
-                        //   height: 20,
-                        // ),
+                        buildname(),
+                        SizedBox(
+                          height: 15,
+                        ),
                         buildemail(),
                         const SizedBox(
                           height: 20,
@@ -423,6 +425,7 @@ class SignupArea extends State<Signup> {
   }
 
   Future signup() async {
+    String name = _namecontroller.text;
     final isValid = formkey.currentState!.validate();
     if (!isValid) return;
     showDialog(
@@ -436,9 +439,14 @@ class SignupArea extends State<Signup> {
               ),
             ));
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailcontroller.text.trim(),
-          password: passcontroller.text.trim());
+      UserCredential result = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: emailcontroller.text.trim(),
+              password: passcontroller.text.trim());
+      await result.user?.updateDisplayName(name);
+      //     User user = result.user;
+      //  user.updateProfile(displayName: name);
+      // return _user(user);
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(msg: e.message!, gravity: ToastGravity.BOTTOM);
     }

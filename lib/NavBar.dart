@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:fyp/LoginScreen.dart';
 import 'package:fyp/MainMenu.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:fyp/ManageProfile.dart';
+import 'package:fyp/Review.dart';
 
 class NavBar extends StatelessWidget {
   @override
@@ -15,7 +17,7 @@ class NavBar extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text('Danish'),
+            accountName: Text(user.displayName!),
             accountEmail: Text(user.email!),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
@@ -37,6 +39,14 @@ class NavBar extends StatelessWidget {
             ),
           ),
           ListTile(
+            leading: Icon(Icons.edit),
+            title: Text('Update Profile'),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Manageprofile()));
+            },
+          ),
+          ListTile(
             leading: Icon(Icons.favorite),
             title: Text('Favorites'),
             onTap: () {
@@ -56,8 +66,8 @@ class NavBar extends StatelessWidget {
             leading: Icon(Icons.feedback),
             title: Text('Feedback'),
             onTap: () {
-              //   Navigator.push(context,
-              //       MaterialPageRoute(builder: (context) => LoginScreen()));
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Review()));
             },
           ),
           ListTile(
