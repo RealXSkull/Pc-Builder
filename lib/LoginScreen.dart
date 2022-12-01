@@ -23,7 +23,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool? Rememberme = false;
   bool _passwordVisible = false;
   final emailcontroller = TextEditingController();
   final passcontroller = TextEditingController();
@@ -256,7 +255,7 @@ class _LoginScreenState extends State<LoginScreen> {
               decoration: const BoxDecoration(
                   gradient: LinearGradient(
                       begin: Alignment.topLeft,
-                      end: Alignment.bottomCenter,
+                      end: Alignment.bottomRight,
                       colors: [Color(0xff588F8F), Color(0x00000000)])),
               child: SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(),
@@ -277,11 +276,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 20,
                     ),
-
                     buildpassword(),
-                    // SizedBox(
-                    //   height: 10,
-                    // ),
                     buildRemembermecb(),
                     buildloginbtn(),
                     SizedBox(
@@ -314,10 +309,7 @@ class _LoginScreenState extends State<LoginScreen> {
           email: emailcontroller.text.trim(),
           password: passcontroller.text.trim());
     } on FirebaseAuthException catch (e) {
-      Fluttertoast.showToast(
-          msg: "Logged in",
-          toastLength: Toast.LENGTH_SHORT,
-          backgroundColor: Colors.grey);
+      Fluttertoast.showToast(msg: e.message!, gravity: ToastGravity.BOTTOM);
     }
     Navigator.pop(context);
     Fluttertoast.showToast(
