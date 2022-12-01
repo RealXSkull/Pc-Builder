@@ -184,25 +184,6 @@ class _LoginScreenState extends State<LoginScreen> {
           SizedBox(
             width: 80,
           ),
-          // Theme(
-          //   data: ThemeData(unselectedWidgetColor: Colors.black),
-          //   // child: Checkbox(
-          //   //   //title: Text("Remember ME"),
-
-          //   //   value: Rememberme,
-          //   //   checkColor: Colors.green,
-          //   //   activeColor: Colors.black,
-          //   //   onChanged: (value) {
-          //   //     setState(() {
-          //   //       Rememberme = value;
-          //   //     });
-          //   //   },
-          //   // ),
-          // ),
-          // const Text(
-          //   'Remember Me',
-          //   style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-          // )
         ],
       ),
     );

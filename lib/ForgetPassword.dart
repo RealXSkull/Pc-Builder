@@ -14,7 +14,6 @@ class ForgetPassword extends StatefulWidget {
 }
 
 class RecoverPassword extends State<ForgetPassword> {
-  final formkey = GlobalKey<FormState>();
   TextEditingController _emailcontroller = new TextEditingController();
 
   @override
@@ -29,10 +28,7 @@ class RecoverPassword extends State<ForgetPassword> {
       child: Text(
         'Recieve an Email to \n Reset your Password',
         textAlign: TextAlign.center,
-        style: TextStyle(
-          color: Colors.black87,
-          fontSize: 30,
-        ),
+        style: TextStyle(color: Colors.black87, fontSize: 30, fontFamily: 'S'),
       ),
     );
   }
@@ -63,17 +59,6 @@ class RecoverPassword extends State<ForgetPassword> {
           child: TextFormField(
             controller: _emailcontroller,
             keyboardType: TextInputType.emailAddress,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (val) {
-              bool emailValid = RegExp(
-                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                  .hasMatch(val!);
-              if (!emailValid) {
-                return 'Invalid Email Address';
-              } else {
-                return null;
-              }
-            },
             style: TextStyle(color: Colors.black87),
             decoration: InputDecoration(
                 border: InputBorder.none,
@@ -93,16 +78,29 @@ class RecoverPassword extends State<ForgetPassword> {
     return Container(
       height: 40,
       width: double.infinity,
-      child: ElevatedButton(
-          style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all<Color>(Colors.lightBlue),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ))),
-          child: Text('Recover Password'),
-          onPressed: () => ResetPassword()),
+      child: ElevatedButton.icon(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlue),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ))),
+        label: Text('Recover Password'),
+        onPressed: () {
+          if (_emailcontroller.text.isNotEmpty) {
+            ResetPassword();
+          } else {
+            Fluttertoast.showToast(
+                msg: "Invalid Credentials",
+                toastLength: Toast.LENGTH_SHORT,
+                backgroundColor: Colors.grey);
+          }
+        },
+        icon: Icon(
+          Icons.mail,
+          size: 24,
+        ),
+      ),
     );
   }
 
@@ -111,7 +109,6 @@ class RecoverPassword extends State<ForgetPassword> {
     return Scaffold(
       appBar: AppBar(
           title: Text('FORGOT PASSWORD?'),
-          elevation: 0,
           backgroundColor: Colors.blueGrey,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios_new_rounded),
