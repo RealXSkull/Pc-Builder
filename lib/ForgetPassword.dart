@@ -2,6 +2,7 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -13,76 +14,26 @@ class ForgetPassword extends StatefulWidget {
 }
 
 class RecoverPassword extends State<ForgetPassword> {
-  int maxLength = 11;
-  TextEditingController _controller = new TextEditingController();
-  String contactno = "";
+  final formkey = GlobalKey<FormState>();
+  TextEditingController _emailcontroller = new TextEditingController();
 
-  Widget backbtn() {
-    return Container(
-      alignment: Alignment.topLeft,
-      height: 40,
-      width: 40,
-      child: ElevatedButton(
-          style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.grey),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0),
-              ))),
-          child: Text('<-'),
-          onPressed: () {
-            // Navigator.push(context,
-            //     MaterialPageRoute(builder: (context) => LoginScreen()));
-          }),
-    );
+  @override
+  void dispose() {
+    _emailcontroller.dispose();
+    super.dispose();
   }
 
-  Widget buildphone() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          'Contact No.',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
+  Widget EmailText() {
+    return Container(
+      alignment: Alignment.center,
+      child: Text(
+        'Recieve an Email to \n Reset your Password',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: Colors.black87,
+          fontSize: 30,
         ),
-        SizedBox(height: 15),
-        Container(
-          alignment: Alignment.centerLeft,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.white, blurRadius: 6, offset: Offset(0, 2))
-              ]),
-          height: 40,
-          child: TextField(
-            controller: _controller,
-            onChanged: (String newVal) {
-              if (newVal.length <= maxLength) {
-                contactno = newVal;
-              } else {
-                _controller.text = contactno;
-              }
-            },
-            // maxLength: 11,
-            keyboardType: TextInputType.number,
-            style: TextStyle(color: Colors.black87),
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                prefixIcon: Icon(
-                  Icons.phone,
-                  color: Color(0xff5ac18e),
-                ),
-                hintText: '03xx-xxxxxxx',
-                hintStyle: TextStyle(color: Colors.black38)),
-          ),
-        )
-      ],
+      ),
     );
   }
 
@@ -108,9 +59,21 @@ class RecoverPassword extends State<ForgetPassword> {
                 BoxShadow(
                     color: Colors.white, blurRadius: 6, offset: Offset(0, 2))
               ]),
-          height: 40,
-          child: TextField(
+          height: 50,
+          child: TextFormField(
+            controller: _emailcontroller,
             keyboardType: TextInputType.emailAddress,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: (val) {
+              bool emailValid = RegExp(
+                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                  .hasMatch(val!);
+              if (!emailValid) {
+                return 'Invalid Email Address';
+              } else {
+                return null;
+              }
+            },
             style: TextStyle(color: Colors.black87),
             decoration: InputDecoration(
                 border: InputBorder.none,
@@ -119,47 +82,6 @@ class RecoverPassword extends State<ForgetPassword> {
                   color: Color(0xff5ac18e),
                 ),
                 hintText: 'Email',
-                hintStyle: TextStyle(color: Colors.black38)),
-          ),
-        )
-      ],
-    );
-  }
-
-  Widget buildpassword() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          'Password',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        SizedBox(height: 15),
-        Container(
-          alignment: Alignment.centerLeft,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.white, blurRadius: 6, offset: Offset(0, 2))
-              ]),
-          height: 40,
-          child: TextField(
-            readOnly: true,
-            obscureText: false,
-            style: TextStyle(color: Colors.black87),
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                prefixIcon: Icon(
-                  Icons.lock,
-                  color: Color(0xff5ac18e),
-                ),
-                hintText: 'Password',
                 hintStyle: TextStyle(color: Colors.black38)),
           ),
         )
@@ -180,12 +102,7 @@ class RecoverPassword extends State<ForgetPassword> {
                 borderRadius: BorderRadius.circular(10.0),
               ))),
           child: Text('Recover Password'),
-          onPressed: () {
-            Fluttertoast.showToast(
-                msg: "Password Recovered Succesfully",
-                toastLength: Toast.LENGTH_SHORT,
-                backgroundColor: Colors.grey);
-          }),
+          onPressed: () => ResetPassword()),
     );
   }
 
@@ -194,6 +111,7 @@ class RecoverPassword extends State<ForgetPassword> {
     return Scaffold(
       appBar: AppBar(
           title: Text('FORGOT PASSWORD?'),
+          elevation: 0,
           backgroundColor: Colors.blueGrey,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios_new_rounded),
@@ -204,6 +122,7 @@ class RecoverPassword extends State<ForgetPassword> {
         child: Stack(
           children: <Widget>[
             Container(
+              alignment: Alignment.center,
               height: double.infinity,
               width: double.infinity,
               decoration: const BoxDecoration(
@@ -213,32 +132,16 @@ class RecoverPassword extends State<ForgetPassword> {
                       colors: [Color(0xff588F8F), Color(0x00000000)])),
               child: SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                padding: EdgeInsets.all(16),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    // buildname(),
-                    SizedBox(
-                      height: 20,
-                    ),
+                    EmailText(),
                     buildemail(),
                     const SizedBox(
                       height: 20,
                     ),
-                    buildphone(),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    buildpassword(),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    // buildconfirmpassword(),
-                    SizedBox(
-                      height: 20,
-                    ),
                     recoverpas(),
-                    // AlreadyAccountbtn()
                   ],
                 ),
               ),
@@ -247,5 +150,28 @@ class RecoverPassword extends State<ForgetPassword> {
         ),
       ),
     );
+  }
+
+  Future ResetPassword() async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => Center(
+              child: Image.asset(
+                'assets/Eater_loading.gif',
+                width: 100,
+                height: 100,
+              ),
+            ));
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(
+        email: _emailcontroller.text.trim(),
+      );
+      Fluttertoast.showToast(
+          msg: 'Password Reset Email was Sent', gravity: ToastGravity.BOTTOM);
+    } on FirebaseAuthException catch (e) {
+      Fluttertoast.showToast(msg: e.message!, gravity: ToastGravity.BOTTOM);
+    }
+    Navigator.pop(context);
   }
 }
