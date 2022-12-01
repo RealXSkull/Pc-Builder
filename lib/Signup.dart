@@ -7,6 +7,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+var useridd;
+
 class Signup extends StatefulWidget {
   final VoidCallback onClickedLogin;
 
@@ -444,6 +446,7 @@ class SignupArea extends State<Signup> {
               email: emailcontroller.text.trim(),
               password: passcontroller.text.trim());
       await result.user?.updateDisplayName(name);
+      useridd = result;
       //     User user = result.user;
       //  user.updateProfile(displayName: name);
       // return _user(user);
