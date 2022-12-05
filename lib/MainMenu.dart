@@ -26,13 +26,21 @@ class MenuItem {
 
 class _MainMenuState extends State<MainMenu> {
   List<int> data = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+
+  List<Map> data1 = [
+    {'name': 'All', 'iconpath': 'assets/icons/all_icons.jpg'},
+    {'name': 'All', 'iconpath': 'assets/icons/all_icons.jpg'},
+    {'name': 'All', 'iconpath': 'assets/icons/all_icons.jpg'},
+    {'name': 'All', 'iconpath': 'assets/icons/all_icons.jpg'},
+  ];
+
   Widget builditemlist(BuildContext context, int index) {
     return SizedBox(
       width: 300,
       height: 250,
       child: Card(
         margin: EdgeInsets.all(12),
-        elevation: 12,
+        elevation: 8,
         child: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(10)),
           child: Column(
@@ -41,10 +49,17 @@ class _MainMenuState extends State<MainMenu> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('\$cos'),
+                  // Text('\$cos'),
+                  Expanded(
+                    child: Image.asset(
+                      'assets/icons/all_icon.jpg',
+                      width: 150,
+                      height: 210,
+                      fit: BoxFit.fill,
+                    ),
+                  )
                 ],
               )
-              // Image.asset(categories[iconpath])
             ],
           ),
         ),
@@ -60,48 +75,10 @@ class _MainMenuState extends State<MainMenu> {
     // {'Name': 'Processor', 'iconpath': 'assets/icons/all_icon.png'},
     // {'Name': 'Storage', 'iconpath': 'assets/icons/all_icon.png'},
   ];
-  // @override
-  // Widget _appBarTitle;
-  // Color _appBarBackgroundColor;
-  // MenuItem _selectedMenuItem;
-  // List<MenuItem> _menuItems;
-  // List<Widget> _menuOptionWidgets = [];
 
-  // @override
-  // initState() {
-  //   super.initState();
-
-  //   _menuItems = createMenuItems();
-  //   _selectedMenuItem = _menuItems.first;
-  //   _appBarTitle = new Text(_menuItems.first.title);
-  //   _appBarBackgroundColor = _menuItems.first.color;
-  // }
   int maxLength = 11;
   String contactno = "";
   bool obscureTextt = true;
-  // Widget _categoryCards(BuildContext context, int index) {
-  //   if (index == categories.length)
-  //     return Center(
-  //       child: CircularProgressIndicator(),
-  //     );
-  //   return Container(
-  //     width: 150,
-  //     child: Column(
-  //       children: [
-  //         Container(
-  //           color: Colors.deepOrangeAccent,
-  //           width: 150,
-  //           child: Center(
-  //             child: Text(
-  //               '${categories[index]}',
-  //               style: TextStyle(fontSize: 30.0),
-  //             ),
-  //           ),
-  //         )
-  //       ],
-  //     ),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -109,12 +86,7 @@ class _MainMenuState extends State<MainMenu> {
       drawer: NavBar(),
       appBar: AppBar(
         title: Text('Home Page'),
-        backgroundColor: Colors.blueGrey,
-        // leading: IconButton(
-        //   icon: Icon(Icons.more_horiz_outlined),
-        //   alignment: Alignment.centerLeft,
-        //   onPressed: () => Navigator.pop(context, false),
-        // )
+        backgroundColor: Color.fromARGB(255, 48, 10, 55),
       ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.dark,
@@ -127,23 +99,82 @@ class _MainMenuState extends State<MainMenu> {
                   gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomCenter,
-                      colors: [Color(0xff588F8F), Color(0x00000000)])),
+                      colors: [
+                    Color.fromARGB(255, 11, 4, 109),
+                    Color.fromARGB(255, 77, 14, 14)
+                  ])),
               child: SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(),
                 padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                child: SizedBox(
-                  height: 250,
-                  child: ScrollSnapList(
-                    itemBuilder: builditemlist,
-                    itemSize: 300,
-                    dynamicItemSize: true,
-                    onReachEnd: () {
-                      print('Done');
-                    },
-                    itemCount: data.length,
-                    onItemFocus: (index) {},
+                child: Column(children: [
+                  SizedBox(
+                    height: 250,
+                    child: ScrollSnapList(
+                      itemBuilder: builditemlist,
+                      itemSize: 300,
+                      dynamicItemSize: true,
+                      onReachEnd: () {
+                        print('1st');
+                      },
+                      itemCount: data1.length,
+                      onItemFocus: (index) {},
+                      // reverse: true,
+                    ),
                   ),
-                ),
+                  SizedBox(
+                    height: 250,
+                    child: ScrollSnapList(
+                      itemBuilder: builditemlist,
+                      itemSize: 300,
+                      dynamicItemSize: true,
+                      onReachEnd: () {
+                        print('Done');
+                      },
+                      itemCount: data.length,
+                      onItemFocus: (index) {},
+                    ),
+                  ),
+                  SizedBox(
+                    height: 250,
+                    child: ScrollSnapList(
+                      itemBuilder: builditemlist,
+                      itemSize: 300,
+                      dynamicItemSize: true,
+                      onReachEnd: () {
+                        print('index');
+                      },
+                      itemCount: data.length,
+                      onItemFocus: (index) {},
+                    ),
+                  ),
+                  SizedBox(
+                    height: 250,
+                    child: ScrollSnapList(
+                      itemBuilder: builditemlist,
+                      itemSize: 300,
+                      dynamicItemSize: true,
+                      onReachEnd: () {
+                        print('Done');
+                      },
+                      itemCount: data.length,
+                      onItemFocus: (index) {},
+                    ),
+                  ),
+                  SizedBox(
+                    height: 250,
+                    child: ScrollSnapList(
+                      itemBuilder: builditemlist,
+                      itemSize: 300,
+                      dynamicItemSize: true,
+                      onReachEnd: () {
+                        // print('Done');
+                      },
+                      reverse: true,
+                      itemCount: data.length,
+                      onItemFocus: (index) {},
+                    ),
+                  ),
+                ]),
               ),
             ),
           ],
