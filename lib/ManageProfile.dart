@@ -1,5 +1,8 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_field
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_field, file_names, unnecessary_string_interpolations
 
+import 'dart:io';
+import 'global.dart' as global;
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,11 +19,23 @@ class Manageprofile extends StatefulWidget {
 }
 
 class _ManageprofileState extends State<Manageprofile> {
-  final _namecontroller = TextEditingController();
+  PlatformFile? pickedFile;
+  final user = FirebaseAuth.instance.currentUser!;
+  final _namecontroller = TextEditingController(text: global.name);
   FirebaseStorage storage = FirebaseStorage.instance;
   final _addcontroller = TextEditingController();
   final formkey = GlobalKey<FormState>();
-  final user = FirebaseAuth.instance.currentUser!;
+  var image;
+  final picker = ImagePicker();
+
+  Future imagepicker() async {
+    final pick = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      if (pick != null) {
+        image = File(pick.path);
+      } else {}
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +68,32 @@ class _ManageprofileState extends State<Manageprofile> {
                         SizedBox(
                           height: 15,
                         ),
+                        Container(
+                          alignment: Alignment.topLeft,
+                          height: 150,
+                          width: 150,
+                          // child: Center(
+                          child: Column(
+                            children: <Widget>[
+                              if (image != null) Image.file(image),
+
+                              // if (pickedFile != null)
+                              //   Expanded(
+                              //     child: Container(
+                              //       color: Colors.blue,
+                              //       child: Image.file(
+                              //         File(pickedFile!.path!),
+                              //       ),
+                              //     ),
+                              //   ),
+                            ],
+                          ),
+                          //  ),
+                        ),
+
+                        const SizedBox(
+                          height: 20,
+                        ),
                         //buildAddress(),
                         const SizedBox(
                           height: 20,
@@ -73,6 +114,11 @@ class _ManageprofileState extends State<Manageprofile> {
                         SizedBox(
                           height: 20,
                         ),
+
+                        selectimage(),
+                        SizedBox(
+                          height: 20,
+                        ),
                         recoverpas()
                       ],
                     ),
@@ -82,6 +128,37 @@ class _ManageprofileState extends State<Manageprofile> {
             ),
           ),
         ));
+  }
+
+  Future selectFile() async {
+    final selectedpicture = await FilePicker.platform.pickFiles();
+    if (selectedpicture == null) return null;
+    setState(() {
+      pickedFile = selectedpicture.files.first;
+    });
+  }
+
+  Widget selectimage() {
+    return Container(
+      height: 40,
+      width: double.infinity,
+      child: ElevatedButton.icon(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlue),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ))),
+        label: Text('Select Image'),
+        onPressed: () {
+          imagepicker();
+        },
+        icon: Icon(
+          Icons.camera_alt_outlined,
+          size: 24,
+        ),
+      ),
+    );
   }
 
   Widget recoverpas() {
@@ -115,7 +192,7 @@ class _ManageprofileState extends State<Manageprofile> {
           height: 10,
         ),
         Text(
-          'Edit Your Full Name',
+          'Enter Your Full Name',
           style: TextStyle(
             color: Colors.white,
             fontSize: 16,
@@ -196,8 +273,11 @@ class _ManageprofileState extends State<Manageprofile> {
   // }
 
   Future update() async {
+    Reference reff =
+        FirebaseStorage.instance.ref().child('DisplayPicture').child(user.uid);
     String name = _namecontroller.text;
     String address = _addcontroller.text;
+
     final isValid = formkey.currentState!.validate();
     if (!isValid) return;
     showDialog(
@@ -211,7 +291,8 @@ class _ManageprofileState extends State<Manageprofile> {
               ),
             ));
     try {
-      await user.updateDisplayName(name);
+      if (name != null) await user.updateDisplayName(name);
+      if (image != null) await reff.putFile(image);
       // await user.updateAddress(address);
       //     User user = result.user;
       //  user.updateProfile(displayName: name);

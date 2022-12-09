@@ -2,9 +2,12 @@
 
 // import 'package:fyp/LoginScreen.dart';
 // import 'package:fluttertoast/fluttertoast.dart';
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fyp/NavBar.dart';
+import 'CardItem.dart';
 import 'dart:math';
 
 import 'package:scroll_snap_list/scroll_snap_list.dart';
@@ -25,7 +28,46 @@ class MenuItem {
 }
 
 class _MainMenuState extends State<MainMenu> {
+  List<CardItem> item = [
+    CardItem(
+        image: 'assets/icons/all_icon.jpg', Title: 'ALL', Subtitle: '\$100'),
+    CardItem(
+        image: 'assets/icons/all_icon.jpg', Title: 'ALL', Subtitle: '\$100'),
+    CardItem(
+        image: 'assets/icons/all_icon.jpg', Title: 'ALL', Subtitle: '\$100'),
+    CardItem(
+        image: 'assets/icons/all_icon.jpg', Title: 'ALL', Subtitle: '\$100'),
+    CardItem(
+        image: 'assets/icons/all_icon.jpg', Title: 'ALL', Subtitle: '\$100'),
+    CardItem(
+        image: 'assets/icons/all_icon.jpg', Title: 'ALL', Subtitle: '\$100'),
+  ];
   List<int> data = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+  Widget Buildcards(CardItem item) => Container(
+        width: 200,
+        child: Column(
+          children: [
+            Expanded(
+                child: AspectRatio(
+              aspectRatio: 4 / 3,
+              child: Image.asset(
+                item.image,
+                fit: BoxFit.cover,
+              ),
+            )),
+            Text(
+              item.Title,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              item.Subtitle,
+              style: TextStyle(
+                fontSize: 12,
+              ),
+            )
+          ],
+        ),
+      );
 
   List<Map> data1 = [
     {'name': 'All', 'iconpath': 'assets/icons/all_icons.jpg'},
@@ -106,48 +148,33 @@ class _MainMenuState extends State<MainMenu> {
               child: SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(),
                 padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                child: Column(children: [
-                  SizedBox(
-                    height: 250,
-                    child: ScrollSnapList(
-                      itemBuilder: builditemlist,
-                      itemSize: 300,
-                      dynamicItemSize: true,
-                      onReachEnd: () {
-                        print('1st');
-                      },
-                      itemCount: data1.length,
-                      onItemFocus: (index) {},
-                      // reverse: true,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 250,
-                    child: ScrollSnapList(
-                      itemBuilder: builditemlist,
-                      itemSize: 300,
-                      dynamicItemSize: true,
-                      onReachEnd: () {
-                        print('Done');
-                      },
-                      itemCount: data.length,
-                      onItemFocus: (index) {},
-                    ),
-                  ),
-                  SizedBox(
-                    height: 250,
-                    child: ScrollSnapList(
-                      itemBuilder: builditemlist,
-                      itemSize: 300,
-                      dynamicItemSize: true,
-                      onReachEnd: () {
-                        print('index');
-                      },
-                      itemCount: data.length,
-                      onItemFocus: (index) {},
-                    ),
-                  ),
-                  SizedBox(
+                child: Container(
+                  // height: 140,
+                  // child: ListView.separated(
+                  //   scrollDirection: Axis.horizontal,
+                  //   separatorBuilder: (context, _) => SizedBox(
+                  //     width: 12,
+                  //   ),
+                  //   itemBuilder: (context, index) {
+                  //     return Buildcards(index);
+                  //   },
+
+                  //   itemCount: 6,
+                  // SizedBox(
+                  //   height: 250,
+                  //   child: ScrollSnapList(
+                  //     itemBuilder: builditemlist,
+                  //     itemSize: 300,
+                  //     dynamicItemSize: true,
+                  //     onReachEnd: () {
+                  //       print('1st');
+                  //     },
+                  //     itemCount: data1.length,
+                  //     onItemFocus: (index) {},
+                  //     // reverse: true,
+                  //   ),
+                  // ),
+                  child: SizedBox(
                     height: 250,
                     child: ScrollSnapList(
                       itemBuilder: builditemlist,
@@ -160,21 +187,62 @@ class _MainMenuState extends State<MainMenu> {
                       onItemFocus: (index) {},
                     ),
                   ),
-                  SizedBox(
-                    height: 250,
-                    child: ScrollSnapList(
-                      itemBuilder: builditemlist,
-                      itemSize: 300,
-                      dynamicItemSize: true,
-                      onReachEnd: () {
-                        // print('Done');
-                      },
-                      reverse: true,
-                      itemCount: data.length,
-                      onItemFocus: (index) {},
-                    ),
-                  ),
-                ]),
+                  // SizedBox(
+                  //   height: 20,
+                  // ),
+                  // Buildcards(),
+                  // SizedBox(
+                  //   width: 20,
+                  //   height: 20,
+                  // ),
+                  // Buildcards(),
+                  // SizedBox(
+                  //   width: 20,
+                  //   height: 20,
+                  // ),
+                  // Buildcards(),
+                  // SizedBox(
+                  //   height: 250,
+                  //   // child: Scrollable(
+
+                  //   //   itemBuilder: builditemlist,
+                  //   //   itemSize: 300,
+                  //   //   dynamicItemSize: true,
+                  //   //   onReachEnd: () {
+                  //   //     print('index');
+                  //   //   },
+                  //   //   itemCount: data.length,
+                  //   //   onItemFocus: (index) {},
+                  //   // ),
+                  // ),
+                  // SizedBox(
+                  //   height: 250,
+                  //   child: ScrollSnapList(
+                  //     itemBuilder: builditemlist,
+                  //     itemSize: 300,
+                  //     dynamicItemSize: true,
+                  //     onReachEnd: () {
+                  //       print('Done');
+                  //     },
+                  //     itemCount: data.length,
+                  //     onItemFocus: (index) {},
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   height: 250,
+                  //   child: ScrollSnapList(
+                  //     itemBuilder: builditemlist,
+                  //     itemSize: 300,
+                  //     dynamicItemSize: true,
+                  //     onReachEnd: () {
+                  //       // print('Done');
+                  //     },
+                  //     reverse: true,
+                  //     itemCount: data.length,
+                  //     onItemFocus: (index) {},
+                  //   ),
+                  // ),
+                ),
               ),
             ),
           ],

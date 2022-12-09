@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors, avoid_print, sized_box_for_whitespace, non_constant_identifier_names, file_names, library_private_types_in_public_api, use_key_in_widget_constructors, must_call_super
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
+import 'global.dart' as global;
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/gestures.dart';
 import 'package:fyp/ForgetPassword.dart';
 import 'package:fyp/MainMenu.dart';
@@ -23,6 +25,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final user = FirebaseAuth.instance.currentUser!;
   bool _passwordVisible = false;
   final emailcontroller = TextEditingController();
   final passcontroller = TextEditingController();
@@ -308,6 +311,11 @@ class _LoginScreenState extends State<LoginScreen> {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailcontroller.text.trim(),
           password: passcontroller.text.trim());
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child("DisplayPicture")
+          .child(user.uid);
+      global.url = await ref.getDownloadURL();
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(msg: e.message!, gravity: ToastGravity.BOTTOM);
     }
