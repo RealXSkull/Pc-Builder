@@ -1,16 +1,16 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, file_names, unused_import
 
-import 'global.dart' as globals;
+import '../classes/global.dart' as globals;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:fyp/LoginScreen.dart';
-import 'package:fyp/MainMenu.dart';
+import 'package:fyp/Screens/LoginScreen.dart';
+import 'package:fyp/Bars/bottomNavBar.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:fyp/ManageProfile.dart';
-import 'package:fyp/Review.dart';
+import 'package:fyp/Screens/ManageProfile.dart';
+import 'package:fyp/Screens/Review.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'ManageProfile.dart';
+import '../Screens/ManageProfile.dart';
 
 class NavBar extends StatelessWidget {
   @override

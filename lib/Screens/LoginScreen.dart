@@ -1,13 +1,13 @@
 // ignore_for_file: prefer_const_constructors, avoid_print, sized_box_for_whitespace, non_constant_identifier_names, file_names, library_private_types_in_public_api, use_key_in_widget_constructors, must_call_super
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
-import 'global.dart' as global;
+import '../classes/global.dart' as global;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/gestures.dart';
-import 'package:fyp/ForgetPassword.dart';
-import 'package:fyp/MainMenu.dart';
-import 'package:fyp/Signup.dart';
+import 'package:fyp/Screens/ForgetPassword.dart';
+import 'package:fyp/Bars/bottomNavBar.dart';
+import 'package:fyp/Screens/Signup.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

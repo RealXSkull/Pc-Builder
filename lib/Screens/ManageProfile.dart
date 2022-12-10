@@ -1,14 +1,16 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_field, file_names, unnecessary_string_interpolations
 
 import 'dart:io';
-import 'global.dart' as global;
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../classes/global.dart' as global;
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:fyp/Signup.dart';
+import 'package:fyp/Screens/Signup.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Manageprofile extends StatefulWidget {
@@ -19,8 +21,11 @@ class Manageprofile extends StatefulWidget {
 }
 
 class _ManageprofileState extends State<Manageprofile> {
+  CollectionReference users = FirebaseFirestore.instance.collection('Users');
+
   PlatformFile? pickedFile;
   final user = FirebaseAuth.instance.currentUser!;
+
   final _namecontroller = TextEditingController(text: global.name);
   FirebaseStorage storage = FirebaseStorage.instance;
   final _addcontroller = TextEditingController();
@@ -68,6 +73,10 @@ class _ManageprofileState extends State<Manageprofile> {
                         SizedBox(
                           height: 15,
                         ),
+                        buildAddress(),
+                        SizedBox(
+                          height: 20,
+                        ),
                         Container(
                           alignment: Alignment.topLeft,
                           height: 150,
@@ -75,17 +84,26 @@ class _ManageprofileState extends State<Manageprofile> {
                           // child: Center(
                           child: Column(
                             children: <Widget>[
-                              if (image != null) Image.file(image),
+                              if (image != null)
+                                ClipRRect(
+                                  child: Image.file(
+                                    image,
+                                    fit: BoxFit.fill,
+                                    height: 100,
+                                    width: 100,
+                                  ),
+                                  borderRadius: BorderRadius.circular(50),
 
-                              // if (pickedFile != null)
-                              //   Expanded(
-                              //     child: Container(
-                              //       color: Colors.blue,
-                              //       child: Image.file(
-                              //         File(pickedFile!.path!),
-                              //       ),
-                              //     ),
-                              //   ),
+                                  // if (pickedFile != null)
+                                  //   Expanded(
+                                  //     child: Container(
+                                  //       color: Colors.blue,
+                                  //       child: Image.file(
+                                  //         File(pickedFile!.path!),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                ),
                             ],
                           ),
                           //  ),
@@ -119,7 +137,7 @@ class _ManageprofileState extends State<Manageprofile> {
                         SizedBox(
                           height: 20,
                         ),
-                        recoverpas()
+                        updateprof()
                       ],
                     ),
                   ),
@@ -161,7 +179,7 @@ class _ManageprofileState extends State<Manageprofile> {
     );
   }
 
-  Widget recoverpas() {
+  Widget updateprof() {
     return Container(
       height: 40,
       width: double.infinity,
@@ -228,49 +246,49 @@ class _ManageprofileState extends State<Manageprofile> {
     );
   }
 
-  // Widget buildAddress() {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: <Widget>[
-  //       SizedBox(
-  //         height: 10,
-  //       ),
-  //       Text(
-  //         'Enter Your Address',
-  //         style: TextStyle(
-  //           color: Colors.white,
-  //           fontSize: 16,
-  //           fontWeight: FontWeight.bold,
-  //         ),
-  //       ),
-  //       SizedBox(height: 10),
-  //       Container(
-  //         alignment: Alignment.centerLeft,
-  //         decoration: BoxDecoration(
-  //             color: Colors.white,
-  //             borderRadius: BorderRadius.circular(10),
-  //             boxShadow: [
-  //               BoxShadow(
-  //                   color: Colors.white, blurRadius: 6, offset: Offset(0, 2))
-  //             ]),
-  //         height: 40,
-  //         child: TextField(
-  //           controller: _addcontroller,
-  //           keyboardType: TextInputType.text,
-  //           style: TextStyle(color: Colors.black87),
-  //           decoration: InputDecoration(
-  //               border: InputBorder.none,
-  //               prefixIcon: Icon(
-  //                 Icons.person,
-  //                 color: Color(0xff5ac18e),
-  //               ),
-  //               hintText: 'Address',
-  //               hintStyle: TextStyle(color: Colors.black38)),
-  //         ),
-  //       )
-  //     ],
-  //   );
-  // }
+  Widget buildAddress() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        SizedBox(
+          height: 10,
+        ),
+        Text(
+          'Enter Your Address',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(height: 10),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.white, blurRadius: 6, offset: Offset(0, 2))
+              ]),
+          height: 40,
+          child: TextField(
+            controller: _addcontroller,
+            keyboardType: TextInputType.text,
+            style: TextStyle(color: Colors.black87),
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                prefixIcon: Icon(
+                  Icons.person,
+                  color: Color(0xff5ac18e),
+                ),
+                hintText: 'Address',
+                hintStyle: TextStyle(color: Colors.black38)),
+          ),
+        )
+      ],
+    );
+  }
 
   Future update() async {
     Reference reff =
@@ -291,8 +309,15 @@ class _ManageprofileState extends State<Manageprofile> {
               ),
             ));
     try {
-      if (name != null) await user.updateDisplayName(name);
+      if (name != null) {
+        await user.updateDisplayName(name);
+        final docuser =
+            FirebaseFirestore.instance.collection('Users').doc(user.uid);
+        final data = {'Name': name, 'Address': address};
+        await docuser.set(data);
+      }
       if (image != null) await reff.putFile(image);
+
       // await user.updateAddress(address);
       //     User user = result.user;
       //  user.updateProfile(displayName: name);
@@ -302,4 +327,7 @@ class _ManageprofileState extends State<Manageprofile> {
     }
     Navigator.pop(context);
   }
+  // Stream<List<User>> readUsers(){
+  //   FirebaseFirestore.instance.collection('Users').snapshots().map((snapshot) => docuser.data)
+  // }
 }

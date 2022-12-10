@@ -2,11 +2,11 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:fyp/MainMenu.dart';
-import 'package:fyp/Authpage.dart';
+import 'package:fyp/Bars/bottomNavBar.dart';
+import 'package:fyp/Controllers/Authpage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'global.dart' as global;
+import 'classes/global.dart' as global;
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
