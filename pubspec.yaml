@@ -52,6 +52,10 @@ dependencies:
   velocity_x: ^3.6.0
   card_swiper: ^2.0.4
   flutter_swiper: ^1.1.6
+  csv: ^5.0.1
+  path_provider: ^2.0.11
+  permission_handler: ^10.2.0
+  open_file_plus: ^3.3.0
 
 dev_dependencies:
   flutter_test:

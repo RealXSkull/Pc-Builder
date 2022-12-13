@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_field, file_names, unnecessary_string_interpolations
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_field, file_names, unnecessary_string_interpolations, sort_child_properties_last
 
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:fyp/Screens/Signup.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Manageprofile extends StatefulWidget {
