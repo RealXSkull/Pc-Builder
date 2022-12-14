@@ -10,7 +10,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:fyp/Screens/ManageProfile.dart';
 import 'package:fyp/Screens/Review.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../Screens/ManageProfile.dart';
 
 class NavBar extends StatelessWidget {
   @override

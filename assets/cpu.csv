@@ -1,0 +1,164 @@
+CPU,CPU Price,cpu_cores,cpu_base_clock,cpu_max_boost_clock,cpu_default_TDP,cpu_graphics_model,Inventory
+AMD Ryzen 7 3700X 3.6 GHz 8-Core,49500,8,3.6GHz,4.4GHz,65W,Discrete Graphics Card Required,1
+Intel Corei5-12600K 3.7 GHz 10-Core,60000,10,3.7 GHz,4.9 GHz,125 W,Intel UHD Graphics 770,1
+Intel Corei9-12900K 3.2 GHz 16-Core,119500,16,3.2 GHz,5.2 GHz,125 W,Intel UHD Graphics 770,1
+AMD Ryzen 5 5600X 3.7 GHz 6-Core,56500,6,3.7GHz,4.6GHz,65W,Discrete Graphics Card Required,1
+Intel Corei9-10900K 3.7 GHz 10-Core,95000,10,3.7 GHz,5.3 GHz,125 W,Intel UHD Graphics 630,1
+AMD Ryzen 7 5800X 3.8 GHz 8-Core,70000,8,3.8GHz,4.7GHz,105W,Discrete Graphics Card Required,1
+AMD Ryzen 5 3600 3.6 GHz 6-Core,35000,6,3.6GHz,4.2GHz,65W,Discrete Graphics Card Required,1
+Intel Corei7-10700KF 3.8 GHz 8-Core,63000,8,3.8 GHz,5.1 GHz,125 W,Discrete Graphics Card Required,1
+Intel Corei7-9700K 3.6 GHz 8-Core,52000,8,3.6 GHz,4.9 GHz,95 W,Intel UHD Graphics 630,1
+AMD Ryzen 9 5900X 3.7 GHz 12-Core,106000,12,3.7GHz,4.8GHz,105W,Discrete Graphics Card Required,1
+AMD Ryzen 5 3600X 3.8 GHz 6-Core,45000,6,3.8GHz,4.4GHz,95W,Discrete Graphics Card Required,1
+Intel Corei7-11700K 3.6 GHz 8-Core,72500,8,3.6 GHz,5 GHz,125 W,Intel UHD Graphics 750,1
+AMD Ryzen Threadripper 1950X 3.4 GHz 16-Core,75950,16,3.4GHz,4.0GHz,180W,Discrete Graphics Card Required,1
+Intel Corei7-8700 3.2 GHz 6-Core,59400,6,3.2 GHz,4.6 GHz,65 W,Intel UHD Graphics 630,1
+Intel Corei5-11500 2.7 GHz 6-Core,37450,6,2.7 GHz,4.6 GHz,65 W,Intel UHD Graphics 750,1
+AMD Ryzen 7 2700X 3.7 GHz 8-Core,66400,8,3.7GHz,4.3GHz,105W,Discrete Graphics Card Required,1
+Intel Corei5-10400 2.9 GHz 6-Core,34500,6,2.9 GHz,4.3 GHz,65 W,Intel UHD Graphics 630,1
+Intel Corei7-10700K 3.8 GHz 8-Core,61900,8,3.8 GHz,5.1 GHz,125 W,Intel UHD Graphics 630,1
+AMD Ryzen 7 2700 3.2 GHz 8-Core,63700,8,3.2GHz,4.1GHz,65W,Discrete Graphics Card Required,1
+AMD Ryzen 7 5700G 3.8 GHz 8-Core,53450,8,3.8GHz,4.6GHz,65W,Radeon  Graphics,1
+Intel Corei9-11900KF 3.5 GHz 8-Core,101000,8,3.5 GHz,5.3 GHz,125 W,Discrete Graphics Card Required,1
+Intel Corei9-12900KF 3.2 GHz 16-Core,122000,16,3.2 GHz,5.2 GHz,125 W,Discrete Graphics Card Required,1
+AMD Ryzen 7 3800X 3.9 GHz 8-Core,61500,8,3.9GHz,4.5GHz,105W,Discrete Graphics Card Required,1
+AMD Ryzen 5 5600G 3.9 GHz 6-Core,51500,6,3.9GHz,4.4GHz,65W,Radeon  Graphics,1
+AMD Ryzen 5 1400 3.2 GHz 4-Core,35800,4,3.2GHz,3.4GHz,65W,Discrete Graphics Card Required,1
+AMD Ryzen 5 2600 3.4 GHz 6-Core,30000,6,3.4GHz,3.9GHz,65W,Discrete Graphics Card Required,1
+Intel Corei7-10700 2.9 GHz 8-Core,60400,8,2.9 GHz,4.8 GHz,65 W,Intel UHD Graphics 630,1
+Intel Corei5-9400F 2.9 GHz 6-Core,29500,6,2.9 GHz,4.1 GHz,65 W,Discrete Graphics Card Required,1
+Intel Corei5-11400F 2.6 GHz 6-Core,33500,6,2.6 GHz,4.4 GHz,65 W,Discrete Graphics Card Required,1
+Intel Corei5-4690K 3.5 GHz 4-Core,10000,4,3.5 GHz,3.9 GHz,88 W,Intel HD Graphics 4600,1
+Intel Corei9-9900K 3.6 GHz 8-Core,85500,8,3.6 GHz,5 GHz,95 W,Intel UHD Graphics 630,1
+Intel Corei7-9700KF 3.6 GHz 8-Core,50000,8,3.6 GHz,4.9 GHz,95 W,Discrete Graphics Card Required,1
+Intel Corei5-7600K 3.8 GHz 4-Core,27500,4,3.8 GHz,4.2 GHz,91 W,Intel HD Graphics 630,1
+Intel Corei5-10600K 4.1 GHz 6-Core,38350,6,4.1 GHz,4.8 GHz,125 W,Intel UHD Graphics 630,1
+Intel Corei5-11600K 3.9 GHz 6-Core,39100,6,3.9 GHz,4.9 GHz,125 W,Intel UHD Graphics 750,1
+AMD Ryzen 9 3900X 3.8 GHz 12-Core,88500,12,3.8GHz,4.6GHz,105W,Discrete Graphics Card Required,1
+Intel Corei7-6700K 4 GHz 4-Core,59400,4,4 GHz,4.2 GHz,91 W,Intel HD Graphics 530,1
+AMD Ryzen 9 3900XT 3.8 GHz 12-Core,89000,12,3.8GHz,4.7GHz,105W,Discrete Graphics Card Required,1
+Intel Corei7-12700K 3.6 GHz 12-Core,84000,12,3.6 GHz,5.0 GHz,125 W,Intel UHD Graphics 770,1
+Intel Corei9-11900K 3.5 GHz 8-Core,100000,8,3.5 GHz,5.3 GHz,125 W,Intel UHD Graphics 750,1
+Intel Corei5-11400 2.6 GHz 6-Core,37000,6,2.6 GHz,4.4 GHz,65 W,Intel UHD Graphics 730,1
+Intel Corei7-4770K 3.5 GHz 4-Core,59400,4,3.5 GHz,3.9 GHz,84 W,Intel HD Graphics 4600,1
+Intel Corei5-8400 2.8 GHz 6-Core,41400,6,2.8 GHz,4 GHz,65 W,Intel UHD Graphics 630,1
+AMD Ryzen 9 5950X 3.4 GHz 16-Core,146000,16,3.4GHz,4.9GHz,105W,Discrete Graphics Card Required,1
+Intel Corei3-10100F 3.6 GHz 4-Core,19500,4,3.6 GHz,4.3 GHz,65 W,Discrete Graphics Card Required,1
+Intel Corei5-4670K 3.4 GHz 4-Core,9800,4,3.4 GHz,3.8 GHz,84 W,Intel HD Graphics 4600,1
+Intel Corei7-8700K 3.7 GHz 6-Core,69850,6,3.7 GHz,4.7 GHz,95 W,Intel UHD Graphics 630,1
+AMD FX-6300 3.5 GHz 6-Core,13500,6,3.5GHz,3.8GHz,95W,Discrete Graphics Card Required,1
+AMD Ryzen 3 3300X 3.8 GHz 4-Core,35100,4,3.8GHz,4.3GHz,65W,Discrete Graphics Card Required,1
+AMD Ryzen 3 1200 3.1 GHz 4-Core,19050,4,3.1GHz,3.4GHz,65W,Discrete Graphics Card Required,1
+AMD Ryzen Threadripper 3960X 3.8 GHz 24-Core,324900,24,3.8GHz,4.5GHz,280W,Discrete Graphics Card Required,1
+Intel Corei5-10600KF 4.1 GHz 6-Core,38000,6,4.1 GHz,4.8 GHz,125 W,Discrete Graphics Card Required,1
+AMD Ryzen 3 3200G 3.6 GHz 4-Core,52200,4,3.6GHz,4.0GHz,65W,Radeon Vega 8 Graphics,1
+Intel Corei3-10105F 3.7 GHz 4-Core,20000,4,3.7 GHz,4.4 GHz,65 W,Discrete Graphics Card Required,1
+Intel Corei5-7500 3.4 GHz 4-Core,33000,4,3.4 GHz,3.8 GHz,65 W,Intel UHD Graphics 630,1
+AMD Ryzen 7 3800XT 3.9 GHz 8-Core,68500,8,3.9GHz,4.7GHz,105W,Discrete Graphics Card Required,1
+AMD Ryzen 5 1600 3.2 GHz 6-Core,45000,6,3.2GHz,3.6GHz,65W,Discrete Graphics Card Required,1
+AMD Ryzen 3 2200G 3.5 GHz 4-Core,47800,4,3.5GHz,3.7GHz,65W,Radeon Vega 8 Graphics,1
+Intel Xeon E3-1230 V3 3.3 GHz 4-Core,27900,4,3.3 GHz,3.7 GHz,80 W,Discrete Graphics Card Required,1
+Intel Corei5-10400F 2.9 GHz 6-Core,31000,6,2.9 GHz,4.3 GHz,65 W,Discrete Graphics Card Required,1
+AMD Ryzen 5 2600X 3.6 GHz 6-Core,35800,6,3.6GHz,4.2GHz,95W,Discrete Graphics Card Required,1
+Intel Corei9-10980XE 3 GHz 18-Core,212000,18,3 GHz,4.8 GHz,165 W,Discrete Graphics Card Required,1
+Intel Corei5-2500K 3.3 GHz 4-Core,5200,4,3.3 GHz,3.7 GHz,95 W,Intel HD Graphics 3000,1
+Intel Corei5-6400 2.7 GHz 4-Core,26100,4,2.7 GHz,3.3 GHz,65 W,Intel UHD Graphics 530,1
+Intel Corei3-10100 3.6 GHz 4-Core,25000,4,3.6 GHz,4.3 GHz,65 W,Intel UHD Graphics 630,1
+AMD A6-9500 3.5 GHz 2-Core,19450,2,3.5GHz,3.8GHz,65W,Radeon R5 Series,1
+Intel Corei7-7700K 4.2 GHz 4-Core,54500,4,4.2 GHz,4.5 GHz,91 W,Intel HD Graphics 630,1
+Intel Corei7-11700 2.5 GHz 8-Core,68900,8,2.5 GHz,4.9 GHz,65 W,Intel UHD Graphics 750,1
+AMD Ryzen 5 3500X 3.6 GHz 6-Core,53800,6,3.6 GHz,4.1 GHz,65 W,Discrete Graphics Card Required,1
+AMD Ryzen 7 1700X 3.4 GHz 8-Core,62650,8,3.4GHz,3.8GHz,95W,Discrete Graphics Card Required,1
+Intel Corei5-9600K 3.7 GHz 6-Core,35500,6,3.7 GHz,4.6 GHz,95 W,Intel UHD Graphics 630,1
+AMD Ryzen 5 3400G 3.7 GHz 4-Core,43900,4,3.7GHz,4.2GHz,65W,Radeon Vega 11 Graphics,1
+AMD FX-8350 4 GHz 8-Core,23400,8,4.0GHz,4.2GHz,125W,Discrete Graphics Card Required,1
+Intel Corei7-920 2.66 GHz 4-Core,10500,4,2.66 GHz,2.93 GHz,130 W,Discrete Graphics Card Required,1
+Intel Corei7-6700 3.4 GHz 4-Core,49000,4,3.4 GHz,4 GHz,65 W,Intel HD Graphics 530,1
+AMD Ryzen 7 1800X 3.6 GHz 8-Core,88700,8,3.6GHz,4.0GHz,95W,Discrete Graphics Card Required,1
+Intel Corei5-11600 2.8 GHz 6-Core,42500,6,2.8 GHz,4.8 GHz,65 W,Intel UHD Graphics 750,1
+Intel Corei7-12700KF 3.6 GHz 12-Core,79900,12,3.6 GHz,5.0 GHz,125 W,Discrete Graphics Card Required,1
+Intel Corei9-10850K 3.6 GHz 10-Core,76000,10,3.6 GHz,5.2 GHz,125 W,Intel UHD Graphics 630,1
+Intel Corei9-10900F 2.8 GHz 10-Core,79500,10,2.8 GHz,5.2 GHz,65 W,Discrete Graphics Card Required,1
+Intel Corei9-10900 2.8 GHz 10-Core,89250,10,2.8 GHz,5.2 GHz,65 W,Intel UHD Graphics 630,1
+Intel Corei5-6600K 3.5 GHz 4-Core,23950,4,3.5 GHz,3.9 GHz,91 W,Intel HD Graphics 530,1
+AMD Ryzen 5 3600XT 3.8 GHz 6-Core,55300,6,3.8GHz,4.5GHz,95W,Discrete Graphics Card Required,1
+Intel Corei5-8600K 3.6 GHz 6-Core,40200,6,3.6 GHz,4.3 GHz,95 W,Intel UHD Graphics 630,1
+AMD Ryzen Threadripper 3970X 3.7 GHz 32-Core,558000,32,3.7GHz,4.5GHz,280W,Discrete Graphics Card Required,1
+Intel Corei7-4790K 4 GHz 4-Core,59900,4,4 GHz,4.4 GHz,88 W,Intel HD Graphics 4600,1
+Intel Corei7-9700F 3 GHz 8-Core,46500,8,3 GHz,4.7 GHz,65 W,Discrete Graphics Card Required,1
+Intel Corei7-2600K 3.4 GHz 4-Core,24000,4,3.4 GHz,3.8 GHz,95 W,Intel HD Graphics 3000,1
+Intel Corei7-7820X 3.6 GHz 8-Core,48000,8,3.6 GHz,4.3 GHz,140 W,Discrete Graphics Card Required,1
+Intel Corei9-9900KF 3.6 GHz 8-Core,63500,8,3.6 GHz,5 GHz,95 W,Discrete Graphics Card Required,1
+Intel Corei5-10500 3.1 GHz 6-Core,37800,6,3.1 GHz,4.5 GHz,65 W,Intel UHD Graphics 630,1
+Intel Corei7-10700F 2.9 GHz 8-Core,56000,8,2.9 GHz,4.8 GHz,65 W,Discrete Graphics Card Required,1
+AMD FX-8370 4 GHz 8-Core,51650,8,4.0GHz,4.3GHz,125W,Discrete Graphics Card Required,1
+Intel Corei5-11600KF 3.9 GHz 6-Core,50000,6,3.9 GHz,4.9 GHz,125 W,Discrete Graphics Card Required,1
+AMD Ryzen Threadripper 1920X 3.5 GHz 12-Core,85600,12,3.5GHz,4.0GHz,180W,Discrete Graphics Card Required,1
+Intel Corei5-6500 3.2 GHz 4-Core,24000,4,3.2 GHz,3.6 GHz,65 W,Intel HD Graphics 530,1
+Intel Corei5-10600 3.3 GHz 6-Core,38000,6,3.3 GHz,4.8 GHz,65 W,Intel UHD Graphics 630,1
+AMD Ryzen 9 3950X 3.5 GHz 16-Core,160200,16,3.5GHz,4.7GHz,105W,Discrete Graphics Card Required,1
+Intel Xeon E3-1225 V3 3.2 GHz 4-Core,26000,4,3.2 GHz,3.6 GHz,84 W,Discrete Graphics Card Required,1
+AMD FX-8320 3.5 GHz 8-Core,18900,8,3.5GHz,4.0GHz,125W,Discrete Graphics Card Required,1
+Intel Corei3-9100F 3.6 GHz 4-Core,17500,4,3.6 GHz,4.2 GHz,65 W,Discrete Graphics Card Required,1
+Intel Corei7-11700KF 3.6 GHz 8-Core,71500,8,3.6 GHz,5 GHz,125 W,Discrete Graphics Card Required,1
+Intel Corei9-9940X 3.3 GHz 14-Core,139500,14,3.3 GHz,4.4 GHz,165 W,Discrete Graphics Card Required,1
+Intel Corei9-9900 3.1 GHz 8-Core,75000,8,3.1 GHz,5.0 GHz,65 W,Intel UHD Graphics 630,1
+AMD Ryzen 5 1600X 3.6 GHz 6-Core,52000,6,3.6GHz,4.0GHz,95W,Discrete Graphics Card Required,1
+Intel Corei5-4690 3.5 GHz 4-Core,7200,4,3.5 GHz,3.9 GHz,84 W,Intel HD Graphics 4600,1
+Intel Corei7-3770K 3.5 GHz 4-Core,47700,4,3.5 GHz,3.9 GHz,77 W,Intel HD Graphics 4000,1
+Intel Corei9-10900KF 3.7 GHz 10-Core,97000,10,3.7 GHz,5.3 GHz,125 W,Discrete Graphics Card Required,1
+AMD Ryzen 5 2400G 3.6 GHz 4-Core,42100,4,3.6GHz,3.9GHz,65W,Radeon Vega 11 Graphics,1
+AMD Ryzen 7 1700 3 GHz 8-Core,48600,8,3.0GHz,3.7GHz,65W,Discrete Graphics Card Required,1
+Intel Corei7-7700 3.6 GHz 4-Core,47500,4,3.6 GHz,4.2 GHz,65 W,Intel HD Graphics 630,1
+Intel Corei9-9900KS 4 GHz 8-Core,112000,8,4.0 GHz,5.0 GHz,127 W,Intel UHD Graphics 630,1
+Intel Corei5-4460 3.2 GHz 4-Core,9000,4,3.2 GHz,3.4 GHz,84 W,Intel HD Graphics 4600,1
+Intel Corei7-4820K 3.7 GHz 4-Core,62800,4,3.7 GHz,3.9 GHz,130 W,Discrete Graphics Card Required,1
+Intel Corei7-8086K 4 GHz 6-Core,72000,6,4.0 GHz,5.0 GHz,95 W,Intel UHD Graphics 630,1
+Intel Corei5-6600 3.3 GHz 4-Core,20700,4,3.3 GHz,3.7 GHz,65 W,Intel UHD Graphics 530,1
+AMD Ryzen 3 3100 3.6 GHz 4-Core,29700,4,3.6GHz,3.9GHz,65W,Discrete Graphics Card Required,1
+Intel Corei3-10105 3.7 GHz 4-Core,27500,4,3.7 GHz,4.4 GHz,65 W,Intel UHD Graphics 630,1
+Intel Corei7-9700 3 GHz 8-Core,47000,8,3 GHz,4.7 GHz,65 W,Intel HD Graphics 630,1
+Intel Corei7-5775C 3.3 GHz 4-Core,54000,4,3.3 GHz,3.7 GHz,37 W,Intel Iris Pro Graphics 6200,1
+Intel Corei5-4570S 2.9 GHz 4-Core,9300,4,2.9 GHz,3.6 GHz,65 W,Intel HD Graphics 4600,1
+Intel Corei7-5820K 3.3 GHz 6-Core,40850,6,3.3 GHz,3.6 GHz,140 W,Discrete Graphics Card Required,1
+Intel Corei7-8700T 2.4 GHz 6-Core,66600,6,2.4 GHz,4.0 GHz,25 W,Intel HD Graphics 630,1
+Intel Corei7-7800X 3.5 GHz 6-Core,47000,6,3.5 GHz,4.0 GHz,140 W,Discrete Graphics Card Required,1
+AMD Ryzen Threadripper 2950X 3.5 GHz 16-Core,117000,16,3.5GHz,4.4GHz,180W,Discrete Graphics Card Required,1
+Intel Corei9-10850KA 3.6 GHz 10-Core,72000,10,3.6 GHz,5.2 GHz,125 W,Intel UHD Graphics 630,1
+AMD FX-6350 3.9 GHz 6-Core,17100,6,3.9GHz,4.2GHz,125W,Discrete Graphics Card Required,1
+AMD FX-8120 3.1 GHz 8-Core,17100,8,3.1GHz,4.0GHz,125W,Discrete Graphics Card Required,1
+Intel Corei5-7400 3 GHz 4-Core,32400,4,3 GHz,3.5 GHz,65 W,Intel HD Graphics 630,1
+Intel Corei5-9600KF 3.7 GHz 6-Core,35000,6,3.7 GHz,4.6 GHz,95 W,Discrete Graphics Card Required,1
+Intel Corei3-10305 3.8 GHz 4-Core,29150,4,3.8 GHz,4.5 GHz,65 W,Intel UHD Graphics 630,1
+Intel Xeon E5-2660 V3 2.6 GHz 10-Core,23000,10,2.6 GHz,3.3 GHz,105 W,Discrete Graphics Card Required,0
+AMD A10-9700 3.5 GHz 4-Core,22700,4,3.5GHz,3.8GHz,65W,Radeon R7 Series,0
+Intel Xeon E5-1650 V2 3.5 GHz 6-Core,30000,6,3.5 GHz,3.9 GHz,130 W,Discrete Graphics Card Required,0
+Intel Corei9-7900X 3.3 GHz 10-Core,107650,10,3.3 GHz,4.3 GHz,140 W,Discrete Graphics Card Required,0
+Intel Corei9-9960X 3.1 GHz 16-Core,324000,16,3.1 GHz,4.4 GHz,165 W,Discrete Graphics Card Required,0
+Intel Corei7-4790 3.6 GHz 4-Core,51000,4,3.6 GHz,4.0 GHz,84 W,Intel HD Graphics 4600,0
+Intel Corei5-9400 2.9 GHz 6-Core,33500,6,2.9 GHz,4.1 GHz,65 W,Intel UHD Graphics 630,0
+AMD Ryzen Threadripper 2970WX 3 GHz 24-Core,252000,24,3.0GHz,4.2GHz,250W,Discrete Graphics Card Required,0
+Intel Corei9-9900X 3.5 GHz 10-Core,139500,10,3.5 GHz,4.4 GHz,165 W,Discrete Graphics Card Required,0
+Intel Corei9-10940X 3.3 GHz 14-Core,95000,14,3.3 GHz,4.6 GHz,165 W,Discrete Graphics Card Required,0
+Intel Corei7-11700F 2.5 GHz 8-Core,67000,8,2.5 GHz,4.9 GHz,65 W,Discrete Graphics Card Required,0
+Intel Corei5-4590 3.3 GHz 4-Core,9500,4,3.3 GHz,3.7 GHz,84 W,Intel HD Graphics 4600,0
+Intel Corei5-7600 3.5 GHz 4-Core,24000,4,3.5 GHz,4.1 GHz,65 W,Intel UHD Graphics 630,0
+Intel Corei7-2600 3.4 GHz 4-Core,17500,4,3.4 GHz,3.8 GHz,95 W,Intel HD Graphics 2000,0
+AMD Ryzen 5 1500X 3.5 GHz 4-Core,32400,4,3.5GHz,3.7GHz,65W,Discrete Graphics Card Required,0
+Intel Corei5-750 2.66 GHz 4-Core,5000,4,2.66 GHz,3.2 GHz,95 W,Discrete Graphics Card Required,0
+Intel Corei5-4690K 3.5 GHz 4-Core,16900,4,3.5 GHz,3.9 GHz,88 W,Intel HD Graphics 4600,0
+AMD Phenom II X6 1100T Black 3.3 GHz 6-Core,30050,6,3.3 GHz,3.7 GHz,125 W,Discrete Graphics Card Required,0
+Intel Corei5-3570 3.4 GHz 4-Core,8200,4,3.4 GHz,3.8 GHz,77 W,Intel HD Graphics 2500,0
+Intel Xeon E3-1265L V3 2.5 GHz 4-Core,24000,4,2.5 GHz,3.7 GHz,45 W,Discrete Graphics Card Required,0
+AMD FX-4100 3.6 GHz 4-Core,9000,4,3.6GHz,3.8GHz,95W,Discrete Graphics Card Required,0
+Intel Corei7-6850K 3.6 GHz 6-Core,51450,6,3.6 GHz,3.8 GHz,140 W,Discrete Graphics Card Required,0
+AMD Ryzen 3 1300X 3.5 GHz 4-Core,72000,4,3.5GHz,3.7GHz,65W,Discrete Graphics Card Required,0
+Intel Corei5-2320 3 GHz 4-Core,4500,4,3.0 GHz,3.3 GHz,95 W,Intel HD Graphics 2000,0
+Intel Corei3-10300 3.7 GHz 4-Core,27350,4,3.7 GHz,4.4 GHz,65 W,Intel UHD Graphics 630,0
+Intel Corei5-8500T 2.1 GHz 6-Core,39000,6,2.1 GHz,3.5 GHz,65 W,Intel UHD Graphics 630,0
+Intel Corei7-9800X 3.8 GHz 8-Core,117000,8,3.8 GHz,4.5 GHz,165 W,Discrete Graphics Card Required,0
+Intel Corei7-875K 2.93 GHz 4-Core,9200,4,2.93 GHz,3.6 GHz,95 W,Discrete Graphics Card Required,0
+AMD Ryzen Threadripper 2990WX 3 GHz 32-Core,483300,32,3.0GHz,4.2GHz,250W,Discrete Graphics Card Required,0
+Intel Corei7-5930K 3.5 GHz 6-Core,43000,6,3.5 GHz,3.7 GHz,140 W,Discrete Graphics Card Required,0
+Intel Corei5-760 2.8 GHz 4-Core,5700,4,2.8 GHz,3.33 GHz,95 W,Discrete Graphics Card Required,0
+AMD Phenom II X6 1055T 2.8 GHz 6-Core,17800,6,2.8 GHz,3.3 GHz,125 W,Discrete Graphics Card Required,0

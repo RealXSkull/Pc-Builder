@@ -4,12 +4,14 @@
 // import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:card_swiper/card_swiper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
+import 'package:fyp/Screens/SearchScreen.dart';
+import 'package:fyp/Screens/inventory.dart';
 import '../classes/CardItem.dart';
 import '../classes/images.dart';
-import 'Review.dart';
+// import 'Review.dart';
 //import 'package:velocity_x/velocity_x.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -28,6 +30,8 @@ class HomePage {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  TextEditingController SearchController = TextEditingController();
+  String name = "";
   List<CardItem> item = [
     CardItem(
         image: 'assets/icons/all_icon.jpg', Title: 'ALL', Subtitle: '\$100'),
@@ -42,6 +46,55 @@ class _HomeScreenState extends State<HomeScreen> {
     CardItem(
         image: 'assets/icons/all_icon.jpg', Title: 'ALL', Subtitle: '\$100'),
   ];
+
+  Widget Searchbar() {
+    return Container(
+      height: 40,
+      alignment: Alignment.center,
+      color: Colors.red,
+      child: TextFormField(
+        controller: SearchController,
+        decoration: InputDecoration(
+            suffixIcon: Icon(Icons.search),
+            filled: true,
+            fillColor: Colors.white,
+            hintText: 'Search Anything..',
+            hintStyle: TextStyle(color: Colors.grey)),
+        textInputAction: TextInputAction.search,
+        onFieldSubmitted: (value) {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => SearchScreen()));
+        },
+      ),
+    );
+  }
+
+  Widget invoscreenbtn() {
+    return Container(
+      height: 40,
+      width: double.infinity,
+      child: ElevatedButton.icon(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlue),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ))),
+        label: Text('update invo'),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const inventory()),
+          );
+        },
+        icon: Icon(
+          Icons.lock,
+          size: 24,
+        ),
+      ),
+    );
+  }
+
   List<int> data = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
   Widget Buildcards(CardItem item) => Container(
         width: 200,
@@ -142,19 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                       height: 15,
                     ),
-                    Container(
-                      height: 40,
-                      alignment: Alignment.center,
-                      color: Colors.red,
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                            suffixIcon: Icon(Icons.search),
-                            filled: true,
-                            fillColor: Colors.white,
-                            hintText: 'Search Anything..',
-                            hintStyle: TextStyle(color: Colors.grey)),
-                      ),
-                    ),
+                    Searchbar(),
                     SizedBox(
                       height: 20,
                     ),
@@ -186,7 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     fit: BoxFit.fill,
                                   ),
                                 );
-                                OnTap(Value) {
+                                OnTap(index) {
                                   // Navigator.push(
                                   //     context,
                                   //     MaterialPageRoute(
@@ -200,6 +241,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        invoscreenbtn(),
                       ],
                     ),
                   ],

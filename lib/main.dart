@@ -1,14 +1,12 @@
 // ignore_for_file: use_key_in_widget_constructors, depend_on_referenced_packages, prefer_const_constructors, duplicate_ignore, prefer_const_constructors
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fyp/Bars/bottomNavBar.dart';
 import 'package:fyp/Controllers/Authpage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'classes/global.dart' as global;
 
-Future main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());

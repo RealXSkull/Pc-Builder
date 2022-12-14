@@ -21,6 +21,7 @@ class Signup extends StatefulWidget {
 }
 
 class SignupArea extends State<Signup> {
+  final user = FirebaseAuth.instance.currentUser;
   int maxLength = 11;
   TextEditingController _controller = new TextEditingController();
   TextEditingController _namecontroller = new TextEditingController();
@@ -447,12 +448,13 @@ class SignupArea extends State<Signup> {
               password: passcontroller.text.trim());
       await result.user?.updateDisplayName(name);
       useridd = result;
-      //     User user = result.user;
-      //  user.updateProfile(displayName: name);
-      // return _user(user);
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(msg: e.message!, gravity: ToastGravity.BOTTOM);
     }
     Navigator.pop(context);
+    Fluttertoast.showToast(
+        msg: "Logged in as",
+        toastLength: Toast.LENGTH_SHORT,
+        backgroundColor: Colors.grey);
   }
 }
