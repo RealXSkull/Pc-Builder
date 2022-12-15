@@ -1,5 +1,5 @@
-Motherboard,Motherboard Price,mobo_socket_cpu,mobo_form_factor,mobo_memory_max,mobo_memory_slots,mobo_color
-Gigabyte B550 AORUS PRO V2 ATX AM4,43800,AM4,ATX,128 GB,4,Black
+Motherboard,Motherboard Price,mobo_socket_cpu,mobo_form_factor,mobo_memory_max,mobo_memory_slots,mobo_color,Inventory
+Gigabyte B550 AORUS PRO V2 ATX AM4,43800,AM4,ATX,128 GB,4,Black,1
 Asus PRIME Z690M-PLUS D4 Micro ATX LGA1700,41050,LGA1700,Micro ATX,128 GB,4,Silver / Black
 MSI MAG B550 TOMAHAWK ATX AM4,23550,AM4,ATX,128 GB,4,Black / Silver
 Gigabyte Z690 AORUS ELITE AX DDR4 ATX LGA1700,36450,LGA1700,ATX,128 GB,4,Black / Silver

@@ -303,10 +303,15 @@ class _inventoryState extends State<inventory> {
             final dataa = {
               'Item Name': data[index][0],
               'Price': data[index][1],
-              'Inventory': data[index][2],
-              'Fan RPM': data[index][3],
-              'Color': data[index][4],
-              'Category': 'Storage'
+              'socket type': data[index][2],
+              'formfactor': data[index][3],
+              'memorymax': data[index][4],
+              'memory slots': data[index][5],
+              'color': data[index][6],
+              'aspect ratio': data[index][7],
+              'Inventory': '1',
+              // 'Inventory': data[index][8],
+              'Category': 'mobo'
             };
             docuser.add(dataa);
           }
@@ -333,7 +338,7 @@ class _inventoryState extends State<inventory> {
     // FilePath = dataset.files.first.path;
 
     // final input = File(FilePath!).openRead();
-    final myData = await rootBundle.loadString("assets/storage.csv");
+    final myData = await rootBundle.loadString("assets/mobo.csv");
     List<List<dynamic>> csvtable = CsvToListConverter().convert(myData);
 
     print(csvtable);

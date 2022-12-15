@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_field, file_names, unnecessary_string_interpolations, sort_child_properties_last
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_field, file_names, unnecessary_string_interpolations, sort_child_properties_last, use_build_context_synchronously
 
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -316,11 +316,11 @@ class _ManageprofileState extends State<Manageprofile> {
         await docuser.set(data);
       }
       if (image != null) await reff.putFile(image);
-
-      // await user.updateAddress(address);
-      //     User user = result.user;
-      //  user.updateProfile(displayName: name);
-      // return _user(user);
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child("DisplayPicture")
+          .child(user.uid);
+      global.url = await ref.getDownloadURL();
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(msg: e.message!, gravity: ToastGravity.BOTTOM);
     }

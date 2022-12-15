@@ -1,9 +1,11 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, file_names, prefer_final_fields, unnecessary_new, use_key_in_widget_constructors, avoid_print, non_constant_identifier_names, sized_box_for_whitespace, must_call_super, unnecessary_import, depend_on_referenced_packages, dead_code
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, file_names, prefer_final_fields, unnecessary_new, use_key_in_widget_constructors, avoid_print, non_constant_identifier_names, sized_box_for_whitespace, must_call_super, unnecessary_import, depend_on_referenced_packages, dead_code, unnecessary_null_comparison, prefer_conditional_assignment
 
 // import 'package:fyp/LoginScreen.dart';
 // import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:card_swiper/card_swiper.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,6 +13,8 @@ import 'package:fyp/Screens/SearchScreen.dart';
 import 'package:fyp/Screens/inventory.dart';
 import '../classes/CardItem.dart';
 import '../classes/images.dart';
+import '../classes/global.dart' as global;
+
 // import 'Review.dart';
 //import 'package:velocity_x/velocity_x.dart';
 
@@ -30,6 +34,14 @@ class HomePage {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    fetchimage();
+  }
+
+  final user = FirebaseAuth.instance.currentUser!;
+
   TextEditingController SearchController = TextEditingController();
   String name = "";
   List<CardItem> item = [
@@ -61,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
             hintText: 'Search Anything..',
             hintStyle: TextStyle(color: Colors.grey)),
         textInputAction: TextInputAction.search,
-        onFieldSubmitted: (value) {
+        onTap: () {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => SearchScreen()));
         },
@@ -178,7 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                   gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomCenter,
@@ -212,12 +224,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 10,
                         ),
                         AspectRatio(
-                          aspectRatio: 6 / 4,
+                          aspectRatio: 6 / 3,
                           child: Container(
-                            height: 150,
+                            // height: 100,
                             child: Swiper(
                               autoplay: true,
-                              itemWidth: 300,
+                              // itemWidth: 250,
                               itemCount: cards.length,
                               itemBuilder: (context, index) {
                                 return ClipRRect(
@@ -255,5 +267,18 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  fetchimage() async {
+    final ref =
+        FirebaseStorage.instance.ref().child("DisplayPicture").child(user.uid);
+    global.url = await ref.getDownloadURL();
+
+    if (global.url == null) {
+      global.url =
+          "https://firebasestorage.googleapis.com/v0/b/pc-builder-2c0a4.appspot.com/o/DisplayPicture%2Fdefaultimage.jpg?alt=media&token=af41bdaf-f5f4-4f0d-ad96-78734f8eb73a";
+    }
+    print(global.url);
+    print(user.uid);
   }
 }
