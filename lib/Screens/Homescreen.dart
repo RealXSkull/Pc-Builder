@@ -240,32 +240,29 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         AspectRatio(
                           aspectRatio: 6 / 3,
-                          child: Container(
-                            // height: 100,
-                            child: Swiper(
-                              autoplay: true,
-                              // itemWidth: 250,
-                              itemCount: cards.length,
-                              itemBuilder: (context, index) {
-                                return ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image(
-                                    image: AssetImage(cards[index]),
-                                    fit: BoxFit.fill,
-                                  ),
-                                );
-                                OnTap(index) {
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //         builder: (context) => Review()));
-                                }
-                              },
-                              viewportFraction: 0.8,
-                              scale: 0.8,
-                              pagination: SwiperPagination(),
-                              // layout: SwiperLayout.STACK,
-                            ),
+                          child: Swiper(
+                            autoplay: true,
+                            // itemWidth: 250,
+                            itemCount: cards.length,
+                            itemBuilder: (context, index) {
+                              return ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image(
+                                  image: AssetImage(cards[index]),
+                                  fit: BoxFit.fill,
+                                ),
+                              );
+                              OnTap(index) {
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) => Review()));
+                              }
+                            },
+                            viewportFraction: 0.8,
+                            scale: 0.8,
+                            pagination: SwiperPagination(),
+                            // layout: SwiperLayout.STACK,
                           ),
                         ),
                         SizedBox(
