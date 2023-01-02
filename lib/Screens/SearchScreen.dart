@@ -18,7 +18,7 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   Stream<QuerySnapshot<Object?>> zawat =
       FirebaseFirestore.instance.collection("Inventory").snapshots();
-  final dbcollector = FirebaseDatabase.instance.ref('Inventory');
+  // final dbcollector = FirebaseDatabase.instance.ref('Inventory');
 
   var searchkey = "";
   TextEditingController searchController = TextEditingController();

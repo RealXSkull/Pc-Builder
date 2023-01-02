@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, file_names, prefer_final_fields, unnecessary_new, use_key_in_widget_constructors, avoid_print, non_constant_identifier_names, sized_box_for_whitespace, must_call_super
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:fyp/Screens/LoginScreen.dart';
@@ -23,8 +21,8 @@ class Signup extends StatefulWidget {
 class SignupArea extends State<Signup> {
   final user = FirebaseAuth.instance.currentUser;
   int maxLength = 11;
-  TextEditingController _controller = new TextEditingController();
-  TextEditingController _namecontroller = new TextEditingController();
+  final TextEditingController _controller = new TextEditingController();
+  final TextEditingController _namecontroller = new TextEditingController();
   String contactno = "";
   bool obscureTextt = true;
   bool _passwordVisible = false;
@@ -52,10 +50,10 @@ class SignupArea extends State<Signup> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
-        Text(
+        const Text(
           'Full Name',
           style: TextStyle(
             color: Colors.white,
@@ -63,13 +61,13 @@ class SignupArea extends State<Signup> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                     color: Colors.white, blurRadius: 6, offset: Offset(0, 2))
               ]),
@@ -77,8 +75,8 @@ class SignupArea extends State<Signup> {
           child: TextField(
             controller: _namecontroller,
             keyboardType: TextInputType.text,
-            style: TextStyle(color: Colors.white),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.white),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 prefixIcon: Icon(
                   Icons.person,
@@ -96,7 +94,7 @@ class SignupArea extends State<Signup> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
+        const Text(
           'Email',
           style: TextStyle(
             color: Colors.white,
@@ -104,7 +102,7 @@ class SignupArea extends State<Signup> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Stack(
           children: [
             Container(
@@ -112,7 +110,7 @@ class SignupArea extends State<Signup> {
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                         color: Colors.white,
                         blurRadius: 6,
@@ -133,8 +131,8 @@ class SignupArea extends State<Signup> {
                     return null;
                   }
                 },
-                style: TextStyle(color: Colors.black),
-                decoration: InputDecoration(
+                style: const TextStyle(color: Colors.black),
+                decoration: const InputDecoration(
                     border: InputBorder.none,
                     prefixIcon: Icon(
                       Icons.email,
@@ -154,7 +152,7 @@ class SignupArea extends State<Signup> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
+        const Text(
           'Password',
           style: TextStyle(
             color: Colors.white,
@@ -162,13 +160,13 @@ class SignupArea extends State<Signup> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         Container(
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                     color: Colors.white, blurRadius: 6, offset: Offset(0, 2))
               ]),
@@ -178,17 +176,18 @@ class SignupArea extends State<Signup> {
             obscureText: !_passwordVisible,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) {
-              if (value == null)
+              if (value == null) {
                 return 'Field Cannot be left Empty';
-              else if (value.length < 6)
+              } else if (value.length < 6) {
                 return 'Enter Minimum 6 characters';
-              else
+              } else {
                 return null;
+              }
             },
-            style: TextStyle(color: Colors.black87),
+            style: const TextStyle(color: Colors.black87),
             decoration: InputDecoration(
                 border: InputBorder.none,
-                prefixIcon: Icon(
+                prefixIcon: const Icon(
                   Icons.lock,
                   color: Color(0xff5ac18e),
                 ),
@@ -204,7 +203,7 @@ class SignupArea extends State<Signup> {
                   },
                 ),
                 hintText: 'Password',
-                hintStyle: TextStyle(color: Colors.black38)),
+                hintStyle: const TextStyle(color: Colors.black38)),
           ),
         )
       ],
@@ -215,7 +214,7 @@ class SignupArea extends State<Signup> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
+        const Text(
           'Confirm Password',
           style: TextStyle(
             color: Colors.white,
@@ -223,13 +222,13 @@ class SignupArea extends State<Signup> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         Container(
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                     color: Colors.white, blurRadius: 6, offset: Offset(0, 2))
               ]),
@@ -239,19 +238,21 @@ class SignupArea extends State<Signup> {
             obscureText: !_passwordVisible2,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) {
-              if (value == null)
+              if (value == null) {
                 return 'Field Cannot be left Empty';
-              else if (confirmpasscontroller.text != null && value.length < 6)
+              } else if (confirmpasscontroller.text.isNotEmpty &&
+                  value.length < 6) {
                 return 'Enter Minimum 6 characters';
-              else if (value != passcontroller.text)
+              } else if (value != passcontroller.text) {
                 return 'Password Doesnot Match';
-              else
+              } else {
                 return null;
+              }
             },
-            style: TextStyle(color: Colors.black87),
+            style: const TextStyle(color: Colors.black87),
             decoration: InputDecoration(
                 border: InputBorder.none,
-                prefixIcon: Icon(
+                prefixIcon: const Icon(
                   Icons.lock,
                   color: Color(0xff5ac18e),
                 ),
@@ -267,7 +268,7 @@ class SignupArea extends State<Signup> {
                   },
                 ),
                 hintText: 'Retype Password',
-                hintStyle: TextStyle(color: Colors.black38)),
+                hintStyle: const TextStyle(color: Colors.black38)),
           ),
         )
       ],
@@ -278,7 +279,7 @@ class SignupArea extends State<Signup> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
+        const Text(
           'Contact No.',
           style: TextStyle(
             color: Colors.white,
@@ -286,13 +287,13 @@ class SignupArea extends State<Signup> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         Container(
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                     color: Colors.white, blurRadius: 6, offset: Offset(0, 2))
               ]),
@@ -308,8 +309,8 @@ class SignupArea extends State<Signup> {
             },
             // maxLength: 11,
             keyboardType: TextInputType.number,
-            style: TextStyle(color: Colors.black87),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black87),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 prefixIcon: Icon(
                   Icons.phone,
@@ -323,14 +324,14 @@ class SignupArea extends State<Signup> {
     );
   }
 
-  Widget AlreadyAccountbtn() {
+  Widget alreadyaccountbtn() {
     return Container(
-      padding: EdgeInsets.only(left: 60.0),
+      padding: const EdgeInsets.only(left: 60.0),
       width: double.infinity,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Text(
+          const Text(
             "Already an account? ",
             style: TextStyle(color: Colors.white),
           ),
@@ -338,7 +339,7 @@ class SignupArea extends State<Signup> {
             text: TextSpan(
               recognizer: TapGestureRecognizer()..onTap = widget.onClickedLogin,
               text: 'LOGIN',
-              style: TextStyle(
+              style: const TextStyle(
                   decoration: TextDecoration.underline, color: Colors.white),
             ),
           )
@@ -347,8 +348,8 @@ class SignupArea extends State<Signup> {
     );
   }
 
-  Widget Registerbtn() {
-    return Container(
+  Widget registerbtn() {
+    return SizedBox(
       height: 40,
       width: double.infinity,
       child: ElevatedButton(
@@ -359,7 +360,7 @@ class SignupArea extends State<Signup> {
                   RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ))),
-          child: Text('Register'),
+          child: const Text('Register'),
           onPressed: () {
             signup();
           }),
@@ -370,7 +371,7 @@ class SignupArea extends State<Signup> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('REGISTRATION'),
+          title: const Text('REGISTRATION'),
           backgroundColor: const Color.fromARGB(255, 48, 10, 55),
         ),
         body: AnnotatedRegion<SystemUiOverlayStyle>(
@@ -392,13 +393,14 @@ class SignupArea extends State<Signup> {
                         ]),
                   ),
                   child: SingleChildScrollView(
-                    physics: AlwaysScrollableScrollPhysics(),
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30, vertical: 10),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         buildname(),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         buildemail(),
@@ -406,18 +408,18 @@ class SignupArea extends State<Signup> {
                           height: 20,
                         ),
                         buildpassword(),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         buildconfirmpassword(),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
-                        Registerbtn(),
-                        SizedBox(
+                        registerbtn(),
+                        const SizedBox(
                           height: 20,
                         ),
-                        AlreadyAccountbtn()
+                        alreadyaccountbtn()
                       ],
                     ),
                   ),
@@ -448,7 +450,7 @@ class SignupArea extends State<Signup> {
               email: emailcontroller.text.trim(),
               password: passcontroller.text.trim());
       await result.user?.updateDisplayName(name);
-      Navigator.pop(context);
+      // Navigator.pop(context);
       useridd = result;
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(msg: e.message!, gravity: ToastGravity.BOTTOM);

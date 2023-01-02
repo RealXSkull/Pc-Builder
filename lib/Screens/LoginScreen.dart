@@ -26,6 +26,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   // final user = FirebaseAuth.instance.currentUser;
   bool _passwordVisible = false;
+  bool _enablebtn = true;
   final emailcontroller = TextEditingController();
   final passcontroller = TextEditingController();
 
@@ -225,13 +226,20 @@ class _LoginScreenState extends State<LoginScreen> {
               borderRadius: BorderRadius.circular(10.0),
             ))),
         label: Text('Login'),
+
+        // onPressed: _enablebtn
+        //     ? () {
+        //         print('Submit');
+        //       }
+        //     : null,
+
         onPressed: () {
           if (emailcontroller.text.isNotEmpty &&
               passcontroller.text.isNotEmpty) {
             signin();
           } else {
             Fluttertoast.showToast(
-                msg: "Invalid Credentials",
+                msg: "Email or Password cannot be Empty",
                 toastLength: Toast.LENGTH_SHORT,
                 backgroundColor: Colors.grey);
           }
@@ -248,7 +256,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login'),
+        // title: const Text('Login'),
         backgroundColor: const Color.fromARGB(255, 48, 10, 55),
       ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
@@ -269,10 +277,24 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               child: SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 50),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
+                    Image(
+                      image: AssetImage('assets/Pc_builder.jpg'),
+                      // height: 250,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      '𝐋𝐎𝐆𝐈𝐍',
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
                     buildemail(),
                     const SizedBox(
                       height: 20,
