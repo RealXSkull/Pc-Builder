@@ -77,7 +77,7 @@ class SignupArea extends State<Signup> {
           child: TextField(
             controller: _namecontroller,
             keyboardType: TextInputType.text,
-            style: TextStyle(color: Colors.black87),
+            style: TextStyle(color: Colors.white),
             decoration: InputDecoration(
                 border: InputBorder.none,
                 prefixIcon: Icon(
@@ -133,7 +133,7 @@ class SignupArea extends State<Signup> {
                     return null;
                   }
                 },
-                style: TextStyle(color: Colors.black87),
+                style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
                     border: InputBorder.none,
                     prefixIcon: Icon(
@@ -328,17 +328,18 @@ class SignupArea extends State<Signup> {
       padding: EdgeInsets.only(left: 60.0),
       width: double.infinity,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Text(
-            "Don't have an account?",
-            style: TextStyle(color: Colors.black),
+            "Already an account? ",
+            style: TextStyle(color: Colors.white),
           ),
           RichText(
             text: TextSpan(
               recognizer: TapGestureRecognizer()..onTap = widget.onClickedLogin,
               text: 'LOGIN',
               style: TextStyle(
-                  decoration: TextDecoration.underline, color: Colors.black),
+                  decoration: TextDecoration.underline, color: Colors.white),
             ),
           )
         ],
@@ -370,7 +371,7 @@ class SignupArea extends State<Signup> {
     return Scaffold(
         appBar: AppBar(
           title: Text('REGISTRATION'),
-          backgroundColor: Colors.blueGrey,
+          backgroundColor: const Color.fromARGB(255, 48, 10, 55),
         ),
         body: AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle.dark,
@@ -382,10 +383,14 @@ class SignupArea extends State<Signup> {
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
                   decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomCenter,
-                          colors: [Color(0xff588F8F), Color(0x00000000)])),
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color.fromARGB(255, 17, 7, 150),
+                          Color.fromARGB(255, 106, 5, 5)
+                        ]),
+                  ),
                   child: SingleChildScrollView(
                     physics: AlwaysScrollableScrollPhysics(),
                     padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
@@ -400,10 +405,6 @@ class SignupArea extends State<Signup> {
                         const SizedBox(
                           height: 20,
                         ),
-                        // buildphone(),
-                        // const SizedBox(
-                        //   height: 20,
-                        // ),
                         buildpassword(),
                         SizedBox(
                           height: 20,
@@ -447,11 +448,12 @@ class SignupArea extends State<Signup> {
               email: emailcontroller.text.trim(),
               password: passcontroller.text.trim());
       await result.user?.updateDisplayName(name);
+      Navigator.pop(context);
       useridd = result;
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(msg: e.message!, gravity: ToastGravity.BOTTOM);
     }
-    Navigator.pop(context);
+
     Fluttertoast.showToast(
         msg: "Logged in as",
         toastLength: Toast.LENGTH_SHORT,

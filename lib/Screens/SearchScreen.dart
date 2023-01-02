@@ -1,6 +1,8 @@
 // ignore_for_file: file_names
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:get/get.dart';
 import '../classes/global.dart' as globals;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,10 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  Stream<QuerySnapshot<Object?>> zawat =
+      FirebaseFirestore.instance.collection("Inventory").snapshots();
+  final dbcollector = FirebaseDatabase.instance.ref('Inventory');
+
   var searchkey = "";
   TextEditingController searchController = TextEditingController();
   @override
@@ -29,8 +35,8 @@ class _SearchScreenState extends State<SearchScreen> {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomCenter,
                   colors: [
-                Color.fromARGB(255, 11, 4, 109),
-                Color.fromARGB(255, 109, 18, 18)
+                Color.fromARGB(255, 17, 7, 150),
+                Color.fromARGB(255, 106, 5, 5)
               ])),
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -47,6 +53,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   textInputAction: TextInputAction.search,
                   onChanged: (value) {
                     setState(() {
+                      // data = zawat.where((event) => false);
                       searchkey = value;
                       print(searchkey);
                     });
@@ -57,13 +64,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
                 Expanded(
                   child: StreamBuilder(
-                    stream: FirebaseFirestore.instance
-                        .collection("Inventory")
-                        // .collection("Users")
-                        // .doc('Hardware')
-                        // .collection('Gpu')
-                        .where("Category", isEqualTo: searchkey)
-                        .snapshots(),
+                    stream: zawat,
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (snapshot.hasError) {
@@ -98,9 +99,18 @@ class _SearchScreenState extends State<SearchScreen> {
                                       url: globals.url,
                                     ),
                                   ));
+                                  Transition.downToUp;
                                 },
                                 child: ListTile(
                                   title: Text(data['Item Name']),
+                                  leading: SizedBox(
+                                      height: 60,
+                                      width: 60,
+                                      child: Image.asset(
+                                        'assets/all_icon.jpg',
+                                        fit: BoxFit.fill,
+                                      )),
+                                  subtitle: Text(data['Category']),
                                   trailing: Text(data['Price'].toString()),
                                   // leading: Image.network(src),
                                 ),
@@ -111,6 +121,11 @@ class _SearchScreenState extends State<SearchScreen> {
                       }
                     },
                   ),
+                  //  child: ListView.builder(
+                  //   itemCount: zawat.length,
+                  //   itemBuilder: (context, index) {
+                  //  }),
+                  //  ),
                 ),
               ],
             ),
@@ -119,4 +134,11 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
     );
   }
+
+  // void searchkeyword(String query) {
+  //   final suggestions = zawat.where((i) {
+  //     final bookTitle = i.title;
+  //   });
+  // }
+
 }

@@ -177,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Text(
               'Forgot Password?',
               style: TextStyle(
-                color: Colors.black,
+                color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -197,16 +197,16 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Row(
           children: <Widget>[
             Text(
-              "Don't have an account?",
-              style: TextStyle(color: Colors.black),
+              "Don't have an account? ",
+              style: TextStyle(color: Colors.white),
             ),
             RichText(
               text: TextSpan(
                 recognizer: TapGestureRecognizer()
                   ..onTap = widget.onClickedSignup,
-                text: 'Sign UP',
+                text: 'Sign Up',
                 style: TextStyle(
-                    decoration: TextDecoration.underline, color: Colors.black),
+                    decoration: TextDecoration.underline, color: Colors.white),
               ),
             )
           ],
@@ -247,6 +247,10 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Login'),
+        backgroundColor: const Color.fromARGB(255, 48, 10, 55),
+      ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.dark,
         child: Stack(
@@ -255,25 +259,20 @@ class _LoginScreenState extends State<LoginScreen> {
               height: double.infinity,
               width: double.infinity,
               decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [Color(0xff588F8F), Color(0x00000000)])),
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color.fromARGB(255, 17, 7, 150),
+                      Color.fromARGB(255, 106, 5, 5)
+                    ]),
+              ),
               child: SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(),
                 padding: EdgeInsets.symmetric(horizontal: 30, vertical: 50),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    const Text(
-                      'Login',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 40,
-                          fontFamily: 'Times New Roman',
-                          fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 20),
                     buildemail(),
                     const SizedBox(
                       height: 20,

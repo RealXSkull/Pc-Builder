@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import '../Bars/NavBar.dart';
 
 class Manageprofile extends StatefulWidget {
   const Manageprofile({super.key});
@@ -44,9 +45,10 @@ class _ManageprofileState extends State<Manageprofile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: NavBar(),
         appBar: AppBar(
-          title: Text('Update Profile'),
-          backgroundColor: Colors.blueGrey,
+          title: Text('Manage Account'),
+          backgroundColor: Color.fromARGB(255, 48, 10, 55),
         ),
         body: AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle.dark,
@@ -326,7 +328,4 @@ class _ManageprofileState extends State<Manageprofile> {
     }
     Navigator.pop(context);
   }
-  // Stream<List<User>> readUsers(){
-  //   FirebaseFirestore.instance.collection('Users').snapshots().map((snapshot) => docuser.data)
-  // }
 }

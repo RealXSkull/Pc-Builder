@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fyp/Screens/Homescreen.dart';
 import 'package:fyp/Bars/NavBar.dart';
+import 'package:fyp/Screens/ManageProfile.dart';
 import '../Controllers/bottomNavController.dart';
 import 'package:get/get.dart';
 
@@ -28,9 +29,7 @@ class _MainMenuState extends State<MainMenu> {
     Container(
       color: Colors.purple,
     ),
-    Container(
-      color: Colors.cyan,
-    ),
+    Manageprofile()
   ];
   var navbaritem = [
     BottomNavigationBarItem(
@@ -62,11 +61,10 @@ class _MainMenuState extends State<MainMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavBar(),
-      appBar: AppBar(
-        title: Text('Home Page'),
-        backgroundColor: Color.fromARGB(255, 48, 10, 55),
-      ),
+      // appBar: AppBar(
+      //   title: Text('Home Page'),
+      //   backgroundColor: Color.fromARGB(255, 48, 10, 55),
+      // ),
       body: Column(
         children: [
           Obx(() => Expanded(

@@ -28,7 +28,7 @@ class RecoverPassword extends State<ForgetPassword> {
       child: Text(
         'Recieve an Email to \n Reset your Password',
         textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.black87, fontSize: 30, fontFamily: 'S'),
+        style: TextStyle(color: Colors.white, fontSize: 30, fontFamily: 'S'),
       ),
     );
   }
@@ -109,7 +109,7 @@ class RecoverPassword extends State<ForgetPassword> {
     return Scaffold(
       appBar: AppBar(
           title: Text('FORGOT PASSWORD?'),
-          backgroundColor: Colors.blueGrey,
+          backgroundColor: const Color.fromARGB(255, 48, 10, 55),
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios_new_rounded),
             onPressed: () => Navigator.pop(context, false),
@@ -123,10 +123,14 @@ class RecoverPassword extends State<ForgetPassword> {
               height: double.infinity,
               width: double.infinity,
               decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomCenter,
-                      colors: [Color(0xff588F8F), Color(0x00000000)])),
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color.fromARGB(255, 17, 7, 150),
+                      Color.fromARGB(255, 106, 5, 5)
+                    ]),
+              ),
               child: SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(),
                 padding: EdgeInsets.all(16),

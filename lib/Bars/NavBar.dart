@@ -93,6 +93,7 @@ class NavBar extends StatelessWidget {
             title: Text('Logout'),
             onTap: () {
               FirebaseAuth.instance.signOut();
+              globals.url = "";
             },
           ),
         ],

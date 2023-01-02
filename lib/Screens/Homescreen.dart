@@ -12,11 +12,9 @@ import 'package:flutter/services.dart';
 import 'package:fyp/Screens/SearchScreen.dart';
 import 'package:fyp/Screens/inventory.dart';
 import '../classes/CardItem.dart';
+import 'package:fyp/Bars/NavBar.dart';
 import '../classes/images.dart';
 import '../classes/global.dart' as global;
-
-// import 'Review.dart';
-//import 'package:velocity_x/velocity_x.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -183,6 +181,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.pink,
+      drawer: NavBar(),
+      appBar: AppBar(
+        title: Text('Home Page'),
+        backgroundColor: Color.fromARGB(255, 48, 10, 55),
+      ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.dark,
         child: Stack(
@@ -195,8 +199,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomCenter,
                       colors: [
-                    Color.fromARGB(255, 11, 4, 109),
-                    Color.fromARGB(255, 77, 14, 14)
+                    Color.fromARGB(255, 17, 7, 150),
+                    Color.fromARGB(255, 106, 5, 5)
                   ])),
               child: SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(),
@@ -278,7 +282,7 @@ class _HomeScreenState extends State<HomeScreen> {
       global.url =
           "https://firebasestorage.googleapis.com/v0/b/pc-builder-2c0a4.appspot.com/o/DisplayPicture%2Fdefaultimage.jpg?alt=media&token=af41bdaf-f5f4-4f0d-ad96-78734f8eb73a";
     }
-    print(global.url);
-    print(user.uid);
+    // print(global.url);
+    // print(user.uid);
   }
 }
