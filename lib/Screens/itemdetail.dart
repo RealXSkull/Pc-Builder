@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, must_be_immutable, camel_case_types
+// ignore_for_file: use_key_in_widget_constructors, must_be_immutable, camel_case_types, unnecessary_null_comparison
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../classes/global.dart' as globals;
@@ -59,7 +59,10 @@ class _itemdetailState extends State<itemdetail> {
                           // shape: BoxShape.circle,
                         ),
                       ),
-                      Container(
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      SizedBox(
                         // color: Colors.grey,
                         child: Row(
                           children: [
@@ -147,6 +150,9 @@ class _itemdetailState extends State<itemdetail> {
                                                         CircularProgressIndicator(),
                                                   ),
                                                 );
+                                              } else if (snapshot == null) {
+                                                return const Text(
+                                                    'No Reviews Yet');
                                               } else {
                                                 return ListView.builder(
                                                   itemCount: snapshot
@@ -157,7 +163,360 @@ class _itemdetailState extends State<itemdetail> {
                                                             .data!.docs[index]
                                                             .data()
                                                         as Map<String, dynamic>;
-                                                    // return const Text('data');
+                                                    return Card(
+                                                      color: Colors.white,
+                                                      child: ListTile(
+                                                        // leading: SizedBox(
+                                                        //     height: 60,
+                                                        //     width: 60,
+                                                        //     child: Image.asset(
+                                                        //       'assets/all_icon.jpg',
+                                                        //       fit: BoxFit.fill,
+                                                        //     )),
+                                                        title: Text(
+                                                          data2['Username'],
+                                                          style: const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        subtitle: Text(
+                                                            data2['Message']),
+                                                        trailing: Text(
+                                                            '${data2['Rating'].toString()} Stars'),
+                                                      ),
+                                                    );
+                                                  }),
+                                                );
+                                              }
+                                            },
+                                          ),
+                                        ),
+                                        headerBuilder: (BuildContext context,
+                                            bool isExpanded) {
+                                          return Container(
+                                            alignment: Alignment.center,
+                                            height: 0,
+                                            child: const Text(
+                                              'Reviews',
+                                              style: TextStyle(fontSize: 20),
+                                            ),
+                                          );
+                                        }),
+                                  ],
+                                  expansionCallback: (panelIndex, isExpanded) =>
+                                      setState(() {
+                                    isopen = !isopen;
+                                  }),
+                                ),
+                              ],
+                            );
+                          } else if ('PSU' ==
+                              "${widget.receivedMap["Category"]}") {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  //change with cpu description
+                                  "◉ Efficiency: ${widget.receivedMap["efficiency"]}\n◉ Power: ${widget.receivedMap["wattage"]}\n◉ Inventory: ${widget.receivedMap["Inventory"]}",
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 12),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                ExpansionPanelList(
+                                  children: [
+                                    ExpansionPanel(
+                                        backgroundColor: Colors.grey,
+                                        isExpanded: isopen,
+                                        body:
+                                            // Text('Open101'),
+                                            SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.3,
+                                          child: StreamBuilder(
+                                            stream: FirebaseFirestore.instance
+                                                .collection("Feedback")
+                                                // .collection("Users")
+                                                // .doc('Hardware')
+                                                // .collection('Gpu')
+                                                .where("Item Name",
+                                                    isEqualTo:
+                                                        "${widget.receivedMap["Item Name"]}")
+                                                .snapshots(),
+                                            builder: (BuildContext context,
+                                                AsyncSnapshot<QuerySnapshot>
+                                                    snapshot) {
+                                              if (snapshot.hasError) {
+                                                return const Center(
+                                                  child: Text(
+                                                      "Something Went Wrong"),
+                                                );
+                                              } else if (snapshot
+                                                      .connectionState ==
+                                                  ConnectionState.waiting) {
+                                                return const Center(
+                                                  heightFactor: 3,
+                                                  widthFactor: 3,
+                                                  child: SizedBox(
+                                                    height: 100,
+                                                    width: 100,
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  ),
+                                                );
+                                              } else if (snapshot == null) {
+                                                return const Text(
+                                                    'No Reviews Yet');
+                                              } else {
+                                                return ListView.builder(
+                                                  itemCount: snapshot
+                                                      .data!.docs.length,
+                                                  itemBuilder:
+                                                      ((context, index) {
+                                                    var data2 = snapshot
+                                                            .data!.docs[index]
+                                                            .data()
+                                                        as Map<String, dynamic>;
+                                                    return Card(
+                                                      color: Colors.white,
+                                                      child: ListTile(
+                                                        // leading: SizedBox(
+                                                        //     height: 60,
+                                                        //     width: 60,
+                                                        //     child: Image.asset(
+                                                        //       'assets/all_icon.jpg',
+                                                        //       fit: BoxFit.fill,
+                                                        //     )),
+                                                        title: Text(
+                                                          data2['Username'],
+                                                          style: const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        subtitle: Text(
+                                                            data2['Message']),
+                                                        trailing: Text(
+                                                            '${data2['Rating'].toString()} Stars'),
+                                                      ),
+                                                    );
+                                                  }),
+                                                );
+                                              }
+                                            },
+                                          ),
+                                        ),
+                                        headerBuilder: (BuildContext context,
+                                            bool isExpanded) {
+                                          return Container(
+                                            alignment: Alignment.center,
+                                            height: 0,
+                                            child: const Text(
+                                              'Reviews',
+                                              style: TextStyle(fontSize: 20),
+                                            ),
+                                          );
+                                        }),
+                                  ],
+                                  expansionCallback: (panelIndex, isExpanded) =>
+                                      setState(() {
+                                    isopen = !isopen;
+                                  }),
+                                ),
+                              ],
+                            );
+                          } else if ('Storage' ==
+                              "${widget.receivedMap["Category"]}") {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  //change with cpu description
+                                  "◉ Capacity: ${widget.receivedMap["Capacity"]}\n◉ Storage Form: ${widget.receivedMap["Storage Form"]}\n◉ Storage Speed: ${widget.receivedMap["Storage type"]}\n◉ Inventory: ${widget.receivedMap["Inventory"]}",
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 12),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                ExpansionPanelList(
+                                  children: [
+                                    ExpansionPanel(
+                                        backgroundColor: Colors.grey,
+                                        isExpanded: isopen,
+                                        body:
+                                            // Text('Open101'),
+                                            SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.3,
+                                          child: StreamBuilder(
+                                            stream: FirebaseFirestore.instance
+                                                .collection("Feedback")
+                                                // .collection("Users")
+                                                // .doc('Hardware')
+                                                // .collection('Gpu')
+                                                .where("Item Name",
+                                                    isEqualTo:
+                                                        "${widget.receivedMap["Item Name"]}")
+                                                .snapshots(),
+                                            builder: (BuildContext context,
+                                                AsyncSnapshot<QuerySnapshot>
+                                                    snapshot) {
+                                              if (snapshot.hasError) {
+                                                return const Center(
+                                                  child: Text(
+                                                      "Something Went Wrong"),
+                                                );
+                                              } else if (snapshot
+                                                      .connectionState ==
+                                                  ConnectionState.waiting) {
+                                                return const Center(
+                                                  heightFactor: 3,
+                                                  widthFactor: 3,
+                                                  child: SizedBox(
+                                                    height: 100,
+                                                    width: 100,
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  ),
+                                                );
+                                              } else if (snapshot == null) {
+                                                return const Text(
+                                                    'No Reviews Yet');
+                                              } else {
+                                                return ListView.builder(
+                                                  itemCount: snapshot
+                                                      .data!.docs.length,
+                                                  itemBuilder:
+                                                      ((context, index) {
+                                                    var data2 = snapshot
+                                                            .data!.docs[index]
+                                                            .data()
+                                                        as Map<String, dynamic>;
+                                                    return Card(
+                                                      color: Colors.white,
+                                                      child: ListTile(
+                                                        // leading: SizedBox(
+                                                        //     height: 60,
+                                                        //     width: 60,
+                                                        //     child: Image.asset(
+                                                        //       'assets/all_icon.jpg',
+                                                        //       fit: BoxFit.fill,
+                                                        //     )),
+                                                        title: Text(
+                                                          data2['Username'],
+                                                          style: const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        subtitle: Text(
+                                                            data2['Message']),
+                                                        trailing: Text(
+                                                            '${data2['Rating'].toString()} Stars'),
+                                                      ),
+                                                    );
+                                                  }),
+                                                );
+                                              }
+                                            },
+                                          ),
+                                        ),
+                                        headerBuilder: (BuildContext context,
+                                            bool isExpanded) {
+                                          return Container(
+                                            alignment: Alignment.center,
+                                            height: 0,
+                                            child: const Text(
+                                              'Reviews',
+                                              style: TextStyle(fontSize: 20),
+                                            ),
+                                          );
+                                        }),
+                                  ],
+                                  expansionCallback: (panelIndex, isExpanded) =>
+                                      setState(() {
+                                    isopen = !isopen;
+                                  }),
+                                ),
+                              ],
+                            );
+                          } else if ('monitor' ==
+                              "${widget.receivedMap["Category"]}") {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  //change with cpu description
+                                  "◉ Aspect Ratio: ${widget.receivedMap["aspect ratio"]}\n◉ Panel Type: ${widget.receivedMap["panel type"]}\n◉ Refresh Rate: ${widget.receivedMap["refresh rate"]}\n◉ Resolution: ${widget.receivedMap["resolution"]}\n◉ Size: ${widget.receivedMap["size"]}\n◉ Inventory: ${widget.receivedMap["Inventory"]}",
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 12),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                ExpansionPanelList(
+                                  children: [
+                                    ExpansionPanel(
+                                        backgroundColor: Colors.grey,
+                                        isExpanded: isopen,
+                                        body:
+                                            // Text('Open101'),
+                                            SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.3,
+                                          child: StreamBuilder(
+                                            stream: FirebaseFirestore.instance
+                                                .collection("Feedback")
+                                                // .collection("Users")
+                                                // .doc('Hardware')
+                                                // .collection('Gpu')
+                                                .where("Item Name",
+                                                    isEqualTo:
+                                                        "${widget.receivedMap["Item Name"]}")
+                                                .snapshots(),
+                                            builder: (BuildContext context,
+                                                AsyncSnapshot<QuerySnapshot>
+                                                    snapshot) {
+                                              if (snapshot.hasError) {
+                                                return const Center(
+                                                  child: Text(
+                                                      "Something Went Wrong"),
+                                                );
+                                              } else if (snapshot
+                                                      .connectionState ==
+                                                  ConnectionState.waiting) {
+                                                return const Center(
+                                                  heightFactor: 3,
+                                                  widthFactor: 3,
+                                                  child: SizedBox(
+                                                    height: 100,
+                                                    width: 100,
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  ),
+                                                );
+                                              } else if (snapshot == null) {
+                                                return const Text(
+                                                    'No Reviews Yet');
+                                              } else {
+                                                return ListView.builder(
+                                                  itemCount: snapshot
+                                                      .data!.docs.length,
+                                                  itemBuilder:
+                                                      ((context, index) {
+                                                    var data2 = snapshot
+                                                            .data!.docs[index]
+                                                            .data()
+                                                        as Map<String, dynamic>;
                                                     return Card(
                                                       color: Colors.white,
                                                       child: ListTile(

@@ -97,50 +97,63 @@ class _SearchScreenState extends State<SearchScreen> {
                             // print("local data length${globals.data1.length}");
                             if (searchkey.isEmpty) {
                               return Card(
-                                  color: Colors.white,
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) => itemdetail(
-                                            receivedMap: data,
-                                            url: globals.url,
-                                          ),
+                                color: Colors.white,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => itemdetail(
+                                          receivedMap: data,
+                                          url: globals.url,
                                         ),
-                                      );
-                                    },
-                                    child: ListTile(
-                                      leading: SizedBox(
-                                          height: 60,
-                                          width: 60,
-                                          child: Image.asset(
-                                            'assets/all_icon.jpg',
-                                            fit: BoxFit.fill,
-                                          )),
-                                      title: Text(data['Item Name']),
-                                      subtitle: Text(data['Category']),
-                                      trailing: Text(data['Price'].toString()),
-                                      // leading: Image.network(src),
-                                    ),
-                                  ));
+                                      ),
+                                    );
+                                  },
+                                  child: ListTile(
+                                    leading: SizedBox(
+                                        height: 60,
+                                        width: 60,
+                                        child: Image.asset(
+                                          'assets/all_icon.jpg',
+                                          fit: BoxFit.fill,
+                                        )),
+                                    title: Text(data['Item Name']),
+                                    subtitle: Text(data['Category']),
+                                    trailing: Text(data['Price'].toString()),
+                                    // leading: Image.network(src),
+                                  ),
+                                ),
+                              );
                             }
                             if (data['Item Name']
                                 .toString()
                                 .contains(searchkey)) {
                               return Card(
                                 color: Colors.white,
-                                child: ListTile(
-                                  leading: SizedBox(
-                                      height: 60,
-                                      width: 60,
-                                      child: Image.asset(
-                                        'assets/all_icon.jpg',
-                                        fit: BoxFit.fill,
-                                      )),
-                                  title: Text(data['Item Name']),
-                                  subtitle: Text(data['Category']),
-                                  trailing: Text(data['Price'].toString()),
-                                  // leading: Image.network(src),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => itemdetail(
+                                          receivedMap: data,
+                                          url: globals.url,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: ListTile(
+                                    leading: SizedBox(
+                                        height: 60,
+                                        width: 60,
+                                        child: Image.asset(
+                                          'assets/all_icon.jpg',
+                                          fit: BoxFit.fill,
+                                        )),
+                                    title: Text(data['Item Name']),
+                                    subtitle: Text(data['Category']),
+                                    trailing: Text(data['Price'].toString()),
+                                    // leading: Image.network(src),
+                                  ),
                                 ),
                               );
                             }
