@@ -75,7 +75,7 @@ class SignupArea extends State<Signup> {
           child: TextField(
             controller: _namecontroller,
             keyboardType: TextInputType.text,
-            style: const TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.black),
             decoration: const InputDecoration(
                 border: InputBorder.none,
                 prefixIcon: Icon(
@@ -133,6 +133,7 @@ class SignupArea extends State<Signup> {
                 },
                 style: const TextStyle(color: Colors.black),
                 decoration: const InputDecoration(
+                    errorStyle: TextStyle(height: 0.1),
                     border: InputBorder.none,
                     prefixIcon: Icon(
                       Icons.email,
@@ -203,6 +204,7 @@ class SignupArea extends State<Signup> {
                   },
                 ),
                 hintText: 'Password',
+                errorStyle: const TextStyle(height: 0.1),
                 hintStyle: const TextStyle(color: Colors.black38)),
           ),
         )
@@ -268,6 +270,7 @@ class SignupArea extends State<Signup> {
                   },
                 ),
                 hintText: 'Retype Password',
+                errorStyle: const TextStyle(height: 0.1),
                 hintStyle: const TextStyle(color: Colors.black38)),
           ),
         )
@@ -435,15 +438,16 @@ class SignupArea extends State<Signup> {
     final isValid = formkey.currentState!.validate();
     if (!isValid) return;
     showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => Center(
-              child: Image.asset(
-                'assets/Eater_loading.gif',
-                width: 100,
-                height: 100,
-              ),
-            ));
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Center(
+        child: Image.asset(
+          'assets/Eater_loading.gif',
+          width: 100,
+          height: 100,
+        ),
+      ),
+    );
     try {
       UserCredential result = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
@@ -451,14 +455,13 @@ class SignupArea extends State<Signup> {
               password: passcontroller.text.trim());
       await result.user?.updateDisplayName(name);
       // Navigator.pop(context);
+      Fluttertoast.showToast(
+          msg: "Logged in as  $name",
+          toastLength: Toast.LENGTH_SHORT,
+          backgroundColor: Colors.grey);
       useridd = result;
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(msg: e.message!, gravity: ToastGravity.BOTTOM);
     }
-
-    Fluttertoast.showToast(
-        msg: "Logged in as",
-        toastLength: Toast.LENGTH_SHORT,
-        backgroundColor: Colors.grey);
   }
 }

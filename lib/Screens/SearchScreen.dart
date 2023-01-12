@@ -16,10 +16,6 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  Stream<QuerySnapshot<Object?>> zawat =
-      FirebaseFirestore.instance.collection("Inventory").snapshots();
-  // final dbcollector = FirebaseDatabase.instance.ref('Inventory');
-
   var searchkey = "";
   TextEditingController searchController = TextEditingController();
   @override
@@ -53,7 +49,6 @@ class _SearchScreenState extends State<SearchScreen> {
                   textInputAction: TextInputAction.search,
                   onChanged: (value) {
                     setState(() {
-                      // data = zawat.where((event) => false);
                       searchkey = value;
                       print(searchkey);
                     });
@@ -64,7 +59,14 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
                 Expanded(
                   child: StreamBuilder(
-                    stream: zawat,
+                    stream: FirebaseFirestore.instance
+                        .collection("Inventory")
+                        // .collection("Users")
+                        // .doc('Hardware')
+                        // .collection('Gpu')
+                        // .where("Item Name", isGreaterThanOrEqualTo: searchkey)
+                        .where("Inventory", isNotEqualTo: 0)
+                        .snapshots(),
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (snapshot.hasError) {
@@ -83,26 +85,51 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                         );
                       } else {
-                        return ListView(
-                          children: snapshot.data!.docs
-                              .map((DocumentSnapshot document) {
-                            Map<String, dynamic> data =
-                                document.data() as Map<String, dynamic>;
-                            return Card(
-                              elevation: 5,
-                              child: InkWell(
-                                onTap: () {
-                                  // print(data);
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => itemdetail(
-                                      receivedMap: data,
-                                      url: globals.url,
+                        return ListView.builder(
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: ((context, index) {
+                            var data = snapshot.data!.docs[index].data()
+                                as Map<String, dynamic>;
+                            globals.data1 = data;
+                            // print(globals.data1);
+                            // print(
+                            //     "database data length${data['Item Name'].length}");
+                            // print("local data length${globals.data1.length}");
+                            if (searchkey.isEmpty) {
+                              return Card(
+                                  color: Colors.white,
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => itemdetail(
+                                            receivedMap: data,
+                                            url: globals.url,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: ListTile(
+                                      leading: SizedBox(
+                                          height: 60,
+                                          width: 60,
+                                          child: Image.asset(
+                                            'assets/all_icon.jpg',
+                                            fit: BoxFit.fill,
+                                          )),
+                                      title: Text(data['Item Name']),
+                                      subtitle: Text(data['Category']),
+                                      trailing: Text(data['Price'].toString()),
+                                      // leading: Image.network(src),
                                     ),
                                   ));
-                                  Transition.downToUp;
-                                },
+                            }
+                            if (data['Item Name']
+                                .toString()
+                                .contains(searchkey)) {
+                              return Card(
+                                color: Colors.white,
                                 child: ListTile(
-                                  title: Text(data['Item Name']),
                                   leading: SizedBox(
                                       height: 60,
                                       width: 60,
@@ -110,22 +137,54 @@ class _SearchScreenState extends State<SearchScreen> {
                                         'assets/all_icon.jpg',
                                         fit: BoxFit.fill,
                                       )),
+                                  title: Text(data['Item Name']),
                                   subtitle: Text(data['Category']),
                                   trailing: Text(data['Price'].toString()),
                                   // leading: Image.network(src),
                                 ),
-                              ),
-                            );
-                          }).toList(),
+                              );
+                            }
+                            return Container();
+                          }),
+                          // children: snapshot.data!.docs
+                          //     .map((DocumentSnapshot document) {
+                          //   Map<String, dynamic> data =
+                          //       document.data() as Map<String, dynamic>;
+                          //   return Card(
+                          //     elevation: 5,
+                          //     child: InkWell(
+                          //       onTap: () {
+                          //         // print(data);
+                          //         Navigator.of(context).push(
+                          //           MaterialPageRoute(
+                          //             builder: (context) => itemdetail(
+                          //               receivedMap: data,
+                          //               url: globals.url,
+                          //             ),
+                          //           ),
+                          //         );
+                          //       },
+                          //       child: ListTile(
+                          //         leading: SizedBox(
+                          //             height: 60,
+                          //             width: 60,
+                          //             child: Image.asset(
+                          //               'assets/all_icon.jpg',
+                          //               fit: BoxFit.fill,
+                          //             )),
+                          //         title: Text(data['Item Name']),
+                          //         subtitle: Text(data['Category']),
+                          //         trailing: Text(data['Price'].toString()),
+                          //         // leading: Image.network(src),
+                          //       ),
+                          //       if(data['Item Name'].toString)
+                          //     ),
+                          //   );
+                          // }).toList(),
                         );
                       }
                     },
                   ),
-                  //  child: ListView.builder(
-                  //   itemCount: zawat.length,
-                  //   itemBuilder: (context, index) {
-                  //  }),
-                  //  ),
                 ),
               ],
             ),
@@ -134,11 +193,4 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
     );
   }
-
-  // void searchkeyword(String query) {
-  //   final suggestions = zawat.where((i) {
-  //     final bookTitle = i.title;
-  //   });
-  // }
-
 }

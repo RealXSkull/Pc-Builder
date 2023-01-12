@@ -8,7 +8,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:8175198105:android:93d3fc4493f270a449fd08",
+        "mobilesdk_app_id": "1:8175198105:android:4c8b0c63b43e0b8849fd08",
         "android_client_info": {
           "package_name": "com.example.fyp"
         }
@@ -32,10 +32,10 @@
               "client_type": 3
             },
             {
-              "client_id": "8175198105-lfcrs4m32depud773amcf9ais020d2ts.apps.googleusercontent.com",
+              "client_id": "8175198105-13ie5jiul6a5rroh6vuju5u7c8n4or3t.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.fyp"
+                "bundle_id": "com.example.pcBuilderAdmin"
               }
             }
           ]

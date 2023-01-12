@@ -9,11 +9,13 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fyp/Controllers/data_controller.dart';
 import 'package:fyp/Screens/SearchScreen.dart';
 import 'package:fyp/Screens/inventory.dart';
 import '../classes/CardItem.dart';
 import 'package:fyp/Bars/NavBar.dart';
 import '../classes/images.dart';
+import 'package:get/get.dart';
 import '../classes/global.dart' as global;
 
 class HomeScreen extends StatefulWidget {
@@ -37,6 +39,8 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     fetchimage();
   }
+
+  final data_controller controller = Get.put(data_controller());
 
   final user = FirebaseAuth.instance.currentUser!;
 
@@ -286,10 +290,11 @@ class _HomeScreenState extends State<HomeScreen> {
         FirebaseStorage.instance.ref().child("DisplayPicture").child(user.uid);
     global.url = await ref.getDownloadURL();
 
-    if (global.url == null) {
+    if (global.url.isEmpty) {
       global.url =
           "https://firebasestorage.googleapis.com/v0/b/pc-builder-2c0a4.appspot.com/o/DisplayPicture%2Fdefaultimage.jpg?alt=media&token=af41bdaf-f5f4-4f0d-ad96-78734f8eb73a";
     }
+    // print(" this is done ${global.topUserPostsRef}");
     // print(global.url);
     // print(user.uid);
   }

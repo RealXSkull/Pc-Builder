@@ -45,18 +45,18 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyCnX_8BSl0rrl-LhlKltQH4ls06q1p7zto',
-    appId: '1:8175198105:web:7929d047eabf8a7c49fd08',
+    appId: '1:8175198105:web:6f1d7032924d76cf49fd08',
     messagingSenderId: '8175198105',
     projectId: 'pc-builder-2c0a4',
     authDomain: 'pc-builder-2c0a4.firebaseapp.com',
     databaseURL: 'https://pc-builder-2c0a4-default-rtdb.firebaseio.com',
     storageBucket: 'pc-builder-2c0a4.appspot.com',
-    measurementId: 'G-LP3LDZYDV9',
+    measurementId: 'G-PSY8V7YQS1',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCdqvqTfuCoF2NtGWzzzC3a95tJdy-Jalw',
-    appId: '1:8175198105:android:93d3fc4493f270a449fd08',
+    appId: '1:8175198105:android:4c8b0c63b43e0b8849fd08',
     messagingSenderId: '8175198105',
     projectId: 'pc-builder-2c0a4',
     databaseURL: 'https://pc-builder-2c0a4-default-rtdb.firebaseio.com',
@@ -65,7 +65,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBhzbswKgYjVizMCHX9JOXcqDI9LQMs454',
-    appId: '1:8175198105:ios:10ff89f2996b612c49fd08',
+    appId: '1:8175198105:ios:d431bba314fcbfcc49fd08',
     messagingSenderId: '8175198105',
     projectId: 'pc-builder-2c0a4',
     databaseURL: 'https://pc-builder-2c0a4-default-rtdb.firebaseio.com',
@@ -76,7 +76,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyBhzbswKgYjVizMCHX9JOXcqDI9LQMs454',
-    appId: '1:8175198105:ios:10ff89f2996b612c49fd08',
+    appId: '1:8175198105:ios:d431bba314fcbfcc49fd08',
     messagingSenderId: '8175198105',
     projectId: 'pc-builder-2c0a4',
     databaseURL: 'https://pc-builder-2c0a4-default-rtdb.firebaseio.com',

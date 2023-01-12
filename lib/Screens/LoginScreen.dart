@@ -29,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _enablebtn = true;
   final emailcontroller = TextEditingController();
   final passcontroller = TextEditingController();
-
+  final formkey = GlobalKey<FormState>();
   @override
   void dispose() {
     emailcontroller.dispose();
@@ -226,23 +226,8 @@ class _LoginScreenState extends State<LoginScreen> {
               borderRadius: BorderRadius.circular(10.0),
             ))),
         label: Text('Login'),
-
-        // onPressed: _enablebtn
-        //     ? () {
-        //         print('Submit');
-        //       }
-        //     : null,
-
         onPressed: () {
-          if (emailcontroller.text.isNotEmpty &&
-              passcontroller.text.isNotEmpty) {
-            signin();
-          } else {
-            Fluttertoast.showToast(
-                msg: "Email or Password cannot be Empty",
-                toastLength: Toast.LENGTH_SHORT,
-                backgroundColor: Colors.grey);
-          }
+          signin();
         },
         icon: Icon(
           Icons.lock,
@@ -261,72 +246,78 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.dark,
-        child: Stack(
-          children: <Widget>[
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color.fromARGB(255, 17, 7, 150),
-                      Color.fromARGB(255, 106, 5, 5)
-                    ]),
-              ),
-              child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Image(
-                      image: AssetImage('assets/Pc_builder.jpg'),
-                      // height: 250,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      '𝐋𝐎𝐆𝐈𝐍',
-                      style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
-                    buildemail(),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    buildpassword(),
-                    buildRemembermecb(),
-                    buildloginbtn(),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Singupbtn()
-                  ],
+        child: Form(
+          key: formkey,
+          child: Stack(
+            children: <Widget>[
+              Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color.fromARGB(255, 17, 7, 150),
+                        Color.fromARGB(255, 106, 5, 5)
+                      ]),
                 ),
-              ),
-            )
-          ],
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Image(
+                        image: AssetImage('assets/Pc_builder_logo.png'),
+                        // height: 250,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        '𝐋𝐎𝐆𝐈𝐍',
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                      buildemail(),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      buildpassword(),
+                      buildRemembermecb(),
+                      buildloginbtn(),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Singupbtn()
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
   }
 
   Future signin() async {
+    final isValid = formkey.currentState!.validate();
+    if (!isValid) return;
     showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => Center(
-              child: Image.asset(
-                'assets/Eater_loading.gif',
-                width: 100,
-                height: 100,
-              ),
-            ));
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Center(
+        child: Image.asset(
+          'assets/Eater_loading.gif',
+          width: 100,
+          height: 100,
+        ),
+      ),
+    );
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailcontroller.text.trim(),
@@ -336,13 +327,15 @@ class _LoginScreenState extends State<LoginScreen> {
       //     .child("DisplayPicture")
       //     .child(user.uid);
       // global.url = await ref.getDownloadURL();
+      Fluttertoast.showToast(
+          msg: "Logged in",
+          toastLength: Toast.LENGTH_SHORT,
+          backgroundColor: Colors.grey);
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(msg: e.message!, gravity: ToastGravity.BOTTOM);
     }
     Navigator.pop(context);
-    Fluttertoast.showToast(
-        msg: "Logged in",
-        toastLength: Toast.LENGTH_SHORT,
-        backgroundColor: Colors.grey);
   }
+
+
 }
