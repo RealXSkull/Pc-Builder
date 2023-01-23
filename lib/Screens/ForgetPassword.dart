@@ -6,7 +6,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:fyp/Screens/LoginScreen.dart';
 
 class ForgetPassword extends StatefulWidget {
   @override
@@ -28,7 +27,7 @@ class RecoverPassword extends State<ForgetPassword> {
       child: Text(
         'Recieve an Email to \n Reset your Password',
         textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.white, fontSize: 30, fontFamily: 'S'),
+        style: TextStyle(color: Colors.black, fontSize: 30, fontFamily: 'S'),
       ),
     );
   }
@@ -40,26 +39,26 @@ class RecoverPassword extends State<ForgetPassword> {
         Text(
           'Email',
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
         ),
         SizedBox(height: 10),
         Container(
+          
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.white, blurRadius: 6, offset: Offset(0, 2))
-              ]),
+              borderRadius: BorderRadius.circular(5),
+              border: Border.all()
+              ),
           height: 50,
           child: TextFormField(
             controller: _emailcontroller,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(color: Colors.black87),
+            
             decoration: InputDecoration(
                 border: InputBorder.none,
                 prefixIcon: Icon(
@@ -123,13 +122,7 @@ class RecoverPassword extends State<ForgetPassword> {
               height: double.infinity,
               width: double.infinity,
               decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color.fromARGB(255, 17, 7, 150),
-                      Color.fromARGB(255, 106, 5, 5)
-                    ]),
+                color: Color.fromRGBO(247, 247, 247, 1),
               ),
               child: SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(),

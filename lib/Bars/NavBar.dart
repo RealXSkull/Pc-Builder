@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, file_names, unused_import
 
+import 'package:fyp/Screens/WarrentyClaim.dart';
+
 import '../classes/global.dart' as globals;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -68,8 +70,8 @@ class NavBar extends StatelessWidget {
             leading: Icon(Icons.support_agent_outlined),
             title: Text('Warranty Claim'),
             onTap: () {
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: (context) => LoginScreen()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => WarrentyClaim()));
             },
           ),
           ListTile(

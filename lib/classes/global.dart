@@ -1,7 +1,6 @@
 library globals;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -19,8 +18,6 @@ method() async {
       .collection('Users')
       .where("Name", isEqualTo: "zawat masta")
       .snapshots();
-  final userObject = documents.first;
-  print(userObject);
 }
 
 final topUserPostsRef = FirebaseFirestore.instance.collection("Users");

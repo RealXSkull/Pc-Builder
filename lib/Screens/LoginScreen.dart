@@ -1,11 +1,7 @@
 // ignore_for_file: prefer_const_constructors, avoid_print, sized_box_for_whitespace, non_constant_identifier_names, file_names, library_private_types_in_public_api, use_key_in_widget_constructors, must_call_super, curly_braces_in_flow_control_structures, use_build_context_synchronously
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
-import 'package:get/get.dart';
-
-import '../classes/global.dart' as global;
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/gestures.dart';
 import 'package:fyp/Screens/ForgetPassword.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -26,7 +22,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   // final user = FirebaseAuth.instance.currentUser;
   bool _passwordVisible = false;
-  bool _enablebtn = true;
   final emailcontroller = TextEditingController();
   final passcontroller = TextEditingController();
   final formkey = GlobalKey<FormState>();
@@ -50,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Text(
           'Email',
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black87,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
@@ -59,12 +54,10 @@ class _LoginScreenState extends State<LoginScreen> {
         Container(
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.white, blurRadius: 6, offset: Offset(0, 2))
-              ]),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(),
+          ),
           height: 60,
           child: TextFormField(
             controller: emailcontroller,
@@ -104,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Text(
           'Password',
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black87,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
@@ -113,12 +106,10 @@ class _LoginScreenState extends State<LoginScreen> {
         Container(
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.white, blurRadius: 6, offset: Offset(0, 2))
-              ]),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(),
+          ),
           height: 60,
           child: TextFormField(
             controller: passcontroller,
@@ -133,27 +124,30 @@ class _LoginScreenState extends State<LoginScreen> {
                 return null;
             },
             obscureText: !_passwordVisible,
-            style: TextStyle(color: Colors.black87),
+            style: TextStyle(
+              color: Colors.black87,
+            ),
             decoration: InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(top: 14),
-                prefixIcon: Icon(
-                  Icons.lock,
-                  color: Color(0xff5ac18e),
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14),
+              prefixIcon: Icon(
+                Icons.lock,
+                color: Color(0xff5ac18e),
+              ),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                  color: Colors.grey,
                 ),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _passwordVisible ? Icons.visibility : Icons.visibility_off,
-                    color: Colors.grey,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _passwordVisible = !_passwordVisible;
-                    });
-                  },
-                ),
-                hintText: 'Password',
-                hintStyle: TextStyle(color: Colors.black38)),
+                onPressed: () {
+                  setState(() {
+                    _passwordVisible = !_passwordVisible;
+                  });
+                },
+              ),
+              hintText: 'Password',
+              hintStyle: TextStyle(color: Colors.black38),
+            ),
           ),
         )
       ],
@@ -178,7 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Text(
               'Forgot Password?',
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black87,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -199,7 +193,8 @@ class _LoginScreenState extends State<LoginScreen> {
           children: <Widget>[
             Text(
               "Don't have an account? ",
-              style: TextStyle(color: Colors.white),
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             ),
             RichText(
               text: TextSpan(
@@ -207,7 +202,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ..onTap = widget.onClickedSignup,
                 text: 'Sign Up',
                 style: TextStyle(
-                    decoration: TextDecoration.underline, color: Colors.white),
+                    decoration: TextDecoration.underline,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),
               ),
             )
           ],
@@ -223,7 +220,7 @@ class _LoginScreenState extends State<LoginScreen> {
             backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlue),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
+              borderRadius: BorderRadius.circular(5.0),
             ))),
         label: Text('Login'),
         onPressed: () {
@@ -254,13 +251,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: double.infinity,
                 width: double.infinity,
                 decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color.fromARGB(255, 17, 7, 150),
-                        Color.fromARGB(255, 106, 5, 5)
-                      ]),
+                  color: Color.fromRGBO(247, 247, 247, 1),
                 ),
                 child: SingleChildScrollView(
                   physics: AlwaysScrollableScrollPhysics(),
@@ -268,9 +259,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Image(
-                        image: AssetImage('assets/Pc_builder_logo.png'),
-                        // height: 250,
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: Color.fromARGB(255, 11, 4, 109),
+                        ),
+                        child: Image(
+                          image: AssetImage('assets/Pc_builder_logo.png'),
+                          // height: 250,
+                        ),
                       ),
                       SizedBox(
                         height: 10,
@@ -280,7 +277,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white),
+                            color: Colors.black87),
                       ),
                       buildemail(),
                       const SizedBox(
@@ -336,6 +333,4 @@ class _LoginScreenState extends State<LoginScreen> {
     }
     Navigator.pop(context);
   }
-
-
 }

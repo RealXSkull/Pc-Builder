@@ -4,7 +4,9 @@
 // import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:card_swiper/card_swiper.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,10 +36,33 @@ class HomePage {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  CollectionReference cf = FirebaseFirestore.instance.collection('Inventory');
+  DatabaseReference postListRef = FirebaseDatabase.instance.ref("Inventory");
+
+  void tryprintdata() {
+    global.inventory['Item Name'] = postListRef;
+    print('Item Name is: ${global.inventory['Item Name']}');
+    // print('Inventory $postListRef');
+  }
+
   @override
   void initState() {
     super.initState();
     fetchimage();
+    //getdata();
+    tryprintdata();
+  }
+
+  void getdata() {
+    cf.doc().get().then(
+      (value) {
+        setState(() {
+          global.inventory['Item Name'] = value.data();
+          // ['Item Name']
+        });
+      },
+    );
+    print(global.inventory['Item Name']);
   }
 
   final data_controller controller = Get.put(data_controller());
@@ -48,24 +73,24 @@ class _HomeScreenState extends State<HomeScreen> {
   String name = "";
   List<CardItem> item = [
     CardItem(
-        image: 'assets/icons/all_icon.jpg', Title: 'ALL', Subtitle: '\$100'),
+        image: 'assets/icons/all_icon.jpg', title: 'ALL', subtitle: '\$100'),
     CardItem(
-        image: 'assets/icons/all_icon.jpg', Title: 'ALL', Subtitle: '\$100'),
+        image: 'assets/icons/all_icon.jpg', title: 'ALL', subtitle: '\$100'),
     CardItem(
-        image: 'assets/icons/all_icon.jpg', Title: 'ALL', Subtitle: '\$100'),
+        image: 'assets/icons/all_icon.jpg', title: 'ALL', subtitle: '\$100'),
     CardItem(
-        image: 'assets/icons/all_icon.jpg', Title: 'ALL', Subtitle: '\$100'),
+        image: 'assets/icons/all_icon.jpg', title: 'ALL', subtitle: '\$100'),
     CardItem(
-        image: 'assets/icons/all_icon.jpg', Title: 'ALL', Subtitle: '\$100'),
+        image: 'assets/icons/all_icon.jpg', title: 'ALL', subtitle: '\$100'),
     CardItem(
-        image: 'assets/icons/all_icon.jpg', Title: 'ALL', Subtitle: '\$100'),
+        image: 'assets/icons/all_icon.jpg', title: 'ALL', subtitle: '\$100'),
   ];
 
   Widget Searchbar() {
     return Container(
-      height: 40,
+      height: 45,
       alignment: Alignment.center,
-      color: Colors.red,
+      color: Colors.grey,
       child: TextFormField(
         controller: SearchController,
         decoration: InputDecoration(
@@ -123,11 +148,11 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             )),
             Text(
-              item.Title,
+              item.title,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Text(
-              item.Subtitle,
+              item.subtitle,
               style: TextStyle(
                 fontSize: 12,
               ),
@@ -210,13 +235,8 @@ class _HomeScreenState extends State<HomeScreen> {
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                    Color.fromARGB(255, 17, 7, 150),
-                    Color.fromARGB(255, 106, 5, 5)
-                  ])),
+                color: Color.fromRGBO(247, 247, 247, 1),
+              ),
               child: SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(),
                 padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
@@ -236,7 +256,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           "Categories",
                           style: TextStyle(
                               fontSize: 20,
-                              color: Colors.white,
+                              color: Colors.black,
                               fontWeight: FontWeight.bold),
                         ),
                         SizedBox(
@@ -256,12 +276,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                   fit: BoxFit.fill,
                                 ),
                               );
-                              OnTap(index) {
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) => Review()));
-                              }
+                              // OnTap(index) {
+                              //   // Navigator.push(
+                              //   //     context,
+                              //   //     MaterialPageRoute(
+                              //   //         builder: (context) => Review()));
+                              // }
                             },
                             viewportFraction: 0.8,
                             scale: 0.8,
@@ -272,7 +292,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(
                           height: 20,
                         ),
-                        invoscreenbtn(),
+                        // invoscreenbtn(),
                       ],
                     ),
                   ],

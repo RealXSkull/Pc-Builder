@@ -1,7 +1,5 @@
 // ignore_for_file: use_key_in_widget_constructors, must_be_immutable, camel_case_types, unnecessary_null_comparison
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../classes/global.dart' as globals;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -15,6 +13,7 @@ class itemdetail extends StatefulWidget {
 }
 
 class _itemdetailState extends State<itemdetail> {
+  bool _visible = true;
   bool isopen = false;
   // var zawat = FirebaseFirestore.instance.collection('Feedback').snapshots();
   @override
@@ -34,13 +33,8 @@ class _itemdetailState extends State<itemdetail> {
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                      Color.fromARGB(255, 11, 4, 109),
-                      Color.fromARGB(255, 109, 18, 18)
-                    ])),
+                  color: Color.fromRGBO(247, 247, 247, 1),
+                ),
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   padding:
@@ -71,7 +65,7 @@ class _itemdetailState extends State<itemdetail> {
                               child: Text(
                                 "${widget.receivedMap["Item Name"]}",
                                 style: const TextStyle(
-                                    fontSize: 17, color: Colors.white),
+                                    fontSize: 17, color: Colors.black87),
                               ),
                             ),
                             Expanded(
@@ -80,7 +74,7 @@ class _itemdetailState extends State<itemdetail> {
                                 "Price: ${widget.receivedMap["Price"]}/- Rs",
                                 style: const TextStyle(
                                     fontSize: 13,
-                                    color: Colors.white,
+                                    color: Colors.black87,
                                     fontWeight: FontWeight.bold),
                               ),
                             ),
@@ -90,9 +84,100 @@ class _itemdetailState extends State<itemdetail> {
                       LayoutBuilder(
                         builder: (context, constraints) {
                           if ('CPU' == "${widget.receivedMap["Category"]}") {
-                            return Text(
-                                //change with cpu description
-                                "◉ CPU Base Clock: ${widget.receivedMap["Fan RPM"]}\n◉ CPU Boost Clock: ${widget.receivedMap["Color"]}\n◉ Inventory: ${widget.receivedMap["Inventory"]}");
+                            return Column(
+                              children: [
+                                Text(
+                                    //change with cpu description
+                                    "◉ CPU Base Clock: ${widget.receivedMap["Fan RPM"]}\n◉ CPU Boost Clock: ${widget.receivedMap["Color"]}\n◉ Inventory: ${widget.receivedMap["Inventory"]}"),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                GestureDetector(
+                                  onTap: () => _togglereview(),
+                                  child: RichText(
+                                    text: const TextSpan(
+                                      // recognizer: TapGestureRecognizer()
+                                      //   ..onTap = _togglereview(),
+                                      text: 'Reviews: ',
+                                      style: TextStyle(
+                                          decoration: TextDecoration.underline,
+                                          color: Colors.black87),
+                                    ),
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: _visible,
+                                  child: SizedBox(
+                                    height:
+                                        MediaQuery.of(context).size.width * 0.4,
+                                    child: StreamBuilder(
+                                      stream: FirebaseFirestore.instance
+                                          .collection('Feedback')
+                                          .where('Item Name',
+                                              isEqualTo:
+                                                  "${widget.receivedMap["Item Name"]}")
+                                          .snapshots(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<QuerySnapshot>
+                                              snapshot) {
+                                        if (snapshot.hasError) {
+                                          return const Center(
+                                            child: Text("Something Went Wrong"),
+                                          );
+                                        } else if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return const Center(
+                                            heightFactor: 3,
+                                            widthFactor: 3,
+                                            child: SizedBox(
+                                              height: 100,
+                                              width: 100,
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            ),
+                                          );
+                                        } else if (snapshot == null) {
+                                          return const Text('No Reviews Yet');
+                                        } else {
+                                          return ListView.builder(
+                                            itemCount:
+                                                snapshot.data!.docs.length,
+                                            itemBuilder: ((context, index) {
+                                              var data2 = snapshot
+                                                      .data!.docs[index]
+                                                      .data()
+                                                  as Map<String, dynamic>;
+                                              return Card(
+                                                color: Colors.white,
+                                                child: ListTile(
+                                                  // leading: SizedBox(
+                                                  //     height: 60,
+                                                  //     width: 60,
+                                                  //     child: Image.asset(
+                                                  //       'assets/all_icon.jpg',
+                                                  //       fit: BoxFit.fill,
+                                                  //     )),
+                                                  title: Text(
+                                                    data2['Username'],
+                                                    style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  subtitle:
+                                                      Text(data2['Message']),
+                                                  trailing: Text(
+                                                      '${data2['Rating'].toString()} Stars'),
+                                                ),
+                                              );
+                                            }),
+                                          );
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
                           } else if ('Ram' ==
                               "${widget.receivedMap["Category"]}") {
                             return Column(
@@ -102,112 +187,94 @@ class _itemdetailState extends State<itemdetail> {
                                   //change with cpu description
                                   "◉ Capacity: ${widget.receivedMap["Module"]}\n◉ Ram Speed: ${widget.receivedMap["Speed"]}\n◉ Ram Color: ${widget.receivedMap["Color"]}\n◉ Inventory: ${widget.receivedMap["Inventory"]}",
                                   style: const TextStyle(
-                                      color: Colors.white, fontSize: 12),
+                                      color: Colors.black87, fontSize: 15),
                                 ),
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                ExpansionPanelList(
-                                  children: [
-                                    ExpansionPanel(
-                                        backgroundColor: Colors.grey,
-                                        isExpanded: isopen,
-                                        body:
-                                            // Text('Open101'),
-                                            SizedBox(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.3,
-                                          child: StreamBuilder(
-                                            stream: FirebaseFirestore.instance
-                                                .collection("Feedback")
-                                                // .collection("Users")
-                                                // .doc('Hardware')
-                                                // .collection('Gpu')
-                                                .where("Item Name",
-                                                    isEqualTo:
-                                                        "${widget.receivedMap["Item Name"]}")
-                                                .snapshots(),
-                                            builder: (BuildContext context,
-                                                AsyncSnapshot<QuerySnapshot>
-                                                    snapshot) {
-                                              if (snapshot.hasError) {
-                                                return const Center(
-                                                  child: Text(
-                                                      "Something Went Wrong"),
-                                                );
-                                              } else if (snapshot
-                                                      .connectionState ==
-                                                  ConnectionState.waiting) {
-                                                return const Center(
-                                                  heightFactor: 3,
-                                                  widthFactor: 3,
-                                                  child: SizedBox(
-                                                    height: 100,
-                                                    width: 100,
-                                                    child:
-                                                        CircularProgressIndicator(),
-                                                  ),
-                                                );
-                                              } else if (snapshot == null) {
-                                                return const Text(
-                                                    'No Reviews Yet');
-                                              } else {
-                                                return ListView.builder(
-                                                  itemCount: snapshot
-                                                      .data!.docs.length,
-                                                  itemBuilder:
-                                                      ((context, index) {
-                                                    var data2 = snapshot
-                                                            .data!.docs[index]
-                                                            .data()
-                                                        as Map<String, dynamic>;
-                                                    return Card(
-                                                      color: Colors.white,
-                                                      child: ListTile(
-                                                        // leading: SizedBox(
-                                                        //     height: 60,
-                                                        //     width: 60,
-                                                        //     child: Image.asset(
-                                                        //       'assets/all_icon.jpg',
-                                                        //       fit: BoxFit.fill,
-                                                        //     )),
-                                                        title: Text(
-                                                          data2['Username'],
-                                                          style: const TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
-                                                        subtitle: Text(
-                                                            data2['Message']),
-                                                        trailing: Text(
-                                                            '${data2['Rating'].toString()} Stars'),
-                                                      ),
-                                                    );
-                                                  }),
-                                                );
-                                              }
-                                            },
-                                          ),
-                                        ),
-                                        headerBuilder: (BuildContext context,
-                                            bool isExpanded) {
-                                          return Container(
-                                            alignment: Alignment.center,
-                                            height: 0,
-                                            child: const Text(
-                                              'Reviews',
-                                              style: TextStyle(fontSize: 20),
+                                GestureDetector(
+                                  onTap: () => _togglereview(),
+                                  child: RichText(
+                                    text: const TextSpan(
+                                      // recognizer: TapGestureRecognizer()
+                                      //   ..onTap = _togglereview(),
+                                      text: 'Reviews: ',
+                                      style: TextStyle(
+                                          decoration: TextDecoration.underline,
+                                          color: Colors.black87),
+                                    ),
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: _visible,
+                                  child: SizedBox(
+                                    height:
+                                        MediaQuery.of(context).size.width * 0.4,
+                                    child: StreamBuilder(
+                                      stream: FirebaseFirestore.instance
+                                          .collection('Feedback')
+                                          .where('Item Name',
+                                              isEqualTo:
+                                                  "${widget.receivedMap["Item Name"]}")
+                                          .snapshots(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<QuerySnapshot>
+                                              snapshot) {
+                                        if (snapshot.hasError) {
+                                          return const Center(
+                                            child: Text("Something Went Wrong"),
+                                          );
+                                        } else if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return const Center(
+                                            heightFactor: 3,
+                                            widthFactor: 3,
+                                            child: SizedBox(
+                                              height: 100,
+                                              width: 100,
+                                              child:
+                                                  CircularProgressIndicator(),
                                             ),
                                           );
-                                        }),
-                                  ],
-                                  expansionCallback: (panelIndex, isExpanded) =>
-                                      setState(() {
-                                    isopen = !isopen;
-                                  }),
+                                        } else if (snapshot == null) {
+                                          return const Text('No Reviews Yet');
+                                        } else {
+                                          return ListView.builder(
+                                            itemCount:
+                                                snapshot.data!.docs.length,
+                                            itemBuilder: ((context, index) {
+                                              var data2 = snapshot
+                                                      .data!.docs[index]
+                                                      .data()
+                                                  as Map<String, dynamic>;
+                                              return Card(
+                                                color: Colors.white,
+                                                child: ListTile(
+                                                  // leading: SizedBox(
+                                                  //     height: 60,
+                                                  //     width: 60,
+                                                  //     child: Image.asset(
+                                                  //       'assets/all_icon.jpg',
+                                                  //       fit: BoxFit.fill,
+                                                  //     )),
+                                                  title: Text(
+                                                    data2['Username'],
+                                                    style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  subtitle:
+                                                      Text(data2['Message']),
+                                                  trailing: Text(
+                                                      '${data2['Rating'].toString()} Stars'),
+                                                ),
+                                              );
+                                            }),
+                                          );
+                                        }
+                                      },
+                                    ),
+                                  ),
                                 ),
                               ],
                             );
@@ -220,112 +287,97 @@ class _itemdetailState extends State<itemdetail> {
                                   //change with cpu description
                                   "◉ Efficiency: ${widget.receivedMap["efficiency"]}\n◉ Power: ${widget.receivedMap["wattage"]}\n◉ Inventory: ${widget.receivedMap["Inventory"]}",
                                   style: const TextStyle(
-                                      color: Colors.white, fontSize: 12),
+                                      color: Colors.black87, fontSize: 12),
                                 ),
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                ExpansionPanelList(
-                                  children: [
-                                    ExpansionPanel(
-                                        backgroundColor: Colors.grey,
-                                        isExpanded: isopen,
-                                        body:
-                                            // Text('Open101'),
-                                            SizedBox(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.3,
-                                          child: StreamBuilder(
-                                            stream: FirebaseFirestore.instance
-                                                .collection("Feedback")
-                                                // .collection("Users")
-                                                // .doc('Hardware')
-                                                // .collection('Gpu')
-                                                .where("Item Name",
-                                                    isEqualTo:
-                                                        "${widget.receivedMap["Item Name"]}")
-                                                .snapshots(),
-                                            builder: (BuildContext context,
-                                                AsyncSnapshot<QuerySnapshot>
-                                                    snapshot) {
-                                              if (snapshot.hasError) {
-                                                return const Center(
-                                                  child: Text(
-                                                      "Something Went Wrong"),
-                                                );
-                                              } else if (snapshot
-                                                      .connectionState ==
-                                                  ConnectionState.waiting) {
-                                                return const Center(
-                                                  heightFactor: 3,
-                                                  widthFactor: 3,
-                                                  child: SizedBox(
-                                                    height: 100,
-                                                    width: 100,
-                                                    child:
-                                                        CircularProgressIndicator(),
-                                                  ),
-                                                );
-                                              } else if (snapshot == null) {
-                                                return const Text(
-                                                    'No Reviews Yet');
-                                              } else {
-                                                return ListView.builder(
-                                                  itemCount: snapshot
-                                                      .data!.docs.length,
-                                                  itemBuilder:
-                                                      ((context, index) {
-                                                    var data2 = snapshot
-                                                            .data!.docs[index]
-                                                            .data()
-                                                        as Map<String, dynamic>;
-                                                    return Card(
-                                                      color: Colors.white,
-                                                      child: ListTile(
-                                                        // leading: SizedBox(
-                                                        //     height: 60,
-                                                        //     width: 60,
-                                                        //     child: Image.asset(
-                                                        //       'assets/all_icon.jpg',
-                                                        //       fit: BoxFit.fill,
-                                                        //     )),
-                                                        title: Text(
-                                                          data2['Username'],
-                                                          style: const TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
-                                                        subtitle: Text(
-                                                            data2['Message']),
-                                                        trailing: Text(
-                                                            '${data2['Rating'].toString()} Stars'),
-                                                      ),
-                                                    );
-                                                  }),
-                                                );
-                                              }
-                                            },
-                                          ),
-                                        ),
-                                        headerBuilder: (BuildContext context,
-                                            bool isExpanded) {
-                                          return Container(
-                                            alignment: Alignment.center,
-                                            height: 0,
-                                            child: const Text(
-                                              'Reviews',
-                                              style: TextStyle(fontSize: 20),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                GestureDetector(
+                                  onTap: () => _togglereview(),
+                                  child: RichText(
+                                    text: const TextSpan(
+                                      // recognizer: TapGestureRecognizer()
+                                      //   ..onTap = _togglereview(),
+                                      text: 'Reviews: ',
+                                      style: TextStyle(
+                                          decoration: TextDecoration.underline,
+                                          color: Colors.black87),
+                                    ),
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: _visible,
+                                  child: SizedBox(
+                                    height:
+                                        MediaQuery.of(context).size.width * 0.4,
+                                    child: StreamBuilder(
+                                      stream: FirebaseFirestore.instance
+                                          .collection('Feedback')
+                                          .where('Item Name',
+                                              isEqualTo:
+                                                  "${widget.receivedMap["Item Name"]}")
+                                          .snapshots(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<QuerySnapshot>
+                                              snapshot) {
+                                        if (snapshot.hasError) {
+                                          return const Center(
+                                            child: Text("Something Went Wrong"),
+                                          );
+                                        } else if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return const Center(
+                                            heightFactor: 3,
+                                            widthFactor: 3,
+                                            child: SizedBox(
+                                              height: 100,
+                                              width: 100,
+                                              child:
+                                                  CircularProgressIndicator(),
                                             ),
                                           );
-                                        }),
-                                  ],
-                                  expansionCallback: (panelIndex, isExpanded) =>
-                                      setState(() {
-                                    isopen = !isopen;
-                                  }),
+                                        } else if (snapshot == null) {
+                                          return const Text('No Reviews Yet');
+                                        } else {
+                                          return ListView.builder(
+                                            itemCount:
+                                                snapshot.data!.docs.length,
+                                            itemBuilder: ((context, index) {
+                                              var data2 = snapshot
+                                                      .data!.docs[index]
+                                                      .data()
+                                                  as Map<String, dynamic>;
+                                              return Card(
+                                                color: Colors.white,
+                                                child: ListTile(
+                                                  // leading: SizedBox(
+                                                  //     height: 60,
+                                                  //     width: 60,
+                                                  //     child: Image.asset(
+                                                  //       'assets/all_icon.jpg',
+                                                  //       fit: BoxFit.fill,
+                                                  //     )),
+                                                  title: Text(
+                                                    data2['Username'],
+                                                    style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  subtitle:
+                                                      Text(data2['Message']),
+                                                  trailing: Text(
+                                                      '${data2['Rating'].toString()} Stars'),
+                                                ),
+                                              );
+                                            }),
+                                          );
+                                        }
+                                      },
+                                    ),
+                                  ),
                                 ),
                               ],
                             );
@@ -343,107 +395,92 @@ class _itemdetailState extends State<itemdetail> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                ExpansionPanelList(
-                                  children: [
-                                    ExpansionPanel(
-                                        backgroundColor: Colors.grey,
-                                        isExpanded: isopen,
-                                        body:
-                                            // Text('Open101'),
-                                            SizedBox(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.3,
-                                          child: StreamBuilder(
-                                            stream: FirebaseFirestore.instance
-                                                .collection("Feedback")
-                                                // .collection("Users")
-                                                // .doc('Hardware')
-                                                // .collection('Gpu')
-                                                .where("Item Name",
-                                                    isEqualTo:
-                                                        "${widget.receivedMap["Item Name"]}")
-                                                .snapshots(),
-                                            builder: (BuildContext context,
-                                                AsyncSnapshot<QuerySnapshot>
-                                                    snapshot) {
-                                              if (snapshot.hasError) {
-                                                return const Center(
-                                                  child: Text(
-                                                      "Something Went Wrong"),
-                                                );
-                                              } else if (snapshot
-                                                      .connectionState ==
-                                                  ConnectionState.waiting) {
-                                                return const Center(
-                                                  heightFactor: 3,
-                                                  widthFactor: 3,
-                                                  child: SizedBox(
-                                                    height: 100,
-                                                    width: 100,
-                                                    child:
-                                                        CircularProgressIndicator(),
-                                                  ),
-                                                );
-                                              } else if (snapshot == null) {
-                                                return const Text(
-                                                    'No Reviews Yet');
-                                              } else {
-                                                return ListView.builder(
-                                                  itemCount: snapshot
-                                                      .data!.docs.length,
-                                                  itemBuilder:
-                                                      ((context, index) {
-                                                    var data2 = snapshot
-                                                            .data!.docs[index]
-                                                            .data()
-                                                        as Map<String, dynamic>;
-                                                    return Card(
-                                                      color: Colors.white,
-                                                      child: ListTile(
-                                                        // leading: SizedBox(
-                                                        //     height: 60,
-                                                        //     width: 60,
-                                                        //     child: Image.asset(
-                                                        //       'assets/all_icon.jpg',
-                                                        //       fit: BoxFit.fill,
-                                                        //     )),
-                                                        title: Text(
-                                                          data2['Username'],
-                                                          style: const TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
-                                                        subtitle: Text(
-                                                            data2['Message']),
-                                                        trailing: Text(
-                                                            '${data2['Rating'].toString()} Stars'),
-                                                      ),
-                                                    );
-                                                  }),
-                                                );
-                                              }
-                                            },
-                                          ),
-                                        ),
-                                        headerBuilder: (BuildContext context,
-                                            bool isExpanded) {
-                                          return Container(
-                                            alignment: Alignment.center,
-                                            height: 0,
-                                            child: const Text(
-                                              'Reviews',
-                                              style: TextStyle(fontSize: 20),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                GestureDetector(
+                                  onTap: () => _togglereview(),
+                                  child: RichText(
+                                    text: const TextSpan(
+                                      // recognizer: TapGestureRecognizer()
+                                      //   ..onTap = _togglereview(),
+                                      text: 'Reviews: ',
+                                      style: TextStyle(
+                                          decoration: TextDecoration.underline,
+                                          color: Colors.black87),
+                                    ),
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: _visible,
+                                  child: SizedBox(
+                                    height:
+                                        MediaQuery.of(context).size.width * 0.4,
+                                    child: StreamBuilder(
+                                      stream: FirebaseFirestore.instance
+                                          .collection('Feedback')
+                                          .where('Item Name',
+                                              isEqualTo:
+                                                  "${widget.receivedMap["Item Name"]}")
+                                          .snapshots(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<QuerySnapshot>
+                                              snapshot) {
+                                        if (snapshot.hasError) {
+                                          return const Center(
+                                            child: Text("Something Went Wrong"),
+                                          );
+                                        } else if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return const Center(
+                                            heightFactor: 3,
+                                            widthFactor: 3,
+                                            child: SizedBox(
+                                              height: 100,
+                                              width: 100,
+                                              child:
+                                                  CircularProgressIndicator(),
                                             ),
                                           );
-                                        }),
-                                  ],
-                                  expansionCallback: (panelIndex, isExpanded) =>
-                                      setState(() {
-                                    isopen = !isopen;
-                                  }),
+                                        } else if (snapshot == null) {
+                                          return const Text('No Reviews Yet');
+                                        } else {
+                                          return ListView.builder(
+                                            itemCount:
+                                                snapshot.data!.docs.length,
+                                            itemBuilder: ((context, index) {
+                                              var data2 = snapshot
+                                                      .data!.docs[index]
+                                                      .data()
+                                                  as Map<String, dynamic>;
+                                              return Card(
+                                                color: Colors.white,
+                                                child: ListTile(
+                                                  // leading: SizedBox(
+                                                  //     height: 60,
+                                                  //     width: 60,
+                                                  //     child: Image.asset(
+                                                  //       'assets/all_icon.jpg',
+                                                  //       fit: BoxFit.fill,
+                                                  //     )),
+                                                  title: Text(
+                                                    data2['Username'],
+                                                    style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  subtitle:
+                                                      Text(data2['Message']),
+                                                  trailing: Text(
+                                                      '${data2['Rating'].toString()} Stars'),
+                                                ),
+                                              );
+                                            }),
+                                          );
+                                        }
+                                      },
+                                    ),
+                                  ),
                                 ),
                               ],
                             );
@@ -456,112 +493,97 @@ class _itemdetailState extends State<itemdetail> {
                                   //change with cpu description
                                   "◉ Aspect Ratio: ${widget.receivedMap["aspect ratio"]}\n◉ Panel Type: ${widget.receivedMap["panel type"]}\n◉ Refresh Rate: ${widget.receivedMap["refresh rate"]}\n◉ Resolution: ${widget.receivedMap["resolution"]}\n◉ Size: ${widget.receivedMap["size"]}\n◉ Inventory: ${widget.receivedMap["Inventory"]}",
                                   style: const TextStyle(
-                                      color: Colors.white, fontSize: 12),
+                                      color: Colors.black87, fontSize: 12),
                                 ),
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                ExpansionPanelList(
-                                  children: [
-                                    ExpansionPanel(
-                                        backgroundColor: Colors.grey,
-                                        isExpanded: isopen,
-                                        body:
-                                            // Text('Open101'),
-                                            SizedBox(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.3,
-                                          child: StreamBuilder(
-                                            stream: FirebaseFirestore.instance
-                                                .collection("Feedback")
-                                                // .collection("Users")
-                                                // .doc('Hardware')
-                                                // .collection('Gpu')
-                                                .where("Item Name",
-                                                    isEqualTo:
-                                                        "${widget.receivedMap["Item Name"]}")
-                                                .snapshots(),
-                                            builder: (BuildContext context,
-                                                AsyncSnapshot<QuerySnapshot>
-                                                    snapshot) {
-                                              if (snapshot.hasError) {
-                                                return const Center(
-                                                  child: Text(
-                                                      "Something Went Wrong"),
-                                                );
-                                              } else if (snapshot
-                                                      .connectionState ==
-                                                  ConnectionState.waiting) {
-                                                return const Center(
-                                                  heightFactor: 3,
-                                                  widthFactor: 3,
-                                                  child: SizedBox(
-                                                    height: 100,
-                                                    width: 100,
-                                                    child:
-                                                        CircularProgressIndicator(),
-                                                  ),
-                                                );
-                                              } else if (snapshot == null) {
-                                                return const Text(
-                                                    'No Reviews Yet');
-                                              } else {
-                                                return ListView.builder(
-                                                  itemCount: snapshot
-                                                      .data!.docs.length,
-                                                  itemBuilder:
-                                                      ((context, index) {
-                                                    var data2 = snapshot
-                                                            .data!.docs[index]
-                                                            .data()
-                                                        as Map<String, dynamic>;
-                                                    return Card(
-                                                      color: Colors.white,
-                                                      child: ListTile(
-                                                        // leading: SizedBox(
-                                                        //     height: 60,
-                                                        //     width: 60,
-                                                        //     child: Image.asset(
-                                                        //       'assets/all_icon.jpg',
-                                                        //       fit: BoxFit.fill,
-                                                        //     )),
-                                                        title: Text(
-                                                          data2['Username'],
-                                                          style: const TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
-                                                        subtitle: Text(
-                                                            data2['Message']),
-                                                        trailing: Text(
-                                                            '${data2['Rating'].toString()} Stars'),
-                                                      ),
-                                                    );
-                                                  }),
-                                                );
-                                              }
-                                            },
-                                          ),
-                                        ),
-                                        headerBuilder: (BuildContext context,
-                                            bool isExpanded) {
-                                          return Container(
-                                            alignment: Alignment.center,
-                                            height: 0,
-                                            child: const Text(
-                                              'Reviews',
-                                              style: TextStyle(fontSize: 20),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                GestureDetector(
+                                  onTap: () => _togglereview(),
+                                  child: RichText(
+                                    text: const TextSpan(
+                                      // recognizer: TapGestureRecognizer()
+                                      //   ..onTap = _togglereview(),
+                                      text: 'Reviews: ',
+                                      style: TextStyle(
+                                          decoration: TextDecoration.underline,
+                                          color: Colors.black87),
+                                    ),
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: _visible,
+                                  child: SizedBox(
+                                    height:
+                                        MediaQuery.of(context).size.width * 0.4,
+                                    child: StreamBuilder(
+                                      stream: FirebaseFirestore.instance
+                                          .collection('Feedback')
+                                          .where('Item Name',
+                                              isEqualTo:
+                                                  "${widget.receivedMap["Item Name"]}")
+                                          .snapshots(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<QuerySnapshot>
+                                              snapshot) {
+                                        if (snapshot.hasError) {
+                                          return const Center(
+                                            child: Text("Something Went Wrong"),
+                                          );
+                                        } else if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return const Center(
+                                            heightFactor: 3,
+                                            widthFactor: 3,
+                                            child: SizedBox(
+                                              height: 100,
+                                              width: 100,
+                                              child:
+                                                  CircularProgressIndicator(),
                                             ),
                                           );
-                                        }),
-                                  ],
-                                  expansionCallback: (panelIndex, isExpanded) =>
-                                      setState(() {
-                                    isopen = !isopen;
-                                  }),
+                                        } else if (snapshot == null) {
+                                          return const Text('No Reviews Yet');
+                                        } else {
+                                          return ListView.builder(
+                                            itemCount:
+                                                snapshot.data!.docs.length,
+                                            itemBuilder: ((context, index) {
+                                              var data2 = snapshot
+                                                      .data!.docs[index]
+                                                      .data()
+                                                  as Map<String, dynamic>;
+                                              return Card(
+                                                color: Colors.white,
+                                                child: ListTile(
+                                                  // leading: SizedBox(
+                                                  //     height: 60,
+                                                  //     width: 60,
+                                                  //     child: Image.asset(
+                                                  //       'assets/all_icon.jpg',
+                                                  //       fit: BoxFit.fill,
+                                                  //     )),
+                                                  title: Text(
+                                                    data2['Username'],
+                                                    style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  subtitle:
+                                                      Text(data2['Message']),
+                                                  trailing: Text(
+                                                      '${data2['Rating'].toString()} Stars'),
+                                                ),
+                                              );
+                                            }),
+                                          );
+                                        }
+                                      },
+                                    ),
+                                  ),
                                 ),
                               ],
                             );
@@ -588,5 +610,11 @@ class _itemdetailState extends State<itemdetail> {
             ],
           ),
         ));
+  }
+
+  void _togglereview() {
+    setState(() {
+      _visible = !_visible;
+    });
   }
 }

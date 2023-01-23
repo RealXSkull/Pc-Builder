@@ -56,7 +56,7 @@ class SignupArea extends State<Signup> {
         const Text(
           'Full Name',
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
@@ -66,12 +66,9 @@ class SignupArea extends State<Signup> {
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: const [
-                BoxShadow(
-                    color: Colors.white, blurRadius: 6, offset: Offset(0, 2))
-              ]),
-          height: 40,
+              borderRadius: BorderRadius.circular(5),
+              border: Border.all()),
+          height: 60,
           child: TextField(
             controller: _namecontroller,
             keyboardType: TextInputType.text,
@@ -97,7 +94,7 @@ class SignupArea extends State<Signup> {
         const Text(
           'Email',
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
@@ -108,15 +105,11 @@ class SignupArea extends State<Signup> {
             Container(
               alignment: Alignment.centerLeft,
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: const [
-                    BoxShadow(
-                        color: Colors.white,
-                        blurRadius: 6,
-                        offset: Offset(0, 2))
-                  ]),
-              height: 40,
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5),
+                border: Border.all(),
+              ),
+              height: 60,
               child: TextFormField(
                 controller: emailcontroller,
                 keyboardType: TextInputType.emailAddress,
@@ -156,7 +149,7 @@ class SignupArea extends State<Signup> {
         const Text(
           'Password',
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
@@ -165,13 +158,11 @@ class SignupArea extends State<Signup> {
         Container(
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: const [
-                BoxShadow(
-                    color: Colors.white, blurRadius: 6, offset: Offset(0, 2))
-              ]),
-          height: 40,
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(),
+          ),
+          height: 60,
           child: TextFormField(
             controller: passcontroller,
             obscureText: !_passwordVisible,
@@ -219,7 +210,7 @@ class SignupArea extends State<Signup> {
         const Text(
           'Confirm Password',
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
@@ -228,13 +219,11 @@ class SignupArea extends State<Signup> {
         Container(
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: const [
-                BoxShadow(
-                    color: Colors.white, blurRadius: 6, offset: Offset(0, 2))
-              ]),
-          height: 40,
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(),
+          ),
+          height: 60,
           child: TextFormField(
             controller: confirmpasscontroller,
             obscureText: !_passwordVisible2,
@@ -285,7 +274,7 @@ class SignupArea extends State<Signup> {
         const Text(
           'Contact No.',
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
@@ -294,13 +283,11 @@ class SignupArea extends State<Signup> {
         Container(
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: const [
-                BoxShadow(
-                    color: Colors.white, blurRadius: 6, offset: Offset(0, 2))
-              ]),
-          height: 40,
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(),
+          ),
+          height: 60,
           child: TextField(
             controller: _controller,
             onChanged: (String newVal) {
@@ -336,14 +323,16 @@ class SignupArea extends State<Signup> {
         children: <Widget>[
           const Text(
             "Already an account? ",
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           ),
           RichText(
             text: TextSpan(
               recognizer: TapGestureRecognizer()..onTap = widget.onClickedLogin,
               text: 'LOGIN',
               style: const TextStyle(
-                  decoration: TextDecoration.underline, color: Colors.white),
+                  decoration: TextDecoration.underline,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold),
             ),
           )
         ],
@@ -387,21 +376,29 @@ class SignupArea extends State<Signup> {
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
                   decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Color.fromARGB(255, 17, 7, 150),
-                          Color.fromARGB(255, 106, 5, 5)
-                        ]),
+                    color: Color.fromRGBO(247, 247, 247, 1),
                   ),
                   child: SingleChildScrollView(
                     physics: const AlwaysScrollableScrollPhysics(),
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 30, vertical: 10),
+                        horizontal: 20, vertical: 10),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: const Color.fromARGB(255, 11, 4, 109),
+                          ),
+                          child: const Image(
+                            image: AssetImage('assets/Pc_builder_logo.png'),
+                            height: 180,
+                            width: double.infinity,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         buildname(),
                         const SizedBox(
                           height: 15,

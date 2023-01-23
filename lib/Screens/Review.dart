@@ -22,11 +22,16 @@ class Review extends StatefulWidget {
 
 class _ReviewState extends State<Review> {
   TextEditingController myController = TextEditingController();
-  double rating = 0;
+  double rating = 3;
   final itemname = TextEditingController();
   final itemdesccontroller = TextEditingController();
   final ref = FirebaseDatabase.instance.ref('Inventory');
   final user = FirebaseAuth.instance.currentUser!;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -51,13 +56,7 @@ class _ReviewState extends State<Review> {
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
                   decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Color.fromARGB(255, 17, 7, 150),
-                          Color.fromARGB(255, 106, 5, 5)
-                        ]),
+                    color: Color.fromRGBO(247, 247, 247, 1),
                   ),
                   child: SingleChildScrollView(
                     physics: const AlwaysScrollableScrollPhysics(),
@@ -66,7 +65,7 @@ class _ReviewState extends State<Review> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        builditemname(),
+                        // builditemname(),
                         const SizedBox(
                           height: 20,
                         ),
@@ -98,10 +97,13 @@ class _ReviewState extends State<Review> {
     return Column(children: <Widget>[
       const Text(
         'Rate Your Product',
-        style: TextStyle(color: Colors.white, fontSize: 15),
+        style: TextStyle(
+            color: Colors.black87, fontSize: 15, fontWeight: FontWeight.bold),
       ),
       RatingBar.builder(
+        allowHalfRating: true,
         minRating: 1,
+        initialRating: 3,
         itemBuilder: (context, _) => const Icon(
           Icons.star,
           color: Colors.amber,
@@ -115,7 +117,7 @@ class _ReviewState extends State<Review> {
       ),
       Text(
         'Rating $rating',
-        style: const TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.black87),
       )
     ]);
   }
@@ -147,7 +149,7 @@ class _ReviewState extends State<Review> {
         const Text(
           'Product Name',
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
@@ -195,7 +197,7 @@ class _ReviewState extends State<Review> {
         const Text(
           'Product Description',
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black87,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
@@ -207,8 +209,6 @@ class _ReviewState extends State<Review> {
               alignment: Alignment.centerLeft,
               child: SizedBox(
                   child: Material(
-                elevation: 10.0,
-                shadowColor: Colors.white,
                 child: TextField(
                   controller: itemdesccontroller,
                   maxLines: maxLines,
@@ -277,9 +277,10 @@ class _ReviewState extends State<Review> {
   }
 
   Future<List> fetchData2() async {
+    DocumentReference df = FirebaseDatabase.instance.ref('Inventory') as DocumentReference<Object?>;
     // await Future.delayed(const Duration(milliseconds: 500));
     List list = [];
-    String inputText = itemname.text;
+    String inputText = myController.text;
     list.add('list+ $inputText');
 
     return list;
@@ -288,10 +289,10 @@ class _ReviewState extends State<Review> {
   Widget searchtext() {
     return TextFieldSearch(
         label: 'Product Name',
-        textStyle: const TextStyle(color: Colors.white),
+        textStyle: const TextStyle(color: Colors.black87),
         controller: myController,
         future: () {
-          return fetchData();
+          return fetchData2();
         });
   }
 }

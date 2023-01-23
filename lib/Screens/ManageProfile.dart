@@ -60,10 +60,8 @@ class _ManageprofileState extends State<Manageprofile> {
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
                   decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomCenter,
-                          colors: [Color(0xff588F8F), Color(0x00000000)])),
+                    color: Color.fromRGBO(247, 247, 247, 1),
+                  ),
                   child: SingleChildScrollView(
                     physics: AlwaysScrollableScrollPhysics(),
                     padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
@@ -158,7 +156,7 @@ class _ManageprofileState extends State<Manageprofile> {
   }
 
   Widget selectimage() {
-    return Container(
+    return SizedBox(
       height: 40,
       width: double.infinity,
       child: ElevatedButton.icon(
@@ -181,7 +179,7 @@ class _ManageprofileState extends State<Manageprofile> {
   }
 
   Widget updateprof() {
-    return Container(
+    return SizedBox(
       height: 40,
       width: double.infinity,
       child: ElevatedButton.icon(
@@ -213,7 +211,7 @@ class _ManageprofileState extends State<Manageprofile> {
         Text(
           'Enter Your Full Name',
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black87,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
@@ -222,12 +220,10 @@ class _ManageprofileState extends State<Manageprofile> {
         Container(
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.white, blurRadius: 6, offset: Offset(0, 2))
-              ]),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(),
+          ),
           height: 40,
           child: TextField(
             controller: _namecontroller,
@@ -257,7 +253,7 @@ class _ManageprofileState extends State<Manageprofile> {
         Text(
           'Enter Your Address',
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black87,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
@@ -267,18 +263,14 @@ class _ManageprofileState extends State<Manageprofile> {
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.white, blurRadius: 6, offset: Offset(0, 2))
-              ]),
+              borderRadius: BorderRadius.circular(5),
+              border: Border.all()),
           height: 40,
           child: TextField(
             controller: _addcontroller,
             keyboardType: TextInputType.text,
             style: TextStyle(color: Colors.black87),
             decoration: InputDecoration(
-                border: InputBorder.none,
                 prefixIcon: Icon(
                   Icons.person,
                   color: Color(0xff5ac18e),

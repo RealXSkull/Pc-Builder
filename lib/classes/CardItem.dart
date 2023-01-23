@@ -1,15 +1,13 @@
-import 'package:flutter/material.dart';
-
-import 'package:flutter/material.dart';
+// ignore_for_file: file_names
 
 class CardItem {
   final String image;
-  final String Title;
-  final String Subtitle;
+  final String title;
+  final String subtitle;
 
   const CardItem({
     required this.image,
-    required this.Title,
-    required this.Subtitle,
+    required this.title,
+    required this.subtitle,
   });
 }

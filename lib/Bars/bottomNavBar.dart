@@ -6,7 +6,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fyp/Screens/Homescreen.dart';
-import 'package:fyp/Bars/NavBar.dart';
 import 'package:fyp/Screens/ManageProfile.dart';
 import '../Controllers/bottomNavController.dart';
 import 'package:get/get.dart';
@@ -78,7 +77,7 @@ class _MainMenuState extends State<MainMenu> {
           selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
           type: BottomNavigationBarType.fixed,
           items: navbaritem,
-          backgroundColor: Colors.white30,
+          backgroundColor: Color.fromRGBO(255, 255, 255, 0.102),
           onTap: ((value) {
             controller.currentNavIndex.value = value;
           }),

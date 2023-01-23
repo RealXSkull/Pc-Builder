@@ -1,445 +1,469 @@
-// // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, file_names, prefer_final_fields, unnecessary_new, use_key_in_widget_constructors, avoid_print, non_constant_identifier_names, sized_box_for_whitespace, must_call_super
+// ignore_for_file: file_names, use_build_context_synchronously
 
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutter/gestures.dart';
-// import 'package:fyp/LoginScreen.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:fyp/Screens/Signup.dart';
+import 'package:fyp/classes/global.dart' as globals;
+import 'package:flutter/services.dart';
+import 'package:flutter_launcher_icons/custom_exceptions.dart';
+import 'package:textfield_search/textfield_search.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-// class WarrentyClaim extends StatefulWidget {
-//   final VoidCallback onClickedLogin;
+import 'itemdetail.dart';
 
-//   const WarrentyClaim({
-//     Key? key,
-//     required this.onClickedLogin,
-//   }) : super(key: key);
-//   @override
-//   WarrentyClaimArea createState() => WarrentyClaimArea();
-// }
+class WarrentyClaim extends StatefulWidget {
+  const WarrentyClaim({super.key});
 
-// class WarrentyClaimArea extends State<WarrentyClaim> {
-//   TextEditingController _controller = new TextEditingController();
-//   bool obscureTextt = true;
-//   bool _passwordVisible = false;
-//   bool _passwordVisible2 = false;
-//   final emailcontroller = TextEditingController();
-//   final passcontroller = TextEditingController();
-//   final confirmpasscontroller = TextEditingController();
-//   final formkey = GlobalKey<FormState>();
+  @override
+  State<WarrentyClaim> createState() => _WarrentyClaimState();
+}
 
-//   @override
-//   void dispose() {
-//     emailcontroller.dispose();
-//     passcontroller.dispose();
+class _WarrentyClaimState extends State<WarrentyClaim> {
+  var data;
+  final itemname = TextEditingController();
+  final formkey = GlobalKey<FormState>();
 
-//     super.dispose();
-//   }
+  final invoiceno = TextEditingController();
+  final itemdesccontroller = TextEditingController();
+  final phonenumber = TextEditingController();
+  String searchingtry = "";
+  final user = FirebaseAuth.instance.currentUser!;
+  DateTime date = DateTime.now();
 
-//   @override
-//   void initState() {
-//     _passwordVisible = false;
-//     _passwordVisible2 = false;
-//   }
+  @override
+  void dispose() {
+    itemdesccontroller.dispose();
+    itemname.dispose();
+    super.dispose();
+  }
 
-//   Widget buildname() {
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: <Widget>[
-//         SizedBox(
-//           height: 10,
-//         ),
-//         Text(
-//           'Full Name',
-//           style: TextStyle(
-//             color: Colors.white,
-//             fontSize: 12,
-//             fontWeight: FontWeight.bold,
-//           ),
-//         ),
-//         SizedBox(height: 10),
-//         Container(
-//           alignment: Alignment.centerLeft,
-//           decoration: BoxDecoration(
-//               color: Colors.white,
-//               borderRadius: BorderRadius.circular(10),
-//               boxShadow: [
-//                 BoxShadow(
-//                     color: Colors.white, blurRadius: 6, offset: Offset(0, 2))
-//               ]),
-//           height: 40,
-//           child: TextField(
-//             keyboardType: TextInputType.text,
-//             style: TextStyle(color: Colors.black87),
-//             decoration: InputDecoration(
-//                 border: InputBorder.none,
-//                 prefixIcon: Icon(
-//                   Icons.person,
-//                   color: Color(0xff5ac18e),
-//                 ),
-//                 hintText: 'Full Name',
-//                 hintStyle: TextStyle(color: Colors.black38)),
-//           ),
-//         )
-//       ],
-//     );
-//   }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Warranty Claim'),
+          backgroundColor: const Color.fromARGB(255, 48, 10, 55),
+        ),
+        body: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle.dark,
+          child: Form(
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(
+                    color: Color.fromRGBO(247, 247, 247, 1),
+                  ),
+                  child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30, vertical: 30),
+                    child: Form(
+                      key: formkey,
+                      child: Stack(children: <Widget>[
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            builditemname(),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            // searchtry(),
+                            // const SizedBox(
+                            //   height: 10,
+                            // ),
 
-//   Widget buildemail() {
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: <Widget>[
-//         Text(
-//           'Email',
-//           style: TextStyle(
-//             color: Colors.white,
-//             fontSize: 16,
-//             fontWeight: FontWeight.bold,
-//           ),
-//         ),
-//         SizedBox(height: 10),
-//         Stack(
-//           children: [
-//             Container(
-//               alignment: Alignment.centerLeft,
-//               decoration: BoxDecoration(
-//                   color: Colors.white,
-//                   borderRadius: BorderRadius.circular(10),
-//                   boxShadow: [
-//                     BoxShadow(
-//                         color: Colors.white,
-//                         blurRadius: 6,
-//                         offset: Offset(0, 2))
-//                   ]),
-//               height: 40,
-//               child: TextFormField(
-//                 controller: emailcontroller,
-//                 keyboardType: TextInputType.emailAddress,
-//                 autovalidateMode: AutovalidateMode.onUserInteraction,
-//                 validator: (val) {
-//                   bool emailValid = RegExp(
-//                           r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-//                       .hasMatch(val!);
-//                   if (!emailValid) {
-//                     return 'Invalid Email Address';
-//                   } else {
-//                     return null;
-//                   }
-//                 },
-//                 style: TextStyle(color: Colors.black87),
-//                 decoration: InputDecoration(
-//                     border: InputBorder.none,
-//                     prefixIcon: Icon(
-//                       Icons.email,
-//                       color: Color(0xff5ac18e),
-//                     ),
-//                     hintText: 'Email',
-//                     hintStyle: TextStyle(color: Colors.black38)),
-//               ),
-//             )
-//           ],
-//         )
-//       ],
-//     );
-//   }
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            buildphonenumber(),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            buildinvoiceno(),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            datepicker(),
+                            // fetchData(),
+                            // searchtext(),
+                            const SizedBox(
+                              height: 39,
+                            ),
+                            builditemdesc(),
+                            const SizedBox(
+                              height: 30,
+                            ),
 
-//   Widget buildpassword() {
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: <Widget>[
-//         Text(
-//           'Password',
-//           style: TextStyle(
-//             color: Colors.white,
-//             fontSize: 16,
-//             fontWeight: FontWeight.bold,
-//           ),
-//         ),
-//         SizedBox(height: 15),
-//         Container(
-//           alignment: Alignment.centerLeft,
-//           decoration: BoxDecoration(
-//               color: Colors.white,
-//               borderRadius: BorderRadius.circular(10),
-//               boxShadow: [
-//                 BoxShadow(
-//                     color: Colors.white, blurRadius: 6, offset: Offset(0, 2))
-//               ]),
-//           height: 40,
-//           child: TextFormField(
-//             controller: passcontroller,
-//             obscureText: !_passwordVisible,
-//             autovalidateMode: AutovalidateMode.onUserInteraction,
-//             validator: (value) {
-//               if (value == null)
-//                 return 'Field Cannot be left Empty';
-//               else if (value.length < 6)
-//                 return 'Enter Minimum 6 characters';
-//               else
-//                 return null;
-//             },
-//             style: TextStyle(color: Colors.black87),
-//             decoration: InputDecoration(
-//                 border: InputBorder.none,
-//                 prefixIcon: Icon(
-//                   Icons.lock,
-//                   color: Color(0xff5ac18e),
-//                 ),
-//                 suffixIcon: IconButton(
-//                   icon: Icon(
-//                     _passwordVisible ? Icons.visibility : Icons.visibility_off,
-//                     color: Colors.grey,
-//                   ),
-//                   onPressed: () {
-//                     setState(() {
-//                       _passwordVisible = !_passwordVisible;
-//                     });
-//                   },
-//                 ),
-//                 hintText: 'Password',
-//                 hintStyle: TextStyle(color: Colors.black38)),
-//           ),
-//         )
-//       ],
-//     );
-//   }
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            submitbtn(),
+                          ],
+                        ),
+                      ]),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ));
+  }
 
-//   Widget buildconfirmpassword() {
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: <Widget>[
-//         Text(
-//           'Confirm Password',
-//           style: TextStyle(
-//             color: Colors.white,
-//             fontSize: 16,
-//             fontWeight: FontWeight.bold,
-//           ),
-//         ),
-//         SizedBox(height: 15),
-//         Container(
-//           alignment: Alignment.centerLeft,
-//           decoration: BoxDecoration(
-//               color: Colors.white,
-//               borderRadius: BorderRadius.circular(10),
-//               boxShadow: [
-//                 BoxShadow(
-//                     color: Colors.white, blurRadius: 6, offset: Offset(0, 2))
-//               ]),
-//           height: 40,
-//           child: TextFormField(
-//             controller: confirmpasscontroller,
-//             obscureText: !_passwordVisible2,
-//             autovalidateMode: AutovalidateMode.onUserInteraction,
-//             validator: (value) {
-//               if (value == null)
-//                 return 'Field Cannot be left Empty';
-//               else if (confirmpasscontroller.text != null && value.length < 6)
-//                 return 'Enter Minimum 6 characters';
-//               else if (value != passcontroller.text)
-//                 return 'Password Doesnot Match';
-//               else
-//                 return null;
-//             },
-//             style: TextStyle(color: Colors.black87),
-//             decoration: InputDecoration(
-//                 border: InputBorder.none,
-//                 prefixIcon: Icon(
-//                   Icons.lock,
-//                   color: Color(0xff5ac18e),
-//                 ),
-//                 suffixIcon: IconButton(
-//                   icon: Icon(
-//                     _passwordVisible2 ? Icons.visibility : Icons.visibility_off,
-//                     color: Colors.grey,
-//                   ),
-//                   onPressed: () {
-//                     setState(() {
-//                       _passwordVisible2 = !_passwordVisible2;
-//                     });
-//                   },
-//                 ),
-//                 hintText: 'Retype Password',
-//                 hintStyle: TextStyle(color: Colors.black38)),
-//           ),
-//         )
-//       ],
-//     );
-//   }
+  Widget datepicker() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Purchased Date: ',
+          style: TextStyle(
+              color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(
+          height: 140,
+          child: CupertinoDatePicker(
+            minimumYear: 2015,
+            maximumYear: DateTime.now().year,
+            mode: CupertinoDatePickerMode.date,
+            initialDateTime: DateTime.now(),
+            onDateTimeChanged: (date) {
+              setState(() {
+                this.date = date;
+              });
+              // Do something
+            },
+          ),
+        ),
+      ],
+    );
+  }
 
-//   Widget buildphone() {
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: <Widget>[
-//         Text(
-//           'Contact No.',
-//           style: TextStyle(
-//             color: Colors.white,
-//             fontSize: 16,
-//             fontWeight: FontWeight.bold,
-//           ),
-//         ),
-//         SizedBox(height: 15),
-//         Container(
-//           alignment: Alignment.centerLeft,
-//           decoration: BoxDecoration(
-//               color: Colors.white,
-//               borderRadius: BorderRadius.circular(10),
-//               boxShadow: [
-//                 BoxShadow(
-//                     color: Colors.white, blurRadius: 6, offset: Offset(0, 2))
-//               ]),
-//           height: 40,
-//           child: TextField(
-//             controller: _controller,
-//             onChanged: (String newVal) {
-//               if (newVal.length <= maxLength) {
-//                 contactno = newVal;
-//               } else {
-//                 _controller.text = contactno;
-//               }
-//             },
-//             // maxLength: 11,
-//             keyboardType: TextInputType.number,
-//             style: TextStyle(color: Colors.black87),
-//             decoration: InputDecoration(
-//                 border: InputBorder.none,
-//                 prefixIcon: Icon(
-//                   Icons.phone,
-//                   color: Color(0xff5ac18e),
-//                 ),
-//                 hintText: '03xx-xxxxxxx',
-//                 hintStyle: TextStyle(color: Colors.black38)),
-//           ),
-//         )
-//       ],
-//     );
-//   }
+  Widget submitbtn() {
+    return SizedBox(
+      height: 40,
+      width: double.infinity,
+      child: ElevatedButton(
+          style: ButtonStyle(
+              backgroundColor:
+                  MaterialStateProperty.all<Color>(Colors.lightBlue),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ))),
+          child: const Text('Submit Request'),
+          onPressed: () {
+            warranty();
+            // addfeedback();
+          }),
+    );
+  }
 
-//   Widget AlreadyAccountbtn() {
-//     return Container(
-//       padding: EdgeInsets.only(left: 60.0),
-//       width: double.infinity,
-//       child: Row(
-//         children: <Widget>[
-//           Text(
-//             "Don't have an account?",
-//             style: TextStyle(color: Colors.black),
-//           ),
-//           RichText(
-//             text: TextSpan(
-//               recognizer: TapGestureRecognizer()..onTap = widget.onClickedLogin,
-//               text: 'LOGIN',
-//               style: TextStyle(
-//                   decoration: TextDecoration.underline, color: Colors.black),
-//             ),
-//           )
-//         ],
-//       ),
-//     );
-//   }
+  Widget builditemname() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        const Text(
+          'Product Name',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Stack(
+          children: [
+            Container(
+              alignment: Alignment.centerLeft,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all()),
+              height: 40,
+              child: TextFieldSearch(
+                controller: itemname,
+                // autovalidateMode: AutovalidateMode.onUserInteraction,
+                // validator: (value) {
+                //   if (value == "" || value == null) {
+                //     return 'Value cannot be Empty';
+                //   } else {
+                //     return null;
+                //   }
+                // },
+                minStringLength: 1,
+                future: () {
+                  return fetchData();
+                },
+                decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Product Name',
+                    contentPadding: EdgeInsets.fromLTRB(10, -10, 0, 0),
+                    hintStyle: TextStyle(color: Colors.black38)),
+                label: 'search',
+              ),
+            )
+          ],
+        )
+      ],
+    );
+  }
 
-//   Widget Registerbtn() {
-//     return Container(
-//       height: 40,
-//       width: double.infinity,
-//       child: ElevatedButton(
-//           style: ButtonStyle(
-//               backgroundColor:
-//                   MaterialStateProperty.all<Color>(Colors.lightBlue),
-//               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-//                   RoundedRectangleBorder(
-//                 borderRadius: BorderRadius.circular(10.0),
-//               ))),
-//           child: Text('Register'),
-//           onPressed: () {
-//             WarrentyClaim();
-//           }),
-//     );
-//   }
+  // Widget searchtry() {
+  //   return TextFieldSearch(
+  //     label: 'Product',
+  //     controller: itemname,
+  //     minStringLength: 2,
+  //     future: () {
+  //       fetchData();
+  //     },
+  //   );
+  // }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         appBar: AppBar(
-//           title: Text('REGISTRATION'),
-//           backgroundColor: Colors.blueGrey,
-//         ),
-//         body: AnnotatedRegion<SystemUiOverlayStyle>(
-//           value: SystemUiOverlayStyle.dark,
-//           child: Form(
-//             key: formkey,
-//             child: Stack(
-//               children: <Widget>[
-//                 Container(
-//                   height: MediaQuery.of(context).size.height,
-//                   width: MediaQuery.of(context).size.width,
-//                   decoration: const BoxDecoration(
-//                       gradient: LinearGradient(
-//                           begin: Alignment.topLeft,
-//                           end: Alignment.bottomCenter,
-//                           colors: [Color(0xff588F8F), Color(0x00000000)])),
-//                   child: SingleChildScrollView(
-//                     physics: AlwaysScrollableScrollPhysics(),
-//                     padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-//                     child: Column(
-//                       mainAxisAlignment: MainAxisAlignment.center,
-//                       children: <Widget>[
-//                         // buildname(),
-//                         // SizedBox(
-//                         //   height: 20,
-//                         // ),
-//                         buildemail(),
-//                         const SizedBox(
-//                           height: 20,
-//                         ),
-//                         // buildphone(),
-//                         // const SizedBox(
-//                         //   height: 20,
-//                         // ),
-//                         buildpassword(),
-//                         SizedBox(
-//                           height: 20,
-//                         ),
-//                         buildconfirmpassword(),
-//                         SizedBox(
-//                           height: 20,
-//                         ),
-//                         Registerbtn(),
-//                         SizedBox(
-//                           height: 20,
-//                         ),
-//                         AlreadyAccountbtn()
-//                       ],
-//                     ),
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ));
-//   }
+  Future<List> fetchData() async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    List list = [];
+    List used = [];
+    String inputText = 'Intel';
+    StreamBuilder(
+      stream: FirebaseFirestore.instance
+          .collection('Inventory')
+          .where('Item Name', isGreaterThanOrEqualTo: inputText)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const CircularProgressIndicator();
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            heightFactor: 3,
+            widthFactor: 3,
+            child: SizedBox(
+              height: 100,
+              width: 100,
+              child: CircularProgressIndicator(),
+            ),
+          );
+        } else {
+          return ListView.builder(
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: ((context, index) {
+              data = snapshot.data!.docs[index].data() as Map<String, dynamic>;
+              return Card(
+                color: Colors.white,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => itemdetail(
+                          receivedMap: data,
+                          url: globals.url,
+                        ),
+                      ),
+                    );
+                  },
+                  child: ListTile(
+                    leading: SizedBox(
+                        height: 60,
+                        width: 60,
+                        child: Image.asset(
+                          'assets/all_icon.jpg',
+                          fit: BoxFit.fill,
+                        )),
+                    title: Text(data['Item Name']),
+                    subtitle: Text(data['Category']),
+                    trailing: Text(data['Price'].toString()),
+                    // leading: Image.network(src),
+                  ),
+                ),
+              );
+            }),
+          );
+        }
+      },
+    );
+    list.add(data['Item Name']);
+    return list;
+  }
 
-//   Future WarrentyClaim() async {
-//     final isValid = formkey.currentState!.validate();
-//     if (!isValid) return;
-//     showDialog(
-//         context: context,
-//         barrierDismissible: false,
-//         builder: (context) => Center(
-//               child: Image.asset(
-//                 'assets/Eater_loading.gif',
-//                 width: 100,
-//                 height: 100,
-//               ),
-//             ));
-//     try {
-//       await FirebaseAuth.instance.createUserWithEmailAndPassword(
-//           email: emailcontroller.text.trim(),
-//           password: passcontroller.text.trim());
-//     } on FirebaseAuthException catch (e) {
-//       Fluttertoast.showToast(msg: e.message!, gravity: ToastGravity.BOTTOM);
-//     }
-//     Navigator.pop(context);
-//   }
-// }
+  Widget builditemdesc() {
+    const maxLines = 5;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        const Text(
+          'Describe The Issue: ',
+          style: TextStyle(
+            color: Colors.black87,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Stack(
+          children: [
+            Container(
+              alignment: Alignment.centerLeft,
+              child: SizedBox(
+                  child: Material(
+                child: Container(
+                  decoration: BoxDecoration(border: Border.all()),
+                  child: TextFormField(
+                    controller: itemdesccontroller,
+                    maxLines: maxLines,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value) {
+                      if (value == "" || value == null) {
+                        return 'Value cannot be Empty';
+                      } else {
+                        return null;
+                      }
+                    },
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Enter message",
+                      hintStyle: TextStyle(color: Colors.black38),
+                      filled: true,
+                    ),
+                  ),
+                ),
+              )),
+            )
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget buildphonenumber() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        const Text(
+          'Enter Your Contact Number',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Stack(
+          children: [
+            Container(
+              alignment: Alignment.centerLeft,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all()),
+              height: 40,
+              child: TextFormField(
+                controller: phonenumber,
+                keyboardType: TextInputType.number,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (value) {
+                  if (value == null) {
+                    return 'Value cannot be Empty';
+                  } else if (value.length < 11) {
+                    return 'Length should be 11';
+                  } else {
+                    return null;
+                  }
+                },
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly,
+                  LengthLimitingTextInputFormatter(11),
+                ],
+                decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    hintText: '03xx-xxxxxxx',
+                    contentPadding: EdgeInsets.fromLTRB(10, -10, 0, 0),
+                    hintStyle: TextStyle(color: Colors.black38)),
+              ),
+            )
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget buildinvoiceno() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        const Text(
+          'Enter Invoice Number',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Stack(
+          children: [
+            Container(
+              alignment: Alignment.centerLeft,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all()),
+              height: 40,
+              child: TextFormField(
+                controller: invoiceno,
+                keyboardType: TextInputType.number,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (value) {
+                  if (value == "" || value == null) {
+                    return 'Value cannot be Empty';
+                  } else {
+                    return null;
+                  }
+                },
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+                decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    hintText: '1234',
+                    contentPadding: EdgeInsets.fromLTRB(10, -10, 0, 0),
+                    hintStyle: TextStyle(color: Colors.black38)),
+              ),
+            )
+          ],
+        )
+      ],
+    );
+  }
+
+  Future warranty() async {
+    String message;
+    final isValid = formkey.currentState!.validate();
+    if (!isValid) return;
+    try {
+      final docuser = FirebaseFirestore.instance.collection('Warranty');
+      final data = {
+        'Item Name': 'ADATA Falcon 1 TB',
+        'Message': itemdesccontroller.text,
+        'Purchased Date': date,
+        'Contact': phonenumber.text,
+        'invoice': invoiceno.text,
+        'Username': user.displayName,
+      };
+      await docuser.add(data);
+      // await docuser.doc().set({
+      //   'Item Name': 'G.Skill Aegis 16 GB (2 x 8 GB) DDR4-2133 CL15',
+      //   'Message': itemdesccontroller.text,
+      // });
+      message = 'Your Request has been Sent Succesfully';
+    } catch (e) {
+      message = 'Error On your Request';
+    }
+    Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_SHORT);
+  }
+}

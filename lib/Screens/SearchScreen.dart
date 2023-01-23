@@ -27,13 +27,8 @@ class _SearchScreenState extends State<SearchScreen> {
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                Color.fromARGB(255, 17, 7, 150),
-                Color.fromARGB(255, 106, 5, 5)
-              ])),
+            color: Color.fromRGBO(247, 247, 247, 1),
+          ),
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
@@ -64,8 +59,9 @@ class _SearchScreenState extends State<SearchScreen> {
                         // .collection("Users")
                         // .doc('Hardware')
                         // .collection('Gpu')
-                        // .where("Item Name", isGreaterThanOrEqualTo: searchkey)
                         .where("Inventory", isNotEqualTo: 0)
+                        // .where("Item Name", isEqualTo: searchkey)
+                        // .startAt("i")
                         .snapshots(),
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
