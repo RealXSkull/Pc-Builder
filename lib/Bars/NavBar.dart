@@ -1,7 +1,8 @@
-// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, file_names, unused_import
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, file_names, unused_import, use_build_context_synchronously
 
 import 'package:fyp/Screens/WarrentyClaim.dart';
 
+import '../Controllers/Authpage.dart';
 import '../classes/global.dart' as globals;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -94,11 +95,21 @@ class NavBar extends StatelessWidget {
             leading: Icon(Icons.logout),
             title: Text('Logout'),
             onTap: () {
-              FirebaseAuth.instance.signOut();
+              logout(context);
               globals.url = "";
             },
           ),
         ],
+      ),
+    );
+  }
+
+  Future<void> logout(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const Authpage(),
       ),
     );
   }

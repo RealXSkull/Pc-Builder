@@ -1,9 +1,14 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:fyp/Screens/LoginScreen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import '../Bars/bottomNavBar.dart';
 
 var useridd;
 
@@ -432,33 +437,31 @@ class SignupArea extends State<Signup> {
 
   Future signup() async {
     String name = _namecontroller.text;
+    const CircularProgressIndicator();
     final isValid = formkey.currentState!.validate();
     if (!isValid) return;
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => Center(
-        child: Image.asset(
-          'assets/Eater_loading.gif',
-          width: 100,
-          height: 100,
-        ),
-      ),
-    );
     try {
       UserCredential result = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: emailcontroller.text.trim(),
               password: passcontroller.text.trim());
       await result.user?.updateDisplayName(name);
-      // Navigator.pop(context);
-      Fluttertoast.showToast(
-          msg: "Logged in as  $name",
-          toastLength: Toast.LENGTH_SHORT,
-          backgroundColor: Colors.grey);
+      final user = FirebaseAuth.instance.currentUser!;
+      final docuser =
+          FirebaseFirestore.instance.collection('Users').doc(user.uid);
+      final data = {'Name': name, 'role': 'user'};
+      await docuser.set(data);
+      Fluttertoast.showToast(msg: 'Signup Succesful! Please Login to continue');
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const MainMenu(),
+        ),
+      );
       useridd = result;
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(msg: e.message!, gravity: ToastGravity.BOTTOM);
     }
+    // Navigator.pop(context);
   }
 }

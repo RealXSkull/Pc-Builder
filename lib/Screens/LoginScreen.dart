@@ -1,12 +1,17 @@
 // ignore_for_file: prefer_const_constructors, avoid_print, sized_box_for_whitespace, non_constant_identifier_names, file_names, library_private_types_in_public_api, use_key_in_widget_constructors, must_call_super, curly_braces_in_flow_control_structures, use_build_context_synchronously
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:fyp/Screens/ForgetPassword.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../Bars/adminNavBar.dart';
+import '../Bars/bottomNavBar.dart';
+import '../Controllers/Authpage.dart';
+import 'splash.dart' as splash;
 
 class LoginScreen extends StatefulWidget {
   final VoidCallback onClickedSignup;
@@ -324,6 +329,37 @@ class _LoginScreenState extends State<LoginScreen> {
       //     .child("DisplayPicture")
       //     .child(user.uid);
       // global.url = await ref.getDownloadURL();
+      User? user = FirebaseAuth.instance.currentUser;
+      FirebaseFirestore.instance
+          .collection('Users')
+          .doc(user?.uid)
+          .get()
+          .then((DocumentSnapshot documentsnapshot) {
+        if (documentsnapshot.exists) {
+          if (documentsnapshot.get('role') == 'admin') {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AdminMenu(),
+              ),
+            );
+          } else {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const MainMenu(),
+              ),
+            );
+          }
+        } else {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const Authpage(),
+            ),
+          );
+        }
+      });
       Fluttertoast.showToast(
           msg: "Logged in",
           toastLength: Toast.LENGTH_SHORT,

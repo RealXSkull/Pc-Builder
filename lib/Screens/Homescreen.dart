@@ -19,6 +19,7 @@ import 'package:fyp/Bars/NavBar.dart';
 import '../classes/images.dart';
 import 'package:get/get.dart';
 import '../classes/global.dart' as global;
+import 'splash.dart' as splash;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -107,6 +108,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+
 
   Widget invoscreenbtn() {
     return Container(
