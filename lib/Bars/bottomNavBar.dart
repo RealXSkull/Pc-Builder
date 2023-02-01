@@ -60,10 +60,6 @@ class _MainMenuState extends State<MainMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Home Page'),
-      //   backgroundColor: Color.fromARGB(255, 48, 10, 55),
-      // ),
       body: Column(
         children: [
           Obx(() => Expanded(
@@ -77,7 +73,7 @@ class _MainMenuState extends State<MainMenu> {
           selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
           type: BottomNavigationBarType.fixed,
           items: navbaritem,
-          backgroundColor: Color.fromRGBO(255, 255, 255, 0.102),
+          backgroundColor: Color.fromARGB(50, 255, 255, 255),
           onTap: ((value) {
             controller.currentNavIndex.value = value;
           }),

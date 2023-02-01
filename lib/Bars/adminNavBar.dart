@@ -61,26 +61,22 @@ class _AdminMenuState extends State<AdminMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Home Page'),
-      //   backgroundColor: Color.fromARGB(255, 48, 10, 55),
-      // ),
       body: Column(
         children: [
           Obx(() => Expanded(
-              child: navbody.elementAt(controller.currentNavIndex.value)))
+              child: navbody.elementAt(controller.admincurrentIndex.value)))
         ],
       ),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
-          currentIndex: controller.currentNavIndex.value,
+          currentIndex: controller.admincurrentIndex.value,
           selectedItemColor: Colors.red,
           selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
           type: BottomNavigationBarType.fixed,
           items: navbaritem,
-          backgroundColor: Color.fromRGBO(255, 255, 255, 0.102),
+          backgroundColor: Color.fromARGB(50, 255, 255, 255),
           onTap: ((value) {
-            controller.currentNavIndex.value = value;
+            controller.admincurrentIndex.value = value;
           }),
         ),
       ),

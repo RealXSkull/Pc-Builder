@@ -37,41 +37,42 @@ class HomePage {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  CollectionReference cf = FirebaseFirestore.instance.collection('Inventory');
-  DatabaseReference postListRef = FirebaseDatabase.instance.ref("Inventory");
+  // CollectionReference cf = FirebaseFirestore.instance.collection('Inventory');
+  // DatabaseReference postListRef = FirebaseDatabase.instance.ref("Inventory");
 
-  void tryprintdata() {
-    global.inventory['Item Name'] = postListRef;
-    print('Item Name is: ${global.inventory['Item Name']}');
-    // print('Inventory $postListRef');
-  }
+  // void tryprintdata() {
+  //   global.inventory['Item Name'] = postListRef;
+  //   print('Item Name is: ${global.inventory['Item Name']}');
+  //   // print('Inventory $postListRef');
+  // }
 
   @override
   void initState() {
     super.initState();
+    global.readdata(user);
+    // global.getinvo();
     fetchimage();
     //getdata();
-    tryprintdata();
+    // tryprintdata();
   }
 
-  void getdata() {
-    cf.doc().get().then(
-      (value) {
-        setState(() {
-          global.inventory['Item Name'] = value.data();
-          // ['Item Name']
-        });
-      },
-    );
-    print(global.inventory['Item Name']);
-  }
+  // void getdata() {
+  //   cf.doc().get().then(
+  //     (value) {
+  //       setState(() {
+  //         global.inventory['Item Name'] = value.data();
+  //         // ['Item Name']
+  //       });
+  //     },
+  //   );
+  //   print(global.inventory['Item Name']);
+  // }
 
-  final data_controller controller = Get.put(data_controller());
+  // final data_controller controller = Get.put(data_controller());
 
   final user = FirebaseAuth.instance.currentUser!;
 
-  TextEditingController SearchController = TextEditingController();
-  String name = "";
+  // String name = "";
   List<CardItem> item = [
     CardItem(
         image: 'assets/icons/all_icon.jpg', title: 'ALL', subtitle: '\$100'),
@@ -92,24 +93,26 @@ class _HomeScreenState extends State<HomeScreen> {
       height: 45,
       alignment: Alignment.center,
       color: Colors.grey,
-      child: TextFormField(
-        controller: SearchController,
-        decoration: InputDecoration(
-            suffixIcon: Icon(Icons.search),
-            filled: true,
-            fillColor: Colors.white,
-            hintText: 'Search Anything..',
-            hintStyle: TextStyle(color: Colors.grey)),
-        textInputAction: TextInputAction.search,
-        onTap: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => SearchScreen()));
-        },
+      child: Container(
+        decoration: BoxDecoration(
+            border: Border.all(), borderRadius: BorderRadius.circular(5)),
+        child: TextFormField(
+          decoration: InputDecoration(
+              border: InputBorder.none,
+              suffixIcon: Icon(Icons.search),
+              filled: true,
+              fillColor: Colors.white,
+              hintText: 'Search Anything..',
+              hintStyle: TextStyle(color: Colors.grey)),
+          textInputAction: TextInputAction.search,
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SearchScreen()));
+          },
+        ),
       ),
     );
   }
-
-
 
   Widget invoscreenbtn() {
     return Container(
@@ -137,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  List<int> data = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+  // List<int> data = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
   Widget Buildcards(CardItem item) => Container(
         width: 200,
         child: Column(
@@ -156,59 +159,53 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Text(
               item.subtitle,
-              style: TextStyle(
-                fontSize: 12,
-              ),
+              style: TextStyle(fontSize: 12, color: Colors.red),
             )
           ],
         ),
       );
 
-  Widget builditemlist(BuildContext context, int index) {
-    return SizedBox(
-      width: 300,
-      height: 250,
-      child: Card(
-        margin: EdgeInsets.all(12),
-        elevation: 8,
-        child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          child: Column(
-            children: [
-              Text('All'),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Text('\$cos'),
-                  Expanded(
-                    child: Image.asset(
-                      'assets/icons/all_icon.jpg',
-                      width: 150,
-                      height: 210,
-                      fit: BoxFit.fill,
-                    ),
-                  )
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget builditemlist(BuildContext context, int index) {
+  //   return SizedBox(
+  //     width: 300,
+  //     height: 250,
+  //     child: Card(
+  //       margin: EdgeInsets.all(12),
+  //       elevation: 8,
+  //       child: ClipRRect(
+  //         borderRadius: BorderRadius.all(Radius.circular(5)),
+  //         child: Column(
+  //           children: [
+  //             Text('All'),
+  //             Row(
+  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //               children: [
+  //                 // Text('\$cos'),
+  //                 Expanded(
+  //                   child: Image.asset(
+  //                     'assets/icons/all_icon.jpg',
+  //                     width: 150,
+  //                     height: 210,
+  //                     fit: BoxFit.fill,
+  //                   ),
+  //                 )
+  //               ],
+  //             )
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  List<Map> categories = [
-    {'Name': 'All', 'iconpath': 'assets/icons/all_icon.jpg'},
-    {'Name': 'Ram', 'iconpath': 'assets/icons/all_icon.png'},
-    // {'Name': 'PSU', 'iconpath': 'assets/icons/all_icon.png'},
-    // {'Name': 'GPU', 'iconpath': 'assets/icons/all_icon.png'},
-    // {'Name': 'Processor', 'iconpath': 'assets/icons/all_icon.png'},
-    // {'Name': 'Storage', 'iconpath': 'assets/icons/all_icon.png'},
-  ];
-
-  int maxLength = 11;
-  String contactno = "";
-  bool obscureTextt = true;
+  // List<Map> categories = [
+  //   {'Name': 'All', 'iconpath': 'assets/icons/all_icon.jpg'},
+  //   {'Name': 'Ram', 'iconpath': 'assets/icons/all_icon.png'},
+  //   // {'Name': 'PSU', 'iconpath': 'assets/icons/all_icon.png'},
+  //   // {'Name': 'GPU', 'iconpath': 'assets/icons/all_icon.png'},
+  //   // {'Name': 'Processor', 'iconpath': 'assets/icons/all_icon.png'},
+  //   // {'Name': 'Storage', 'iconpath': 'assets/icons/all_icon.png'},
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -238,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                color: Color.fromRGBO(247, 247, 247, 1),
+                color: Color(0xfff7f7f7),
               ),
               child: SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(),
@@ -289,6 +286,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             viewportFraction: 0.8,
                             scale: 0.8,
                             pagination: SwiperPagination(),
+                            // itemWidth: 500,
                             // layout: SwiperLayout.STACK,
                           ),
                         ),
@@ -308,14 +306,18 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  fetchimage() async {
+  Future fetchimage() async {
     final ref =
         FirebaseStorage.instance.ref().child("DisplayPicture").child(user.uid);
-    global.url = await ref.getDownloadURL();
-
-    if (global.url.isEmpty) {
-      global.url =
-          "https://firebasestorage.googleapis.com/v0/b/pc-builder-2c0a4.appspot.com/o/DisplayPicture%2Fdefaultimage.jpg?alt=media&token=af41bdaf-f5f4-4f0d-ad96-78734f8eb73a";
+    try {
+      if (global.url == "") global.url = await ref.getDownloadURL();
+      // global.img = Image(image: NetworkImage(global.url));
+    } catch (e) {
+      if (global.url == "") {
+        global.url =
+            "https://firebasestorage.googleapis.com/v0/b/pc-builder-2c0a4.appspot.com/o/DisplayPicture%2Fdefaultimage.jpg?alt=media&token=af41bdaf-f5f4-4f0d-ad96-78734f8eb73a";
+        print("${global.url} \n defauly image");
+      } //  global.img = Image(image: NetworkImage(global.url));
     }
     // print(" this is done ${global.topUserPostsRef}");
     // print(global.url);

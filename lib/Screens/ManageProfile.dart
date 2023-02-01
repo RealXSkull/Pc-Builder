@@ -2,7 +2,7 @@
 
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:firebase_database/firebase_database.dart';
 import '../classes/global.dart' as global;
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,14 +24,26 @@ class _ManageprofileState extends State<Manageprofile> {
   CollectionReference users = FirebaseFirestore.instance.collection('Users');
 
   PlatformFile? pickedFile;
+  var dataa;
   final user = FirebaseAuth.instance.currentUser!;
-
   final _namecontroller = TextEditingController(text: global.name);
   FirebaseStorage storage = FirebaseStorage.instance;
-  final _addcontroller = TextEditingController();
+  final _addcontroller = TextEditingController(text: global.address);
   final formkey = GlobalKey<FormState>();
+
   var image;
+
   final picker = ImagePicker();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<void> readdata() async {
+    _namecontroller.text = dataa['name'];
+    _addcontroller.text = dataa['address'];
+  }
 
   Future imagepicker() async {
     final pick = await picker.pickImage(source: ImageSource.gallery);
@@ -68,7 +80,52 @@ class _ManageprofileState extends State<Manageprofile> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        buildname(),
+                        SizedBox(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              (image != null)
+                                  ? Expanded(
+                                      flex: 1,
+                                      child: Visibility(
+                                        visible: true,
+                                        child: ClipRRect(
+                                          child: Image.file(
+                                            image,
+                                            fit: BoxFit.fill,
+                                            height: 54,
+                                            width: 54,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(27),
+                                        ),
+                                      ),
+                                    )
+                                  : Expanded(
+                                      flex: 1,
+                                      child: Visibility(
+                                        visible: true,
+                                        child: ClipRRect(
+                                          child: Image.network(
+                                            global.url,
+                                            fit: BoxFit.fill,
+                                            height: 54,
+                                            width: 54,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(27),
+                                        ),
+                                      ),
+                                    ),
+                              Spacer(),
+                              Expanded(
+                                flex: 5,
+                                child: buildname(),
+                              ),
+                            ],
+                          ),
+                        ),
+                        // buildname(),
                         SizedBox(
                           height: 15,
                         ),
@@ -76,42 +133,11 @@ class _ManageprofileState extends State<Manageprofile> {
                         SizedBox(
                           height: 20,
                         ),
-                        Container(
-                          alignment: Alignment.topLeft,
-                          height: 150,
-                          width: 150,
-                          // child: Center(
-                          child: Column(
-                            children: <Widget>[
-                              if (image != null)
-                                ClipRRect(
-                                  child: Image.file(
-                                    image,
-                                    fit: BoxFit.fill,
-                                    height: 100,
-                                    width: 100,
-                                  ),
-                                  borderRadius: BorderRadius.circular(50),
-
-                                  // if (pickedFile != null)
-                                  //   Expanded(
-                                  //     child: Container(
-                                  //       color: Colors.blue,
-                                  //       child: Image.file(
-                                  //         File(pickedFile!.path!),
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                ),
-                            ],
-                          ),
-                          //  ),
-                        ),
 
                         const SizedBox(
                           height: 20,
                         ),
-                        //buildAddress(),
+
                         const SizedBox(
                           height: 20,
                         ),
@@ -291,23 +317,18 @@ class _ManageprofileState extends State<Manageprofile> {
 
     final isValid = formkey.currentState!.validate();
     if (!isValid) return;
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => Center(
-              child: Image.asset(
-                'assets/Eater_loading.gif',
-                width: 100,
-                height: 100,
-              ),
-            ));
+
     try {
       if (name != null) {
         await user.updateDisplayName(name);
         final docuser =
             FirebaseFirestore.instance.collection('Users').doc(user.uid);
-        final data = {'Name': name, 'Address': address};
-        await docuser.set(data);
+        final data = {
+          'Name': name,
+          'Address': address,
+          'role': global.role,
+        };
+        await docuser.update(data);
       }
       if (image != null) await reff.putFile(image);
       final ref = FirebaseStorage.instance
@@ -315,9 +336,10 @@ class _ManageprofileState extends State<Manageprofile> {
           .child("DisplayPicture")
           .child(user.uid);
       global.url = await ref.getDownloadURL();
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Profile Updated!')));
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(msg: e.message!, gravity: ToastGravity.BOTTOM);
     }
-    Navigator.pop(context);
   }
 }

@@ -20,7 +20,7 @@ class _SearchScreenState extends State<SearchScreen> {
   TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser!;
+    // User user = FirebaseAuth.instance.currentUser!;
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -33,21 +33,27 @@ class _SearchScreenState extends State<SearchScreen> {
             padding: const EdgeInsets.all(20.0),
             child: Column(
               children: [
-                TextFormField(
-                  controller: searchController,
-                  decoration: const InputDecoration(
-                      suffixIcon: Icon(Icons.search),
-                      filled: true,
-                      fillColor: Colors.white,
-                      hintText: 'Search Anything..',
-                      hintStyle: TextStyle(color: Colors.grey)),
-                  textInputAction: TextInputAction.search,
-                  onChanged: (value) {
-                    setState(() {
-                      searchkey = value;
-                      print(searchkey);
-                    });
-                  },
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(5)),
+                  child: TextFormField(
+                    controller: searchController,
+                    decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        suffixIcon: Icon(Icons.search),
+                        filled: true,
+                        fillColor: Colors.white,
+                        hintText: 'Search Anything..',
+                        hintStyle: TextStyle(color: Colors.grey)),
+                    textInputAction: TextInputAction.search,
+                    onChanged: (value) {
+                      setState(() {
+                        searchkey = value;
+                        // print(searchkey);
+                      });
+                    },
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
@@ -60,6 +66,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         // .doc('Hardware')
                         // .collection('Gpu')
                         .where("Inventory", isNotEqualTo: 0)
+                        // .where("Item Name", arrayContains: searchkey)
                         // .where("Item Name", isEqualTo: searchkey)
                         // .startAt("i")
                         .snapshots(),
@@ -123,7 +130,8 @@ class _SearchScreenState extends State<SearchScreen> {
                             }
                             if (data['Item Name']
                                 .toString()
-                                .contains(searchkey)) {
+                                .toLowerCase()
+                                .contains(searchkey.toLowerCase())) {
                               return Card(
                                 color: Colors.white,
                                 child: InkWell(

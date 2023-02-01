@@ -26,7 +26,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   // final user = FirebaseAuth.instance.currentUser;
-  bool _passwordVisible = false;
+  bool _passwordhidden = false;
   final emailcontroller = TextEditingController();
   final passcontroller = TextEditingController();
   final formkey = GlobalKey<FormState>();
@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-    _passwordVisible = false;
+    _passwordhidden = true;
   }
 
   Widget buildemail() {
@@ -67,12 +67,13 @@ class _LoginScreenState extends State<LoginScreen> {
           child: TextFormField(
             controller: emailcontroller,
             textInputAction: TextInputAction.next,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (val) {
               bool emailValid = RegExp(
                       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                   .hasMatch(val!);
-              if (!emailValid) {
+              if (val == "") {
+                return "Email cannot be Empty";
+              } else if (!emailValid) {
                 return 'Invalid Email Address';
               } else {
                 return null;
@@ -119,16 +120,15 @@ class _LoginScreenState extends State<LoginScreen> {
           child: TextFormField(
             controller: passcontroller,
             textInputAction: TextInputAction.done,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) {
-              if (value == null)
-                return 'Field Cannot be left Empty';
-              else if (value.length < 6)
+              if (value == "")
+                return 'Field Cannot be Empty';
+              else if (value.toString().length < 6)
                 return 'Enter Minimum 6 characters';
               else
                 return null;
             },
-            obscureText: !_passwordVisible,
+            obscureText: _passwordhidden,
             style: TextStyle(
               color: Colors.black87,
             ),
@@ -141,12 +141,12 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               suffixIcon: IconButton(
                 icon: Icon(
-                  _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                  _passwordhidden ? Icons.visibility_off : Icons.visibility,
                   color: Colors.grey,
                 ),
                 onPressed: () {
                   setState(() {
-                    _passwordVisible = !_passwordVisible;
+                    _passwordhidden = !_passwordhidden;
                   });
                 },
               ),
@@ -159,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget buildRemembermecb() {
+  Widget buildforgotpw() {
     return Container(
       height: 35,
       alignment: Alignment.centerLeft,
@@ -289,7 +289,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 20,
                       ),
                       buildpassword(),
-                      buildRemembermecb(),
+                      buildforgotpw(),
                       buildloginbtn(),
                       SizedBox(
                         height: 20,
@@ -322,8 +322,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailcontroller.text.trim(),
-          password: passcontroller.text.trim());
+          email: emailcontroller.text, password: passcontroller.text);
       // final ref = FirebaseStorage.instance
       //     .ref()
       //     .child("DisplayPicture")
@@ -351,6 +350,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             );
           }
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('Logged In!')));
         } else {
           Navigator.pushReplacement(
             context,
@@ -360,12 +361,9 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         }
       });
-      Fluttertoast.showToast(
-          msg: "Logged in",
-          toastLength: Toast.LENGTH_SHORT,
-          backgroundColor: Colors.grey);
     } on FirebaseAuthException catch (e) {
-      Fluttertoast.showToast(msg: e.message!, gravity: ToastGravity.BOTTOM);
+      Fluttertoast.showToast(
+          msg: e.message.toString(), gravity: ToastGravity.BOTTOM);
     }
     Navigator.pop(context);
   }

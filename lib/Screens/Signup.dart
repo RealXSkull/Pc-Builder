@@ -24,10 +24,10 @@ class Signup extends StatefulWidget {
 }
 
 class SignupArea extends State<Signup> {
-  final user = FirebaseAuth.instance.currentUser;
+  User? user = FirebaseAuth.instance.currentUser;
   int maxLength = 11;
-  final TextEditingController _controller = new TextEditingController();
-  final TextEditingController _namecontroller = new TextEditingController();
+  final TextEditingController _controller = TextEditingController();
+  final TextEditingController _namecontroller = TextEditingController();
   String contactno = "";
   bool obscureTextt = true;
   bool _passwordVisible = false;
@@ -41,7 +41,9 @@ class SignupArea extends State<Signup> {
   void dispose() {
     emailcontroller.dispose();
     passcontroller.dispose();
-
+    confirmpasscontroller.dispose();
+    _controller.dispose();
+    _namecontroller.dispose();
     super.dispose();
   }
 
@@ -49,6 +51,7 @@ class SignupArea extends State<Signup> {
   void initState() {
     _passwordVisible = false;
     _passwordVisible2 = false;
+    super.initState();
   }
 
   Widget buildname() {
@@ -74,12 +77,20 @@ class SignupArea extends State<Signup> {
               borderRadius: BorderRadius.circular(5),
               border: Border.all()),
           height: 60,
-          child: TextField(
+          child: TextFormField(
             controller: _namecontroller,
             keyboardType: TextInputType.text,
+            validator: (value) {
+              if (value == "") {
+                return 'Name Cannot be Empty';
+              } else {
+                return null;
+              }
+            },
             style: const TextStyle(color: Colors.black),
             decoration: const InputDecoration(
                 border: InputBorder.none,
+                errorStyle: TextStyle(height: 0.1),
                 prefixIcon: Icon(
                   Icons.person,
                   color: Color(0xff5ac18e),
@@ -118,12 +129,13 @@ class SignupArea extends State<Signup> {
               child: TextFormField(
                 controller: emailcontroller,
                 keyboardType: TextInputType.emailAddress,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (val) {
                   bool emailValid = RegExp(
                           r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                       .hasMatch(val!);
-                  if (!emailValid) {
+                  if (val == "") {
+                    return 'Email Cannot be Empty';
+                  } else if (!emailValid) {
                     return 'Invalid Email Address';
                   } else {
                     return null;
@@ -171,11 +183,10 @@ class SignupArea extends State<Signup> {
           child: TextFormField(
             controller: passcontroller,
             obscureText: !_passwordVisible,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) {
-              if (value == null) {
+              if (value == "") {
                 return 'Field Cannot be left Empty';
-              } else if (value.length < 6) {
+              } else if (value.toString().length < 6) {
                 return 'Enter Minimum 6 characters';
               } else {
                 return null;
@@ -232,12 +243,10 @@ class SignupArea extends State<Signup> {
           child: TextFormField(
             controller: confirmpasscontroller,
             obscureText: !_passwordVisible2,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) {
-              if (value == null) {
+              if (value == "") {
                 return 'Field Cannot be left Empty';
-              } else if (confirmpasscontroller.text.isNotEmpty &&
-                  value.length < 6) {
+              } else if (value.toString().length < 6) {
                 return 'Enter Minimum 6 characters';
               } else if (value != passcontroller.text) {
                 return 'Password Doesnot Match';
@@ -437,28 +446,32 @@ class SignupArea extends State<Signup> {
 
   Future signup() async {
     String name = _namecontroller.text;
-    const CircularProgressIndicator();
     final isValid = formkey.currentState!.validate();
     if (!isValid) return;
     try {
       UserCredential result = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: emailcontroller.text.trim(),
-              password: passcontroller.text.trim());
+              password: passcontroller.text);
       await result.user?.updateDisplayName(name);
       final user = FirebaseAuth.instance.currentUser!;
       final docuser =
           FirebaseFirestore.instance.collection('Users').doc(user.uid);
-      final data = {'Name': name, 'role': 'user'};
+      final data = {
+        'Name': name,
+        'role': 'user',
+        'Email': emailcontroller.text,
+        'Address': '',
+        'Phone': ''
+      };
       await docuser.set(data);
-      Fluttertoast.showToast(msg: 'Signup Succesful! Please Login to continue');
+      Fluttertoast.showToast(msg: 'Signup Succesful!');
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => const MainMenu(),
         ),
       );
-      useridd = result;
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(msg: e.message!, gravity: ToastGravity.BOTTOM);
     }

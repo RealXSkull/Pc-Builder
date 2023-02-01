@@ -1,5 +1,4 @@
 // ignore_for_file: file_names, use_build_context_synchronously
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -10,6 +9,7 @@ import 'package:fyp/Screens/Signup.dart';
 import 'package:fyp/classes/global.dart' as globals;
 import 'package:flutter/services.dart';
 import 'package:flutter_launcher_icons/custom_exceptions.dart';
+import 'package:get/get.dart';
 import 'package:textfield_search/textfield_search.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -21,6 +21,7 @@ class Review extends StatefulWidget {
 }
 
 class _ReviewState extends State<Review> {
+  List items = [];
   TextEditingController myController = TextEditingController();
   double rating = 3;
   final itemname = TextEditingController();
@@ -171,9 +172,7 @@ class _ReviewState extends State<Review> {
               height: 40,
               child: TextFieldSearch(
                 controller: itemname,
-                future: () {
-                  fetchData2();
-                },
+                future: () {},
                 textStyle: const TextStyle(color: Colors.black),
                 decoration: const InputDecoration(
                     border: InputBorder.none,
@@ -226,37 +225,16 @@ class _ReviewState extends State<Review> {
     );
   }
 
-  Future<List> fetchData() async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    List list = [];
-    List used = [];
-    String inputText = myController.text;
+  
 
-    // list.add('value');
-    print(globals.data1['Item Name'].length);
-    for (int count = 0; count < globals.data1.length; count++) {
-      if (globals.data1['Item Name'].toString().startsWith(myController.text)) {
-        used = globals.data1['Item Name'];
-        for (int i = 0; i < used.length; i++) {
-          if (used.contains(globals.data1['Item Name'].toString())) {
-          } else {
-            list.add(globals.data1['Item Name'].toString());
-          }
-        }
-      }
-    }
-    // list.add('list+asd+ ');
-    // list.add('list+ $inputText');
-
-    return list;
-  }
+  // Future<List> fetchDatalisting() async {}
 
   Future addfeedback() async {
     String message;
     try {
       final docuser = FirebaseFirestore.instance.collection('Feedback');
       final data = {
-        'Item Name': 'ADATA Falcon 1 TB',
+        'Item Name': myController.text,
         'Message': itemdesccontroller.text,
         'Rating': rating,
         'Username': user.displayName,
@@ -276,23 +254,14 @@ class _ReviewState extends State<Review> {
     // Navigator.pop(context);
   }
 
-  Future<List> fetchData2() async {
-    DocumentReference df = FirebaseDatabase.instance.ref('Inventory') as DocumentReference<Object?>;
-    // await Future.delayed(const Duration(milliseconds: 500));
-    List list = [];
-    String inputText = myController.text;
-    list.add('list+ $inputText');
-
-    return list;
-  }
-
   Widget searchtext() {
     return TextFieldSearch(
         label: 'Product Name',
         textStyle: const TextStyle(color: Colors.black87),
         controller: myController,
         future: () {
-          return fetchData2();
+          return globals.getinvo(myController.text);
+          // return fetchDatalisting();
         });
   }
 }

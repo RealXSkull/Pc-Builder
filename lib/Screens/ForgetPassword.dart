@@ -14,6 +14,7 @@ class ForgetPassword extends StatefulWidget {
 
 class RecoverPassword extends State<ForgetPassword> {
   TextEditingController _emailcontroller = new TextEditingController();
+  final formkey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -46,20 +47,30 @@ class RecoverPassword extends State<ForgetPassword> {
         ),
         SizedBox(height: 10),
         Container(
-          
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(5),
-              border: Border.all()
-              ),
+              border: Border.all()),
           height: 50,
           child: TextFormField(
             controller: _emailcontroller,
             keyboardType: TextInputType.emailAddress,
+            validator: (val) {
+              bool emailValid = RegExp(
+                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                  .hasMatch(val!);
+              if (val == "") {
+                return 'Email Cannot be Empty';
+              } else if (!emailValid) {
+                return 'Invalid Email Address';
+              } else {
+                return null;
+              }
+            },
             style: TextStyle(color: Colors.black87),
-            
             decoration: InputDecoration(
+                errorStyle: TextStyle(height: 0.1),
                 border: InputBorder.none,
                 prefixIcon: Icon(
                   Icons.email,
@@ -86,14 +97,7 @@ class RecoverPassword extends State<ForgetPassword> {
             ))),
         label: Text('Recover Password'),
         onPressed: () {
-          if (_emailcontroller.text.isNotEmpty) {
-            ResetPassword();
-          } else {
-            Fluttertoast.showToast(
-                msg: "Invalid Credentials",
-                toastLength: Toast.LENGTH_SHORT,
-                backgroundColor: Colors.grey);
-          }
+          ResetPassword();
         },
         icon: Icon(
           Icons.mail,
@@ -115,38 +119,43 @@ class RecoverPassword extends State<ForgetPassword> {
           )),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.dark,
-        child: Stack(
-          children: <Widget>[
-            Container(
-              alignment: Alignment.center,
-              height: double.infinity,
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                color: Color.fromRGBO(247, 247, 247, 1),
-              ),
-              child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    EmailText(),
-                    buildemail(),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    recoverpas(),
-                  ],
+        child: Form(
+          key: formkey,
+          child: Stack(
+            children: <Widget>[
+              Container(
+                alignment: Alignment.center,
+                height: double.infinity,
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  color: Color(0xfff7f7f7),
                 ),
-              ),
-            )
-          ],
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  padding: EdgeInsets.all(16),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      EmailText(),
+                      buildemail(),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      recoverpas(),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
   }
 
   Future ResetPassword() async {
+    final isvalid = formkey.currentState!.validate();
+    if (!isvalid) return;
     showDialog(
         context: context,
         barrierDismissible: false,

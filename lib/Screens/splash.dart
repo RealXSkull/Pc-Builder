@@ -73,6 +73,7 @@ class _SplashscreenState extends State<Splashscreen> {
         .then((DocumentSnapshot documentsnapshot) {
       if (documentsnapshot.exists) {
         if (documentsnapshot.get('role') == 'admin') {
+          globals.role = 'admin';
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -80,6 +81,7 @@ class _SplashscreenState extends State<Splashscreen> {
             ),
           );
         } else {
+          globals.role = 'user';
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -87,15 +89,6 @@ class _SplashscreenState extends State<Splashscreen> {
             ),
           );
         }
-        // isAdmin().then((value) => rolechecker = value);
-        // if (rolechecker == 'true') {
-        //   Fluttertoast.showToast(msg: '$rolechecker Admin1');
-        //   return const AdminMenu();
-        // } else {
-        //   Fluttertoast.showToast(msg: '$rolechecker user1');
-        //   // Fluttertoast.showToast(msg: '$rolechecker pt2');
-        //   return const MainMenu();
-        // }
       } else {
         Navigator.pushReplacement(
           context,
@@ -105,74 +98,6 @@ class _SplashscreenState extends State<Splashscreen> {
         );
       }
     });
-    // Navigator.pushReplacement(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => StreamBuilder<User?>(
-    //       //streambuilder
-    //       stream: FirebaseAuth.instance.authStateChanges(),
-    //       builder: (context, AsyncSnapshot snapshot) {
-    //         if (snapshot.connectionState == ConnectionState.waiting) {
-    //           return const Center(
-    //             child: CircularProgressIndicator(),
-    //           );
-    //         } else if (!snapshot.hasData) {
-    //           return const Center(
-    //             child: CircularProgressIndicator(),
-    //           );
-    //         } else if (snapshot.hasData) {
-    //           if (snapshot.get)
-    //             // snapshot1 = snapshot;
-
-    //             var rolechecker = isAdmin();
-    //           // isAdmin().then((value) => rolechecker = value);
-    //           if (rolechecker == 'admin') {
-    //             return const AdminMenu();
-    //           } else {
-    //             return const MainMenu();
-    //           }
-
-    //           // isAdmin().then((value) => rolechecker = value);
-    //           // if (rolechecker == 'true') {
-    //           //   Fluttertoast.showToast(msg: '$rolechecker Admin1');
-    //           //   return const AdminMenu();
-    //           // } else {
-    //           //   Fluttertoast.showToast(msg: '$rolechecker user1');
-    //           //   // Fluttertoast.showToast(msg: '$rolechecker pt2');
-    //           //   return const MainMenu();
-    //           // }
-    //         } else {
-    //           return const Authpage();
-    //         }
-    //       },
-    //     ),
-    //   ),
-    // );
-  }
-
-  Future<String> isAdmin() async {
-    final user = FirebaseAuth.instance.currentUser!;
-
-    final adminRef = await FirebaseFirestore.instance
-        .collection("Users")
-        .doc(user.uid)
-        .get();
-    // Fluttertoast.showToast(msg: 'waqar');
-    Map<String, dynamic>? data = adminRef.data();
-    Fluttertoast.showToast(msg: 'waqar');
-    var role = data?['role'];
-    // Fluttertoast.showToast(msg: 'waqar');
-    if (role == 'admin') {
-      // Fluttertoast.showToast(msg: '$role');
-      counter = 1;
-      return Future.value('admin');
-      // return Future.value('true');
-    } else {
-      counter = 0;
-      // Fluttertoast.showToast(msg: '${adminRef.data()}');
-      // return Future.value('false');
-      return Future.value('user');
-    }
   }
 
   @override

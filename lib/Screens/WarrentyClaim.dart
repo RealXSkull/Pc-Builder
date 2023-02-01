@@ -199,7 +199,7 @@ class _WarrentyClaimState extends State<WarrentyClaim> {
                 // },
                 minStringLength: 1,
                 future: () {
-                  return fetchData();
+                  return globals.getinvo(itemname.text);
                 },
                 decoration: const InputDecoration(
                     border: InputBorder.none,
@@ -213,82 +213,6 @@ class _WarrentyClaimState extends State<WarrentyClaim> {
         )
       ],
     );
-  }
-
-  // Widget searchtry() {
-  //   return TextFieldSearch(
-  //     label: 'Product',
-  //     controller: itemname,
-  //     minStringLength: 2,
-  //     future: () {
-  //       fetchData();
-  //     },
-  //   );
-  // }
-
-  Future<List> fetchData() async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    List list = [];
-    List used = [];
-    String inputText = 'Intel';
-    StreamBuilder(
-      stream: FirebaseFirestore.instance
-          .collection('Inventory')
-          .where('Item Name', isGreaterThanOrEqualTo: inputText)
-          .snapshots(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return const CircularProgressIndicator();
-        } else if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            heightFactor: 3,
-            widthFactor: 3,
-            child: SizedBox(
-              height: 100,
-              width: 100,
-              child: CircularProgressIndicator(),
-            ),
-          );
-        } else {
-          return ListView.builder(
-            itemCount: snapshot.data!.docs.length,
-            itemBuilder: ((context, index) {
-              data = snapshot.data!.docs[index].data() as Map<String, dynamic>;
-              return Card(
-                color: Colors.white,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => itemdetail(
-                          receivedMap: data,
-                          url: globals.url,
-                        ),
-                      ),
-                    );
-                  },
-                  child: ListTile(
-                    leading: SizedBox(
-                        height: 60,
-                        width: 60,
-                        child: Image.asset(
-                          'assets/all_icon.jpg',
-                          fit: BoxFit.fill,
-                        )),
-                    title: Text(data['Item Name']),
-                    subtitle: Text(data['Category']),
-                    trailing: Text(data['Price'].toString()),
-                    // leading: Image.network(src),
-                  ),
-                ),
-              );
-            }),
-          );
-        }
-      },
-    );
-    list.add(data['Item Name']);
-    return list;
   }
 
   Widget builditemdesc() {
@@ -448,7 +372,7 @@ class _WarrentyClaimState extends State<WarrentyClaim> {
     try {
       final docuser = FirebaseFirestore.instance.collection('Warranty');
       final data = {
-        'Item Name': 'ADATA Falcon 1 TB',
+        'Item Name': itemname.text,
         'Message': itemdesccontroller.text,
         'Purchased Date': date,
         'Contact': phonenumber.text,

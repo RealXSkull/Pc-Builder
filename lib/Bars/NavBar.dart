@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, file_names, unused_import, use_build_context_synchronously
 
 import 'package:fyp/Screens/WarrentyClaim.dart';
-
 import '../Controllers/Authpage.dart';
 import '../classes/global.dart' as globals;
 import 'package:firebase_auth/firebase_auth.dart';
