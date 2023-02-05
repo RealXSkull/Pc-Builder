@@ -3,10 +3,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
-import '../classes/global.dart' as globals;
+import '../../classes/global.dart' as globals;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:fyp/Screens/itemdetail.dart';
+import 'package:fyp/user/Screens/itemdetail.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -105,10 +105,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                   onTap: () {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
-                                        builder: (context) => itemdetail(
-                                          receivedMap: data,
-                                          url: globals.url,
-                                        ),
+                                        builder: (context) =>
+                                            itemdetail(receivedMap: data),
                                       ),
                                     );
                                   },
@@ -138,10 +136,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                   onTap: () {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
-                                        builder: (context) => itemdetail(
-                                          receivedMap: data,
-                                          url: globals.url,
-                                        ),
+                                        builder: (context) =>
+                                            itemdetail(receivedMap: data),
                                       ),
                                     );
                                   },

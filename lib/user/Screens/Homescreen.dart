@@ -12,13 +12,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fyp/Controllers/data_controller.dart';
-import 'package:fyp/Screens/SearchScreen.dart';
-import 'package:fyp/Screens/inventory.dart';
-import '../classes/CardItem.dart';
+import 'package:fyp/user/Screens/SearchScreen.dart';
+import 'package:fyp/user/Screens/inventory.dart';
+import '../../classes/CardItem.dart';
 import 'package:fyp/Bars/NavBar.dart';
-import '../classes/images.dart';
+import '../../classes/images.dart';
 import 'package:get/get.dart';
-import '../classes/global.dart' as global;
+import '../../classes/global.dart' as global;
 import 'splash.dart' as splash;
 
 class HomeScreen extends StatefulWidget {
@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // final data_controller controller = Get.put(data_controller());
 
-  final user = FirebaseAuth.instance.currentUser!;
+  User user = FirebaseAuth.instance.currentUser!;
 
   // String name = "";
   List<CardItem> item = [
@@ -97,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
         decoration: BoxDecoration(
             border: Border.all(), borderRadius: BorderRadius.circular(5)),
         child: TextFormField(
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
               border: InputBorder.none,
               suffixIcon: Icon(Icons.search),
               filled: true,

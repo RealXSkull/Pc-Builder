@@ -5,9 +5,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fyp/Screens/Homescreen.dart';
-import 'package:fyp/Screens/ManageProfile.dart';
-import '../Controllers/bottomNavController.dart';
+import 'package:fyp/user/Screens/Homescreen.dart';
+import 'package:fyp/user/Screens/ManageProfile.dart';
+import '../../Controllers/bottomNavController.dart';
 import 'package:get/get.dart';
 
 class AdminMenu extends StatefulWidget {

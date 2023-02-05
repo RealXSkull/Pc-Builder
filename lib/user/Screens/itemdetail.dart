@@ -5,8 +5,8 @@ import 'package:flutter/services.dart';
 
 class itemdetail extends StatefulWidget {
   Map<String, dynamic> receivedMap;
-  String url;
-  itemdetail({required this.receivedMap, required this.url});
+
+  itemdetail({required this.receivedMap});
 
   @override
   State<itemdetail> createState() => _itemdetailState();
@@ -223,7 +223,7 @@ class _itemdetailState extends State<itemdetail> {
                                   //change with cpu description
                                   "◉ Capacity: ${widget.receivedMap["Capacity"]}\n◉ Storage Form: ${widget.receivedMap["Storage Form"]}\n◉ Storage Speed: ${widget.receivedMap["Storage type"]}\n◉ Inventory: ${widget.receivedMap["Inventory"]}",
                                   style: const TextStyle(
-                                      color: Colors.white, fontSize: 12),
+                                      color: Colors.black, fontSize: 12),
                                 ),
                                 const SizedBox(
                                   height: 10,

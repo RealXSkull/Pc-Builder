@@ -1,16 +1,16 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, file_names, unused_import, use_build_context_synchronously
 
-import 'package:fyp/Screens/WarrentyClaim.dart';
+import 'package:fyp/user/Screens/WarrentyClaim.dart';
 import '../Controllers/Authpage.dart';
 import '../classes/global.dart' as globals;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:fyp/Screens/LoginScreen.dart';
+import 'package:fyp/user/Screens/LoginScreen.dart';
 import 'package:fyp/Bars/bottomNavBar.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:fyp/Screens/ManageProfile.dart';
-import 'package:fyp/Screens/Review.dart';
+import 'package:fyp/user/Screens/ManageProfile.dart';
+import 'package:fyp/user/Screens/Review.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class NavBar extends StatelessWidget {
