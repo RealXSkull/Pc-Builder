@@ -2,7 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csv/csv.dart';
-
+import '../../classes/global.dart' as global;
 // import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,7 +17,8 @@ class inventory extends StatefulWidget {
 class _inventoryState extends State<inventory> {
   String dropdownvalue = 'Monitor';
   // bool _visible = true;
-  var items = ['Monitor', 'Pc'];
+  // var items = global.getcategory();
+  var items = ['Monitor', 'Ram', 'PSU', 'Storage'];
   List<List<dynamic>> data = [];
   String? FilePath;
 

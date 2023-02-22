@@ -93,7 +93,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           itemBuilder: ((context, index) {
                             var data = snapshot.data!.docs[index].data()
                                 as Map<String, dynamic>;
-                            globals.data1 = data;
+
                             // print(globals.data1);
                             // print(
                             //     "database data length${data['Item Name'].length}");

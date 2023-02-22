@@ -421,6 +421,10 @@ class SignupArea extends State<Signup> {
                         const SizedBox(
                           height: 20,
                         ),
+                        buildphone(),
+                        const SizedBox(
+                          height: 20,
+                        ),
                         buildpassword(),
                         const SizedBox(
                           height: 20,
@@ -444,6 +448,14 @@ class SignupArea extends State<Signup> {
         ));
   }
 
+  Future authprofilesetting(
+      UserCredential cred, String name, String contact) async {
+    await cred.user?.updateDisplayName(name);
+    await cred.user?.updatePhoneNumber(contact as PhoneAuthCredential);
+    await cred.user?.updatePhotoURL(
+        'https://firebasestorage.googleapis.com/v0/b/pc-builder-2c0a4.appspot.com/o/DisplayPicture%2Fdefaultimage.jpg?alt=media&token=af41bdaf-f5f4-4f0d-ad96-78734f8eb73a');
+  }
+
   Future signup() async {
     String name = _namecontroller.text;
     final isValid = formkey.currentState!.validate();
@@ -453,7 +465,7 @@ class SignupArea extends State<Signup> {
           .createUserWithEmailAndPassword(
               email: emailcontroller.text.trim(),
               password: passcontroller.text);
-      await result.user?.updateDisplayName(name);
+      authprofilesetting(result, name, contactno);
       final user = FirebaseAuth.instance.currentUser!;
       final docuser =
           FirebaseFirestore.instance.collection('Users').doc(user.uid);

@@ -2,12 +2,14 @@
 
 library globals;
 
+import 'dart:collection';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/material.dart';
 
 Map<String, dynamic> data1 = [] as Map<String, dynamic>;
 var role = "";
@@ -32,6 +34,22 @@ Future<List> getinvo(String search) async {
   }
   return invo;
 }
+
+Future<List> getcategory(BuildContext context) async {
+  var invo = [];
+  final datagetter =
+      await FirebaseFirestore.instance.collection('Inventory').get();
+  for (int i = 0; i < datagetter.docs.length; i++) {
+    if (!invo.contains(datagetter.docs[i]['Category'].toString())) {
+      invo.add(datagetter.docs[i]['Category']);
+    }
+  }
+  ScaffoldMessenger.of(context)
+      .showSnackBar(SnackBar(content: Text(invo.toString())));
+  return invo;
+}
+
+
 
 Future<void> readdata(User user) async {
   FirebaseFirestore.instance

@@ -73,7 +73,7 @@ class _MainMenuState extends State<MainMenu> {
           selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
           type: BottomNavigationBarType.fixed,
           items: navbaritem,
-          backgroundColor: Color.fromARGB(50, 255, 255, 255),
+          backgroundColor: Color.fromARGB(35, 0, 0, 0),
           onTap: ((value) {
             controller.currentNavIndex.value = value;
           }),

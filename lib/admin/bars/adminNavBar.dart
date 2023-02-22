@@ -5,6 +5,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fyp/admin/screens/AdminHomeScreen.dart';
 import 'package:fyp/user/Screens/Homescreen.dart';
 import 'package:fyp/user/Screens/ManageProfile.dart';
 import '../../Controllers/bottomNavController.dart';
@@ -21,7 +22,7 @@ class _AdminMenuState extends State<AdminMenu> {
   var controller = Get.put(HomeController());
 
   var navbody = [
-    HomeScreen(),
+    AdminHomeScreen(),
     Container(
       color: Colors.amber,
     ),
@@ -74,7 +75,7 @@ class _AdminMenuState extends State<AdminMenu> {
           selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
           type: BottomNavigationBarType.fixed,
           items: navbaritem,
-          backgroundColor: Color.fromARGB(50, 255, 255, 255),
+          backgroundColor: Color.fromARGB(35, 0, 0, 0),
           onTap: ((value) {
             controller.admincurrentIndex.value = value;
           }),

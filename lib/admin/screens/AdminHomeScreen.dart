@@ -3,33 +3,28 @@
 // import 'package:fyp/LoginScreen.dart';
 // import 'package:fluttertoast/fluttertoast.dart';
 
-import 'package:badges/badges.dart' as badges;
-
 import 'package:card_swiper/card_swiper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fyp/Bars/cart.dart';
 import 'package:fyp/Controllers/data_controller.dart';
 import 'package:fyp/user/Screens/SearchScreen.dart';
 import 'package:fyp/admin/screens/inventory.dart';
-
 import '../../classes/CardItem.dart';
 import 'package:fyp/Bars/NavBar.dart';
 import '../../classes/images.dart';
 import 'package:get/get.dart';
 import '../../classes/global.dart' as global;
-import 'splash.dart' as splash;
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class AdminHomeScreen extends StatefulWidget {
+  const AdminHomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<AdminHomeScreen> createState() => _AdminHomeScreenState();
 }
 
 class HomePage {
@@ -40,24 +35,44 @@ class HomePage {
   HomePage(this.title, this.icon, this.color, this.func);
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  final user = FirebaseAuth.instance.currentUser!;
+class _AdminHomeScreenState extends State<AdminHomeScreen> {
+  // CollectionReference cf = FirebaseFirestore.instance.collection('Inventory');
+  // DatabaseReference postListRef = FirebaseDatabase.instance.ref("Inventory");
 
-  final GlobalKey<ScaffoldState> _key = GlobalKey();
-
-  var doclength;
+  // void tryprintdata() {
+  //   global.inventory['Item Name'] = postListRef;
+  //   print('Item Name is: ${global.inventory['Item Name']}');
+  //   // print('Inventory $postListRef');
+  // }
 
   @override
   void initState() {
     super.initState();
     global.readdata(user);
     global.getcategory(context);
-
+    // global.getinvo();
     fetchimage();
     //getdata();
     // tryprintdata();
   }
 
+  // void getdata() {
+  //   cf.doc().get().then(
+  //     (value) {
+  //       setState(() {
+  //         global.inventory['Item Name'] = value.data();
+  //         // ['Item Name']
+  //       });
+  //     },
+  //   );
+  //   print(global.inventory['Item Name']);
+  // }
+
+  // final data_controller controller = Get.put(data_controller());
+
+  User user = FirebaseAuth.instance.currentUser!;
+
+  // String name = "";
   List<CardItem> item = [
     CardItem(
         image: 'assets/icons/all_icon.jpg', title: 'ALL', subtitle: '\$100'),
@@ -112,8 +127,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ))),
         label: Text('update invo'),
         onPressed: () {
-          // global.getcategory1(context);
-          global.getcategory(context);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const inventory()),
+          );
         },
         icon: Icon(
           Icons.lock,
@@ -148,62 +165,65 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       );
 
+  // Widget builditemlist(BuildContext context, int index) {
+  //   return SizedBox(
+  //     width: 300,
+  //     height: 250,
+  //     child: Card(
+  //       margin: EdgeInsets.all(12),
+  //       elevation: 8,
+  //       child: ClipRRect(
+  //         borderRadius: BorderRadius.all(Radius.circular(5)),
+  //         child: Column(
+  //           children: [
+  //             Text('All'),
+  //             Row(
+  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //               children: [
+  //                 // Text('\$cos'),
+  //                 Expanded(
+  //                   child: Image.asset(
+  //                     'assets/icons/all_icon.jpg',
+  //                     width: 150,
+  //                     height: 210,
+  //                     fit: BoxFit.fill,
+  //                   ),
+  //                 )
+  //               ],
+  //             )
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  // List<Map> categories = [
+  //   {'Name': 'All', 'iconpath': 'assets/icons/all_icon.jpg'},
+  //   {'Name': 'Ram', 'iconpath': 'assets/icons/all_icon.png'},
+  //   // {'Name': 'PSU', 'iconpath': 'assets/icons/all_icon.png'},
+  //   // {'Name': 'GPU', 'iconpath': 'assets/icons/all_icon.png'},
+  //   // {'Name': 'Processor', 'iconpath': 'assets/icons/all_icon.png'},
+  //   // {'Name': 'Storage', 'iconpath': 'assets/icons/all_icon.png'},
+  // ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _key,
       backgroundColor: Colors.pink,
       drawer: NavBar(),
-      endDrawer: Cart(),
       appBar: AppBar(
         title: Text('Home Page'),
         backgroundColor: Color.fromARGB(255, 48, 10, 55),
         actions: [
-          Center(
-            child: InkWell(
-              onTap: () {
-                _key.currentState!.openEndDrawer();
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const inventory()),
+                );
               },
-              child: StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('Users')
-                    .doc(user.uid)
-                    .collection('Cart')
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    doclength = 0;
-                  } else {
-                    doclength = snapshot.data!.docs.length;
-                  }
-                  return badges.Badge(
-                    position: badges.BadgePosition.topEnd(top: -10, end: -12),
-                    showBadge: true,
-                    ignorePointer: false,
-                    badgeContent: Text(
-                      doclength.toString(),
-                    ),
-                    badgeAnimation: badges.BadgeAnimation.slide(
-                      animationDuration: Duration(seconds: 1),
-                    ),
-                    badgeStyle: badges.BadgeStyle(
-                      badgeColor: Colors.blue,
-                    ),
-                    child: Image.asset(
-                      'assets/shopping-cart.png',
-                      width: 26,
-                    ),
-                    onTap: () {
-                      _key.currentState!.openEndDrawer();
-                    },
-                  );
-                },
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 10,
-          ),
+              icon: Icon(Icons.inventory)),
         ],
       ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
@@ -272,7 +292,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(
                           height: 20,
                         ),
-                        invoscreenbtn(),
                       ],
                     ),
                   ],
@@ -286,27 +305,18 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future fetchimage() async {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(user.photoURL as String)));
-    // if (user.photoURL != null) {
-    //   global.url = user.photoURL;
-    // } else {
-    //   global.url =
-    //       'https://firebasestorage.googleapis.com/v0/b/pc-builder-2c0a4.appspot.com/o/DisplayPicture%2Fdefaultimage.jpg?alt=media&token=af41bdaf-f5f4-4f0d-ad96-78734f8eb73a';
-    // }
-    // final ref = FirebaseAuth.instance.currentUser.photoURL;
-    // final ref =
-    //     FirebaseStorage.instance.ref().child("DisplayPicture").child(user.uid);
-    // try {
-    //   if (global.url == "") global.url = await ref.getDownloadURL();
-    //   // global.img = Image(image: NetworkImage(global.url));
-    // } catch (e) {
-    //   if (global.url == "") {
-    //     global.url =
-    //         "https://firebasestorage.googleapis.com/v0/b/pc-builder-2c0a4.appspot.com/o/DisplayPicture%2Fdefaultimage.jpg?alt=media&token=af41bdaf-f5f4-4f0d-ad96-78734f8eb73a";
-    //     print("${global.url} \n defauly image");
-    //   } //  global.img = Image(image: NetworkImage(global.url));
-    // }
+    final ref =
+        FirebaseStorage.instance.ref().child("DisplayPicture").child(user.uid);
+    try {
+      if (global.url == "") global.url = await ref.getDownloadURL();
+      // global.img = Image(image: NetworkImage(global.url));
+    } catch (e) {
+      if (global.url == "") {
+        global.url =
+            "https://firebasestorage.googleapis.com/v0/b/pc-builder-2c0a4.appspot.com/o/DisplayPicture%2Fdefaultimage.jpg?alt=media&token=af41bdaf-f5f4-4f0d-ad96-78734f8eb73a";
+        print("${global.url} \n defauly image");
+      } //  global.img = Image(image: NetworkImage(global.url));
+    }
     // print(" this is done ${global.topUserPostsRef}");
     // print(global.url);
     // print(user.uid);

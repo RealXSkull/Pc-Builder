@@ -26,6 +26,9 @@ class _ManageprofileState extends State<Manageprofile> {
   PlatformFile? pickedFile;
   var dataa;
   final user = FirebaseAuth.instance.currentUser!;
+  final _phonecontroller = TextEditingController();
+  int maxLength = 11;
+  var contactno = "";
   final _namecontroller = TextEditingController(text: global.name);
   FirebaseStorage storage = FirebaseStorage.instance;
   final _addcontroller = TextEditingController(text: global.address);
@@ -40,9 +43,18 @@ class _ManageprofileState extends State<Manageprofile> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _phonecontroller.dispose();
+    _namecontroller.dispose();
+    _addcontroller.dispose();
+    super.dispose();
+  }
+
   Future<void> readdata() async {
     _namecontroller.text = dataa['name'];
     _addcontroller.text = dataa['address'];
+    _phonecontroller.text = dataa['contactno'];
   }
 
   Future imagepicker() async {
@@ -134,14 +146,7 @@ class _ManageprofileState extends State<Manageprofile> {
                           height: 20,
                         ),
 
-                        const SizedBox(
-                          height: 20,
-                        ),
-
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        // buildphone(),
+                        buildphone(),
                         // const SizedBox(
                         //   height: 20,
                         // ),
@@ -201,6 +206,53 @@ class _ManageprofileState extends State<Manageprofile> {
           size: 24,
         ),
       ),
+    );
+  }
+
+  Widget buildphone() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        const Text(
+          'Contact No.',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 15),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(),
+          ),
+          height: 40,
+          child: TextField(
+            controller: _phonecontroller,
+            onChanged: (String newVal) {
+              if (newVal.length <= maxLength) {
+                contactno = newVal;
+              } else {
+                _phonecontroller.text = contactno;
+              }
+            },
+            // maxLength: 11,
+            keyboardType: TextInputType.number,
+            style: const TextStyle(color: Colors.black87),
+            decoration: const InputDecoration(
+                border: InputBorder.none,
+                prefixIcon: Icon(
+                  Icons.phone,
+                  color: Color(0xff5ac18e),
+                ),
+                hintText: '03xx-xxxxxxx',
+                hintStyle: TextStyle(color: Colors.black38)),
+          ),
+        )
+      ],
     );
   }
 
@@ -319,6 +371,11 @@ class _ManageprofileState extends State<Manageprofile> {
     if (!isValid) return;
 
     try {
+      // showDialog(
+      //   context: context,
+      //   barrierDismissible: false,
+      //   builder: (context) => Center(child: CircularProgressIndicator()),
+      // );
       if (name != null) {
         await user.updateDisplayName(name);
         final docuser =
@@ -327,6 +384,7 @@ class _ManageprofileState extends State<Manageprofile> {
           'Name': name,
           'Address': address,
           'role': global.role,
+          'contactno': _phonecontroller.value
         };
         await docuser.update(data);
       }
@@ -336,6 +394,7 @@ class _ManageprofileState extends State<Manageprofile> {
           .child("DisplayPicture")
           .child(user.uid);
       global.url = await ref.getDownloadURL();
+      // Navigator.pop(context);
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Profile Updated!')));
     } on FirebaseAuthException catch (e) {

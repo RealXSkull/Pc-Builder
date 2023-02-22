@@ -1,7 +1,9 @@
 // ignore_for_file: use_key_in_widget_constructors, must_be_immutable, camel_case_types, unnecessary_null_comparison
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fyp/classes/global.dart';
 
 class itemdetail extends StatefulWidget {
   Map<String, dynamic> receivedMap;
@@ -13,6 +15,7 @@ class itemdetail extends StatefulWidget {
 }
 
 class _itemdetailState extends State<itemdetail> {
+  final user = FirebaseAuth.instance.currentUser!;
   bool _visible = true;
   // bool isopen = false;
   // var zawat = FirebaseFirestore.instance.collection('Feedback').snapshots();
@@ -356,7 +359,9 @@ class _itemdetailState extends State<itemdetail> {
                           //     textStyle: const TextStyle(
                           //   fontSize: 20,
                           // )),
-                          onPressed: () {},
+                          onPressed: () {
+                            addtocart();
+                          },
                           child: const Icon(Icons.shopping_cart),
                         ),
                       )
@@ -367,6 +372,27 @@ class _itemdetailState extends State<itemdetail> {
             ],
           ),
         ));
+  }
+
+  Future addtocart() async {
+    try {
+      final res = FirebaseFirestore.instance
+          .collection('Users')
+          .doc(user.uid)
+          .collection('Cart')
+          .doc();
+      final doc = {
+        'Item Name': widget.receivedMap['Item Name'],
+        'price': widget.receivedMap['Price'],
+        'Image': widget.receivedMap['Image'],
+      };
+      await res.set(doc);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Succesfully Added to Cart')));
+    } on FirebaseException catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.toString())));
+    }
   }
 
   void _togglereview() {
