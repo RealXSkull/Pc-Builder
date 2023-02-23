@@ -153,8 +153,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       key: _key,
       backgroundColor: Colors.pink,
-      drawer: NavBar(),
-      endDrawer: Cart(),
+      drawer: SafeArea(child: NavBar()),
+      endDrawer: SafeArea(child: Cart()),
       appBar: AppBar(
         title: Text('Home Page'),
         backgroundColor: Color.fromARGB(255, 48, 10, 55),

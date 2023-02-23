@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, must_be_immutable, camel_case_types, unnecessary_null_comparison
+// ignore_for_file: use_key_in_widget_constructors, must_be_immutable, camel_case_types, unnecessary_null_comparison, use_build_context_synchronously
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -375,20 +375,36 @@ class _itemdetailState extends State<itemdetail> {
   }
 
   Future addtocart() async {
+    final res = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user.uid)
+        .collection('Cart')
+        .doc();
+    final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user.uid)
+        .collection('Cart')
+        .where('Item Name', isEqualTo: widget.receivedMap['Item Name'])
+        .get();
     try {
-      final res = FirebaseFirestore.instance
-          .collection('Users')
-          .doc(user.uid)
-          .collection('Cart')
-          .doc();
-      final doc = {
-        'Item Name': widget.receivedMap['Item Name'],
-        'price': widget.receivedMap['Price'],
-        'Image': widget.receivedMap['Image'],
-      };
-      await res.set(doc);
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Succesfully Added to Cart')));
+      if (querySnapshot.docs.isNotEmpty) {
+        final userRef = querySnapshot.docs.first.reference;
+        final count = querySnapshot.docs.first.data();
+        await userRef.update({'Count': FieldValue.increment(1)});
+      } else {
+        final doc = {
+          'Item Name': widget.receivedMap['Item Name'],
+          'price': widget.receivedMap['Price'],
+          'Image': widget.receivedMap['Image'],
+          'Count': 1
+        };
+        await res.set(doc);
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Succesfully Added to Cart'),
+        ),
+      );
     } on FirebaseException catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.toString())));

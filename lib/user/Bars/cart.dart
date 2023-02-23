@@ -13,10 +13,64 @@ import 'package:fyp/user/Screens/ManageProfile.dart';
 import 'package:fyp/user/Screens/Review.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Cart extends StatelessWidget {
+class Cart extends StatefulWidget {
+  const Cart({super.key});
+
+  @override
+  State<Cart> createState() => _CartState();
+}
+
+class _CartState extends State<Cart> {
+  @override
+  void initstate() {
+    // totalcounter();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    var total = 0;
+    var dc = 0;
+    var cost = 0;
     final user = FirebaseAuth.instance.currentUser!;
+
+    //    Future totalcounter() async{
+    //   StreamBuilder(
+    //     stream: FirebaseFirestore.instance.collection('Users').doc(user.uid).collection('Cart').snapshots(),
+    //     builder: (context, snapshot) {
+    //     },
+    //   );
+    // }
+
+    Future inc(Map<String, dynamic> receivedMap) async {
+      final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(user.uid)
+          .collection('Cart')
+          .where('Item Name', isEqualTo: receivedMap['Item Name'])
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        final userRef = querySnapshot.docs.first.reference;
+        final count = querySnapshot.docs.first.data();
+        await userRef.update({'Count': FieldValue.increment(1)});
+      }
+    }
+
+    Future dec(Map<String, dynamic> receivedMap) async {
+      final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(user.uid)
+          .collection('Cart')
+          .where('Item Name', isEqualTo: receivedMap['Item Name'])
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        final userRef = querySnapshot.docs.first.reference;
+        final count = querySnapshot.docs.first.data();
+        await userRef.update({'Count': FieldValue.increment(-1)});
+      }
+    }
 
     return Drawer(
       child: Column(
@@ -24,14 +78,15 @@ class Cart extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Container(
-                color: Colors.blue,
-                child: Center(
-                  child: Text(
-                    'CART',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                )),
+              color: Colors.blue,
+              child: Center(
+                child: Text(
+                  'My Cart',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
           ),
           Expanded(
             flex: 9,
@@ -47,7 +102,7 @@ class Cart extends StatelessWidget {
                           .collection('Users')
                           .doc(user.uid)
                           .collection('Cart')
-                          .snapshots(),
+                          .snapshots(includeMetadataChanges: true),
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {
                         if (snapshot.hasError) {
@@ -81,6 +136,7 @@ class Cart extends StatelessWidget {
                               var data = snapshot.data!.docs[index].data()
                                   as Map<String, dynamic>;
 
+                              // total = data['price'];
                               return Card(
                                 color: Colors.white,
                                 child: ListTile(
@@ -92,20 +148,37 @@ class Cart extends StatelessWidget {
                                   //       fit: BoxFit.fill,
                                   //     )),
                                   tileColor: Colors.grey[350],
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5)),
                                   title: Text(data['Item Name']),
-                                  // subtitle: Text(data['Category']),
-                                  trailing: Column(
+                                  subtitle: Text(
+                                    'Price: ${data['price'].toString()}/- ',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  // trailing: Column(
+                                  //   mainAxisSize: MainAxisSize.min,
+                                  //   children: [
+                                  // Text(data['price'].toString()),
+                                  trailing: Row(
+                                    mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Text(data['price'].toString()),
-                                      // Row(
-                                      //   children: [
                                       IconButton(
-                                        icon: Icon(Icons.remove),
-                                        onPressed: () {},
+                                        icon: Icon(
+                                          Icons.remove,
+                                          size: 20,
+                                        ),
+                                        onPressed: () {
+                                          dec(data);
+                                        },
                                       ),
+                                      Text(data['Count'].toString()),
                                       IconButton(
                                         icon: Icon(Icons.add),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          inc(data);
+                                        },
                                       ),
                                       //   ],
                                       // ),
@@ -115,14 +188,27 @@ class Cart extends StatelessWidget {
                                   // leading: Image.network(src),
                                 ),
                               );
-
-                              return Container();
                             }),
                           );
                         }
                       }),
                 ),
               ],
+            ),
+          ),
+          Expanded(
+            // flex: 1,
+            child: Container(
+              padding: EdgeInsets.fromLTRB(5, 5, 0, 0),
+              width: MediaQuery.of(context).size.width,
+              color: Colors.blue,
+              child: Text(
+                'Total is: $total',
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+                textAlign: TextAlign.start,
+              ),
             ),
           ),
         ],
