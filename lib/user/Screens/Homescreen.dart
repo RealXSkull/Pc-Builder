@@ -13,16 +13,16 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fyp/Bars/cart.dart';
-import 'package:fyp/Controllers/data_controller.dart';
+import 'package:fyp/user/Bars/cart.dart';
+import 'package:fyp/user/Controllers/data_controller.dart';
 import 'package:fyp/user/Screens/SearchScreen.dart';
 import 'package:fyp/admin/screens/inventory.dart';
 
-import '../../classes/CardItem.dart';
-import 'package:fyp/Bars/NavBar.dart';
-import '../../classes/images.dart';
+import '../classes/CardItem.dart';
+import 'package:fyp/user/Bars/NavBar.dart';
+import '../classes/images.dart';
 import 'package:get/get.dart';
-import '../../classes/global.dart' as global;
+import '../classes/global.dart' as global;
 import 'splash.dart' as splash;
 
 class HomeScreen extends StatefulWidget {
@@ -162,7 +162,9 @@ class _HomeScreenState extends State<HomeScreen> {
           Center(
             child: InkWell(
               onTap: () {
-                _key.currentState!.openEndDrawer();
+                if (doclength != 0) {
+                  _key.currentState!.openEndDrawer();
+                }
               },
               child: StreamBuilder(
                 stream: FirebaseFirestore.instance
@@ -194,7 +196,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: 26,
                     ),
                     onTap: () {
-                      _key.currentState!.openEndDrawer();
+                      if (doclength != 0) {
+                        _key.currentState!.openEndDrawer();
+                      }
                     },
                   );
                 },
@@ -208,78 +212,80 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.dark,
-        child: Stack(
-          children: <Widget>[
-            Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: Color(0xfff7f7f7),
-              ),
-              child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Searchbar(),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          "Categories",
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        AspectRatio(
-                          aspectRatio: 6 / 3,
-                          child: Swiper(
-                            autoplay: true,
-                            // itemWidth: 250,
-                            itemCount: cards.length,
-                            itemBuilder: (context, index) {
-                              return ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image(
-                                  image: AssetImage(cards[index]),
-                                  fit: BoxFit.fill,
-                                ),
-                              );
-                              // OnTap(index) {
-                              //   // Navigator.push(
-                              //   //     context,
-                              //   //     MaterialPageRoute(
-                              //   //         builder: (context) => Review()));
-                              // }
-                            },
-                            viewportFraction: 0.8,
-                            scale: 0.8,
-                            pagination: SwiperPagination(),
-                            // itemWidth: 500,
-                            // layout: SwiperLayout.STACK,
+        child: SafeArea(
+          child: Stack(
+            children: <Widget>[
+              Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: Color(0xfff7f7f7),
+                ),
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Searchbar(),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            "Categories",
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
                           ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        invoscreenbtn(),
-                      ],
-                    ),
-                  ],
+                          SizedBox(
+                            height: 10,
+                          ),
+                          AspectRatio(
+                            aspectRatio: 6 / 3,
+                            child: Swiper(
+                              autoplay: true,
+                              // itemWidth: 250,
+                              itemCount: cards.length,
+                              itemBuilder: (context, index) {
+                                return ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image(
+                                    image: AssetImage(cards[index]),
+                                    fit: BoxFit.fill,
+                                  ),
+                                );
+                                // OnTap(index) {
+                                //   // Navigator.push(
+                                //   //     context,
+                                //   //     MaterialPageRoute(
+                                //   //         builder: (context) => Review()));
+                                // }
+                              },
+                              viewportFraction: 0.8,
+                              scale: 0.8,
+                              pagination: SwiperPagination(),
+                              // itemWidth: 500,
+                              // layout: SwiperLayout.STACK,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          invoscreenbtn(),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

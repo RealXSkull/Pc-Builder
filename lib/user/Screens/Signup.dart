@@ -8,7 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../Bars/bottomNavBar.dart';
+import '../Bars/bottomNavBar.dart';
 
 var useridd;
 

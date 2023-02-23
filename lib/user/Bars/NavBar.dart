@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/user/Screens/LoginScreen.dart';
-import 'package:fyp/Bars/bottomNavBar.dart';
+import 'package:fyp/user/Bars/bottomNavBar.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:fyp/user/Screens/ManageProfile.dart';
 import 'package:fyp/user/Screens/Review.dart';

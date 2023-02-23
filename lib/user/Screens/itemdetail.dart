@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fyp/classes/global.dart';
+import 'package:fyp/user/classes/global.dart';
 
 class itemdetail extends StatefulWidget {
   Map<String, dynamic> receivedMap;

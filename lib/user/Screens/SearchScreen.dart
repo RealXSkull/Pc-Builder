@@ -3,7 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
-import '../../classes/global.dart' as globals;
+import '../classes/global.dart' as globals;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/user/Screens/itemdetail.dart';
@@ -118,6 +118,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                           'assets/all_icon.jpg',
                                           fit: BoxFit.fill,
                                         )),
+                                    tileColor: Colors.grey[350],
                                     title: Text(data['Item Name']),
                                     subtitle: Text(data['Category']),
                                     trailing: Text(data['Price'].toString()),

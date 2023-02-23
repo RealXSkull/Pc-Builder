@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/user/Screens/LoginScreen.dart';
-import 'package:fyp/Bars/bottomNavBar.dart';
+import 'package:fyp/user/Bars/bottomNavBar.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:fyp/user/Screens/ManageProfile.dart';
 import 'package:fyp/user/Screens/Review.dart';
@@ -94,7 +94,24 @@ class Cart extends StatelessWidget {
                                   tileColor: Colors.grey[350],
                                   title: Text(data['Item Name']),
                                   // subtitle: Text(data['Category']),
-                                  trailing: Text(data['price'].toString()),
+                                  trailing: Column(
+                                    children: [
+                                      Text(data['price'].toString()),
+                                      // Row(
+                                      //   children: [
+                                      IconButton(
+                                        icon: Icon(Icons.remove),
+                                        onPressed: () {},
+                                      ),
+                                      IconButton(
+                                        icon: Icon(Icons.add),
+                                        onPressed: () {},
+                                      ),
+                                      //   ],
+                                      // ),
+                                    ],
+                                  ),
+                                  // trailing: Text(data['price'].toString()),
                                   // leading: Image.network(src),
                                 ),
                               );

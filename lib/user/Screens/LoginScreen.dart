@@ -9,8 +9,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../admin/bars/adminNavBar.dart';
-import '../../Bars/bottomNavBar.dart';
-import '../../Controllers/Authpage.dart';
+import '../Bars/bottomNavBar.dart';
+import '../Controllers/Authpage.dart';
 import 'splash.dart' as splash;
 
 class LoginScreen extends StatefulWidget {

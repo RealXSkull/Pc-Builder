@@ -8,13 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fyp/admin/bars/adminNavBar.dart';
 import 'package:fyp/user/Screens/Signup.dart';
-import 'package:fyp/classes/global.dart' as globals;
-import 'package:fyp/Bars/NavBar.dart';
+import 'package:fyp/user/classes/global.dart' as globals;
+import 'package:fyp/user/Bars/NavBar.dart';
 import 'package:fyp/user/Screens/Homescreen.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../Bars/bottomNavBar.dart';
-import '../../Controllers/Authpage.dart';
+import '../Bars/bottomNavBar.dart';
+import '../Controllers/Authpage.dart';
 
 var rolechecker;
 var snapshot1;

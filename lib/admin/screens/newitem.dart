@@ -11,14 +11,14 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fyp/Controllers/data_controller.dart';
+import 'package:fyp/user/Controllers/data_controller.dart';
 import 'package:fyp/user/Screens/SearchScreen.dart';
 import 'package:fyp/admin/screens/inventory.dart';
-import '../../classes/CardItem.dart';
-import 'package:fyp/Bars/NavBar.dart';
-import '../../classes/images.dart';
+import '../../user/classes/CardItem.dart';
+import 'package:fyp/user/Bars/NavBar.dart';
+import '../../user/classes/images.dart';
 import 'package:get/get.dart';
-import '../../classes/global.dart' as global;
+import '../../user/classes/global.dart' as global;
 
 class NewItemScreen extends StatefulWidget {
   const NewItemScreen({super.key});

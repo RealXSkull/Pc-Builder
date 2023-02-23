@@ -6,7 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fyp/user/Screens/Signup.dart';
-import 'package:fyp/classes/global.dart' as globals;
+import 'package:fyp/user/classes/global.dart' as globals;
 import 'package:flutter/services.dart';
 import 'package:flutter_launcher_icons/custom_exceptions.dart';
 import 'package:get/get.dart';
