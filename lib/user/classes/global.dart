@@ -2,8 +2,6 @@
 
 library globals;
 
-import 'dart:collection';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -15,8 +13,9 @@ Map<String, dynamic> data1 = [] as Map<String, dynamic>;
 var role = "";
 var url = "";
 var address = "";
+var phone = "";
 var name = "";
-
+List items = [];
 Image? img;
 // List inventory = {'Item Name': '', 'Category': ''} as List;
 
@@ -49,8 +48,6 @@ Future<List> getcategory(BuildContext context) async {
   return invo;
 }
 
-
-
 Future<void> readdata(User user) async {
   FirebaseFirestore.instance
       .collection('Users')
@@ -59,6 +56,7 @@ Future<void> readdata(User user) async {
       .then((value) {
     name = value['Name'];
     address = value['Address'];
+    phone = value['Phone'].toString();
     role = value['role'];
   });
 }

@@ -311,7 +311,7 @@ class SignupArea extends State<Signup> {
                 _controller.text = contactno;
               }
             },
-            // maxLength: 11,
+            maxLength: 11,
             keyboardType: TextInputType.number,
             style: const TextStyle(color: Colors.black87),
             decoration: const InputDecoration(
@@ -474,7 +474,7 @@ class SignupArea extends State<Signup> {
         'role': 'user',
         'Email': emailcontroller.text,
         'Address': '',
-        'Phone': ''
+        'Phone': _controller
       };
       await docuser.set(data);
       Fluttertoast.showToast(msg: 'Signup Succesful!');

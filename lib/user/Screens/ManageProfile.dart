@@ -137,7 +137,7 @@ class _ManageprofileState extends State<Manageprofile> {
                             ],
                           ),
                         ),
-                        // buildname(),
+
                         SizedBox(
                           height: 15,
                         ),

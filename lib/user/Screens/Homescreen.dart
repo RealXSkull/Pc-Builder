@@ -191,10 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     badgeStyle: badges.BadgeStyle(
                       badgeColor: Colors.blue,
                     ),
-                    child: Image.asset(
-                      'assets/shopping-cart.png',
-                      width: 26,
-                    ),
+                    child: Icon(Icons.shopping_cart),
                     onTap: () {
                       if (doclength != 0) {
                         _key.currentState!.openEndDrawer();
