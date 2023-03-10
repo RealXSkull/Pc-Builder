@@ -178,14 +178,6 @@ class _ManageprofileState extends State<Manageprofile> {
         ));
   }
 
-  Future selectFile() async {
-    final selectedpicture = await FilePicker.platform.pickFiles();
-    if (selectedpicture == null) return null;
-    setState(() {
-      pickedFile = selectedpicture.files.first;
-    });
-  }
-
   Widget selectimage() {
     return SizedBox(
       height: 40,

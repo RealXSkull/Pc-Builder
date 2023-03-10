@@ -87,6 +87,27 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
     CardItem(
         image: 'assets/icons/all_icon.jpg', title: 'ALL', subtitle: '\$100'),
   ];
+  Widget uploaditembtn() {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => inventory()));
+      },
+      child: Container(
+        height: 120,
+        width: 120,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.grey[350],
+        ),
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [Text('Upload Item'), Icon(Icons.upload_file)],
+        ),
+      ),
+    );
+  }
 
   Widget Searchbar() {
     return Container(
@@ -109,32 +130,6 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => SearchScreen()));
           },
-        ),
-      ),
-    );
-  }
-
-  Widget invoscreenbtn() {
-    return Container(
-      height: 40,
-      width: double.infinity,
-      child: ElevatedButton.icon(
-        style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlue),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ))),
-        label: Text('update invo'),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const inventory()),
-          );
-        },
-        icon: Icon(
-          Icons.lock,
-          size: 24,
         ),
       ),
     );
@@ -165,48 +160,6 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         ),
       );
 
-  // Widget builditemlist(BuildContext context, int index) {
-  //   return SizedBox(
-  //     width: 300,
-  //     height: 250,
-  //     child: Card(
-  //       margin: EdgeInsets.all(12),
-  //       elevation: 8,
-  //       child: ClipRRect(
-  //         borderRadius: BorderRadius.all(Radius.circular(5)),
-  //         child: Column(
-  //           children: [
-  //             Text('All'),
-  //             Row(
-  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //               children: [
-  //                 // Text('\$cos'),
-  //                 Expanded(
-  //                   child: Image.asset(
-  //                     'assets/icons/all_icon.jpg',
-  //                     width: 150,
-  //                     height: 210,
-  //                     fit: BoxFit.fill,
-  //                   ),
-  //                 )
-  //               ],
-  //             )
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  // List<Map> categories = [
-  //   {'Name': 'All', 'iconpath': 'assets/icons/all_icon.jpg'},
-  //   {'Name': 'Ram', 'iconpath': 'assets/icons/all_icon.png'},
-  //   // {'Name': 'PSU', 'iconpath': 'assets/icons/all_icon.png'},
-  //   // {'Name': 'GPU', 'iconpath': 'assets/icons/all_icon.png'},
-  //   // {'Name': 'Processor', 'iconpath': 'assets/icons/all_icon.png'},
-  //   // {'Name': 'Storage', 'iconpath': 'assets/icons/all_icon.png'},
-  // ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -215,16 +168,16 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
       appBar: AppBar(
         title: Text('Home Page'),
         backgroundColor: Color.fromARGB(255, 48, 10, 55),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const inventory()),
-                );
-              },
-              icon: Icon(Icons.inventory)),
-        ],
+        // actions: [
+        //   IconButton(
+        //       onPressed: () {
+        //         Navigator.push(
+        //           context,
+        //           MaterialPageRoute(builder: (context) => const inventory()),
+        //         );
+        //       },
+        //       icon: Icon(Icons.inventory)),
+        // ],
       ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.dark,
@@ -294,6 +247,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                         ),
                       ],
                     ),
+                    uploaditembtn(),
                   ],
                 ),
               ),

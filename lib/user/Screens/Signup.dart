@@ -302,8 +302,9 @@ class SignupArea extends State<Signup> {
             border: Border.all(),
           ),
           height: 60,
-          child: TextField(
+          child: TextFormField(
             controller: _controller,
+
             onChanged: (String newVal) {
               if (newVal.length <= maxLength) {
                 contactno = newVal;
@@ -311,7 +312,16 @@ class SignupArea extends State<Signup> {
                 _controller.text = contactno;
               }
             },
-            maxLength: 11,
+            validator: (val) {
+              if (_controller.text == "") {
+                return 'Contact cannot be empty';
+              } else if (_controller.text.length < 11) {
+                return 'Contact No should be 11';
+              } else {
+                return null;
+              }
+            },
+            // maxLength: 11,
             keyboardType: TextInputType.number,
             style: const TextStyle(color: Colors.black87),
             decoration: const InputDecoration(

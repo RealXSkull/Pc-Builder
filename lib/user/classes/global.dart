@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 Map<String, dynamic> data1 = [] as Map<String, dynamic>;
 var role = "";
 var url = "";
+var itemurl = "";
 var address = "";
 var phone = "";
 var name = "";
