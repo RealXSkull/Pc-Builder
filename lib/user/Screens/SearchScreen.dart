@@ -1,9 +1,9 @@
 // ignore_for_file: file_names
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:get/get.dart';
-import '../classes/global.dart' as globals;
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_database/firebase_database.dart';
+// import 'package:get/get.dart';
+// import '../classes/global.dart' as globals;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/user/Screens/itemdetail.dart';
@@ -65,7 +65,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         // .collection("Users")
                         // .doc('Hardware')
                         // .collection('Gpu')
-                        .where("Inventory", isNotEqualTo: 0)
+                        .where("Inventory", isGreaterThan: 0)
                         // .where("Item Name", arrayContains: searchkey)
                         // .where("Item Name", isEqualTo: searchkey)
                         // .startAt("i")
@@ -112,12 +112,19 @@ class _SearchScreenState extends State<SearchScreen> {
                                   },
                                   child: ListTile(
                                     leading: SizedBox(
-                                        height: 60,
-                                        width: 60,
-                                        child: Image.asset(
-                                          'assets/all_icon.jpg',
-                                          fit: BoxFit.fill,
-                                        )),
+                                      height: 60,
+                                      width: 60,
+                                      child: (data['url'] == null)
+                                          ? Image.asset(
+                                              'assets/all_icon.jpg',
+                                              fit: BoxFit.fill,
+                                            )
+                                          : Image.network(
+                                              data['url'],
+                                              height: 60,
+                                              width: 60,
+                                            ),
+                                    ),
                                     tileColor: Colors.grey[350],
                                     title: Text(data['Item Name']),
                                     subtitle: Text(data['Category']),

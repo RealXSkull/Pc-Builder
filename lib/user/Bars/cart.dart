@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, file_names, unused_import, use_build_context_synchronously, non_constant_identifier_names, avoid_types_as_parameter_names, avoid_function_literals_in_foreach_calls
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, file_names, unused_import, use_build_context_synchronously, non_constant_identifier_names, avoid_types_as_parameter_names, avoid_function_literals_in_foreach_calls, prefer_typing_uninitialized_variables
 
 import 'dart:async';
 
@@ -10,7 +10,7 @@ import 'package:intl/intl.dart';
 import '../Controllers/Authpage.dart';
 import '../classes/global.dart' as globals;
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/user/Screens/LoginScreen.dart';
 import 'package:fyp/user/Bars/bottomNavBar.dart';
@@ -131,233 +131,178 @@ class _CartState extends State<Cart> {
       // if(querySnapshot.docs['Count'])
     }
 
-    return Drawer(
-      child: Column(
-        children: [
-          Container(
-            color: Colors.blue,
-            height: MediaQuery.of(context).size.height * 0.07,
-            child: Center(
-              child: Text(
-                'My Cart',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
+    return SafeArea(
+      child: Drawer(
+        child: Column(
+          children: [
+            Container(
+              color: Colors.blue,
+              height: MediaQuery.of(context).size.height * 0.07,
+              child: Center(
+                child: Text(
+                  'My Cart',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.657,
-            child: ListView(
-              shrinkWrap: true,
-              padding:
-                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.657,
-                  child: StreamBuilder(
-                      stream: FirebaseFirestore.instance
-                          .collection('Users')
-                          .doc(user.uid)
-                          .collection('Cart')
-                          .snapshots(includeMetadataChanges: true),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<QuerySnapshot> snapshot) {
-                        if (snapshot.hasError) {
-                          return const Center(
-                            child: Text("Something Went Wrong"),
-                          );
-                        } else if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Center(
-                            heightFactor: 3,
-                            widthFactor: 3,
-                            child: SizedBox(
-                              height: 100,
-                              width: 100,
-                              child: CircularProgressIndicator(),
-                            ),
-                          );
-                        } else if (snapshot.data!.docs.isEmpty) {
-                          // return const Center(
-                          return Center(
-                            child: Text(
-                              'Cart is Empty',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
-                            ),
-                          );
-                          // );
-                        } else {
-                          return ListView.builder(
-                            itemCount: snapshot.data!.docs.length,
-                            itemBuilder: ((context, index) {
-                              data = snapshot.data!.docs[index].data()
-                                  as Map<String, dynamic>;
-                              if (globals.items.length > index) {
-                                globals.items.clear();
-                              }
-                              globals.items
-                                  .add(snapshot.data!.docs[index].data());
-                              // globals.items.add(data);
-                              // total = data['price'];
-                              return Card(
-                                color: Colors.white,
-                                child: ListTile(
-                                  // leading: SizedBox(
-                                  //   height: 50,
-                                  //   width: 50,
-                                  //   child: Image.asset(
-                                  //     'assets/all_icon.jpg',
-                                  //     fit: BoxFit.fill,
-                                  //   ),
-                                  // ),
-                                  tileColor: Colors.grey[350],
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5)),
-                                  title: Text(data['Item Name']),
-                                  subtitle: Row(
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.657,
+              child: ListView(
+                shrinkWrap: true,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.657,
+                    child: StreamBuilder(
+                        stream: FirebaseFirestore.instance
+                            .collection('Users')
+                            .doc(user.uid)
+                            .collection('Cart')
+                            .snapshots(includeMetadataChanges: true),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (snapshot.hasError) {
+                            return const Center(
+                              child: Text("Something Went Wrong"),
+                            );
+                          } else if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              heightFactor: 3,
+                              widthFactor: 3,
+                              child: SizedBox(
+                                height: 100,
+                                width: 100,
+                                child: CircularProgressIndicator(),
+                              ),
+                            );
+                          } else if (snapshot.data!.docs.isEmpty) {
+                            // return const Center(
+                            return Center(
+                              child: Text(
+                                'Cart is Empty',
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
+                              ),
+                            );
+                            // );
+                          } else {
+                            return ListView.builder(
+                              itemCount: snapshot.data!.docs.length,
+                              itemBuilder: ((context, index) {
+                                data = snapshot.data!.docs[index].data()
+                                    as Map<String, dynamic>;
+                                if (globals.items.length > index) {
+                                  globals.items.clear();
+                                }
+                                globals.items
+                                    .add(snapshot.data!.docs[index].data());
+                                // globals.items.add(data);
+                                // total = data['price'];
+                                return Card(
+                                  color: Colors.white,
+                                  child: ListTile(
+                                    // leading: SizedBox(
+                                    //   height: 50,
+                                    //   width: 50,
+                                    //   child: Image.asset(
+                                    //     'assets/all_icon.jpg',
+                                    //     fit: BoxFit.fill,
+                                    //   ),
+                                    // ),
+                                    tileColor: Colors.grey[350],
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5)),
+                                    title: Text(data['Item Name']),
+                                    subtitle: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            'Price: ',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(
+                                            NumberFormat.simpleCurrency(
+                                              locale: 'ur_PK',
+                                              decimalDigits: 0,
+                                            ).format(data['price']),
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ]),
+                                    // trailing: Column(
+                                    //   mainAxisSize: MainAxisSize.min,
+                                    //   children: [
+                                    // Text(data['price'].toString()),
+                                    trailing: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Text(
-                                          'Price: ',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
+                                        IconButton(
+                                          icon: Icon(
+                                            Icons.remove,
+                                            size: 20,
+                                          ),
+                                          onPressed: () {
+                                            // ScaffoldMessenger.of(context)
+                                            //     .showSnackBar(SnackBar(
+                                            //         content:
+                                            //             Text(index.toString())));
+                                            dec(data, index);
+                                          },
                                         ),
-                                        Text(
-                                          NumberFormat.simpleCurrency(
-                                            locale: 'ur_PK',
-                                            decimalDigits: 0,
-                                          ).format(data['price']),
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ]),
-                                  // trailing: Column(
-                                  //   mainAxisSize: MainAxisSize.min,
-                                  //   children: [
-                                  // Text(data['price'].toString()),
-                                  trailing: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      IconButton(
-                                        icon: Icon(
-                                          Icons.remove,
-                                          size: 20,
-                                        ),
-                                        onPressed: () {
-                                          // ScaffoldMessenger.of(context)
-                                          //     .showSnackBar(SnackBar(
-                                          //         content:
-                                          //             Text(index.toString())));
-                                          dec(data, index);
-                                        },
-                                      ),
 
-                                      Container(
-                                        width: 22,
-                                        height: 25,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                          color: Colors.white,
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            data['Count'].toString(),
+                                        Container(
+                                          width: 22,
+                                          height: 25,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            color: Colors.white,
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              data['Count'].toString(),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      IconButton(
-                                        icon: Icon(Icons.add),
-                                        onPressed: () {
-                                          inc(data, index);
-                                        },
-                                      ),
-                                      //   ],
-                                      // ),
-                                    ],
+                                        IconButton(
+                                          icon: Icon(Icons.add),
+                                          onPressed: () {
+                                            inc(data, index);
+                                          },
+                                        ),
+                                        //   ],
+                                        // ),
+                                      ],
+                                    ),
+                                    // trailing: Text(data['price'].toString()),
+                                    // leading: Image.network(src),
                                   ),
-                                  // trailing: Text(data['price'].toString()),
-                                  // leading: Image.network(src),
-                                ),
-                              );
-                            }),
-                          );
-                        }
-                      }),
-                ),
-              ],
+                                );
+                              }),
+                            );
+                          }
+                        }),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Container(
-            height: MediaQuery.of(context).size.height * 0.16,
-            padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
-            width: MediaQuery.of(context).size.width,
-            color: Color(0xfff4f4f4),
-            child: Column(
-              children: [
-                Row(children: [
-                  Text(
-                    'Price:',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.start,
-                  ),
-                  Spacer(),
-                  Text(
-                    NumberFormat.simpleCurrency(
-                      locale: 'ur_PK',
-                      decimalDigits: 2,
-                    ).format(checker),
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.start,
-                  ),
-                ]),
-                SizedBox(
-                  height: 5,
-                ),
-                Row(
-                  children: [
+            Container(
+              height: MediaQuery.of(context).size.height * 0.16,
+              padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+              width: MediaQuery.of(context).size.width,
+              color: Color(0xfff4f4f4),
+              child: Column(
+                children: [
+                  Row(children: [
                     Text(
-                      'Delivery Charges:',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                    Spacer(),
-                    Text(
-                      dc.toString(),
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 2,
-                  color: Colors.black,
-                ),
-                SizedBox(
-                  height: 1,
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 2,
-                  color: Colors.black,
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      'Total:',
+                      'Price:',
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.start,
@@ -367,27 +312,86 @@ class _CartState extends State<Cart> {
                       NumberFormat.simpleCurrency(
                         locale: 'ur_PK',
                         decimalDigits: 2,
-                      ).format(total),
+                      ).format(checker),
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.start,
                     ),
-                  ],
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Row(
-                  children: [
-                    clearcart(),
-                    Spacer(),
-                    checkoutbtn(),
-                  ],
-                ),
-              ],
+                  ]),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'Delivery Charges:',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.start,
+                      ),
+                      Spacer(),
+                      Text(
+                        dc.toString(),
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.start,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 2,
+                    color: Colors.black,
+                  ),
+                  SizedBox(
+                    height: 1,
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 2,
+                    color: Colors.black,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'Total:',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.start,
+                      ),
+                      Spacer(),
+                      Text(
+                        NumberFormat.simpleCurrency(
+                          locale: 'ur_PK',
+                          decimalDigits: 2,
+                        ).format(total),
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.start,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      clearcart(),
+                      Spacer(),
+                      checkoutbtn(),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -406,13 +410,15 @@ class _CartState extends State<Cart> {
         label: Text('Checkout'),
         onPressed: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => checkoutscreen(
-                        receivedMap: data,
-                        total: total,
-                        items: globals.items,
-                      )));
+            context,
+            MaterialPageRoute(
+              builder: (context) => checkoutscreen(
+                receivedMap: data,
+                total: total,
+                items: globals.items,
+              ),
+            ),
+          );
         },
         icon: Icon(
           Icons.shopping_cart_checkout,

@@ -1,16 +1,16 @@
 // import 'dart:html';
 
-// ignore_for_file: use_build_context_synchronously, unrelated_type_equality_checks
+// ignore_for_file: use_build_context_synchronously, unrelated_type_equality_checks, prefer_typing_uninitialized_variables
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fyp/admin/bars/adminNavBar.dart';
-import 'package:fyp/user/Screens/Signup.dart';
+// import 'package:fyp/user/Screens/Signup.dart';
 import 'package:fyp/user/classes/global.dart' as globals;
-import 'package:fyp/user/Bars/NavBar.dart';
-import 'package:fyp/user/Screens/Homescreen.dart';
+// import 'package:fyp/user/Bars/NavBar.dart';
+// import 'package:fyp/user/Screens/Homescreen.dart';
 import 'package:video_player/video_player.dart';
 
 import '../Bars/bottomNavBar.dart';

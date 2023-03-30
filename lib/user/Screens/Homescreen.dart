@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, file_names, prefer_final_fields, unnecessary_new, use_key_in_widget_constructors, avoid_print, non_constant_identifier_names, sized_box_for_whitespace, must_call_super, unnecessary_import, depend_on_referenced_packages, dead_code, unnecessary_null_comparison, prefer_conditional_assignment
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, file_names, prefer_final_fields, unnecessary_new, use_key_in_widget_constructors, avoid_print, non_constant_identifier_names, sized_box_for_whitespace, must_call_super, unnecessary_import, depend_on_referenced_packages, dead_code, unnecessary_null_comparison, prefer_conditional_assignment, prefer_typing_uninitialized_variables
 
 // import 'package:fyp/LoginScreen.dart';
 // import 'package:fluttertoast/fluttertoast.dart';
@@ -9,21 +9,21 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:firebase_storage/firebase_storage.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fyp/user/Bars/cart.dart';
-import 'package:fyp/user/Controllers/data_controller.dart';
+// import 'package:fyp/user/Controllers/data_controller.dart';
 import 'package:fyp/user/Screens/SearchScreen.dart';
-import 'package:fyp/admin/screens/inventory.dart';
+// import 'package:fyp/admin/screens/inventory.dart';
 
 import '../classes/CardItem.dart';
 import 'package:fyp/user/Bars/NavBar.dart';
 import '../classes/images.dart';
-import 'package:get/get.dart';
+// import 'package:get/get.dart';
 import '../classes/global.dart' as global;
-import 'splash.dart' as splash;
+// import 'splash.dart' as splash;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -150,138 +150,140 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _key,
-      backgroundColor: Colors.pink,
-      drawer: SafeArea(child: NavBar()),
-      endDrawer: SafeArea(child: Cart()),
-      appBar: AppBar(
-        title: Text('Home Page'),
-        backgroundColor: Color.fromARGB(255, 48, 10, 55),
-        actions: [
-          Center(
-            child: InkWell(
-              onTap: () {
-                if (doclength != 0) {
-                  _key.currentState!.openEndDrawer();
-                }
-              },
-              child: StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('Users')
-                    .doc(user.uid)
-                    .collection('Cart')
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    doclength = 0;
-                  } else {
-                    doclength = snapshot.data!.docs.length;
+    return SafeArea(
+      child: Scaffold(
+        key: _key,
+        backgroundColor: Colors.pink,
+        drawer: SafeArea(child: NavBar()),
+        endDrawer: SafeArea(child: Cart()),
+        appBar: AppBar(
+          title: Text('Home Page'),
+          backgroundColor: Color.fromARGB(255, 48, 10, 55),
+          actions: [
+            Center(
+              child: InkWell(
+                onTap: () {
+                  if (doclength != 0) {
+                    _key.currentState!.openEndDrawer();
                   }
-                  return badges.Badge(
-                    position: badges.BadgePosition.topEnd(top: -10, end: -12),
-                    showBadge: true,
-                    ignorePointer: false,
-                    badgeContent: Text(
-                      doclength.toString(),
-                    ),
-                    badgeAnimation: badges.BadgeAnimation.slide(
-                      animationDuration: Duration(seconds: 1),
-                    ),
-                    badgeStyle: badges.BadgeStyle(
-                      badgeColor: Colors.blue,
-                    ),
-                    child: Icon(Icons.shopping_cart),
-                    onTap: () {
-                      if (doclength != 0) {
-                        _key.currentState!.openEndDrawer();
-                      }
-                    },
-                  );
                 },
+                child: StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('Users')
+                      .doc(user.uid)
+                      .collection('Cart')
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      doclength = 0;
+                    } else {
+                      doclength = snapshot.data!.docs.length;
+                    }
+                    return badges.Badge(
+                      position: badges.BadgePosition.topEnd(top: -10, end: -12),
+                      showBadge: true,
+                      ignorePointer: false,
+                      badgeContent: Text(
+                        doclength.toString(),
+                      ),
+                      badgeAnimation: badges.BadgeAnimation.slide(
+                        animationDuration: Duration(seconds: 1),
+                      ),
+                      badgeStyle: badges.BadgeStyle(
+                        badgeColor: Colors.blue,
+                      ),
+                      child: Icon(Icons.shopping_cart),
+                      onTap: () {
+                        if (doclength != 0) {
+                          _key.currentState!.openEndDrawer();
+                        }
+                      },
+                    );
+                  },
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            width: 10,
-          ),
-        ],
-      ),
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.dark,
-        child: SafeArea(
-          child: Stack(
-            children: <Widget>[
-              Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: Color(0xfff7f7f7),
-                ),
-                child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Searchbar(),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            "Categories",
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          AspectRatio(
-                            aspectRatio: 6 / 3,
-                            child: Swiper(
-                              autoplay: true,
-                              // itemWidth: 250,
-                              itemCount: cards.length,
-                              itemBuilder: (context, index) {
-                                return ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image(
-                                    image: AssetImage(cards[index]),
-                                    fit: BoxFit.fill,
-                                  ),
-                                );
-                                // OnTap(index) {
-                                //   // Navigator.push(
-                                //   //     context,
-                                //   //     MaterialPageRoute(
-                                //   //         builder: (context) => Review()));
-                                // }
-                              },
-                              viewportFraction: 0.8,
-                              scale: 0.8,
-                              pagination: SwiperPagination(),
-                              // itemWidth: 500,
-                              // layout: SwiperLayout.STACK,
+            SizedBox(
+              width: 10,
+            ),
+          ],
+        ),
+        body: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle.dark,
+          child: SafeArea(
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    color: Color(0xfff7f7f7),
+                  ),
+                  child: SingleChildScrollView(
+                    physics: AlwaysScrollableScrollPhysics(),
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Searchbar(),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Column(
+                          children: [
+                            Text(
+                              "Categories",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
                             ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          invoscreenbtn(),
-                        ],
-                      ),
-                    ],
+                            SizedBox(
+                              height: 10,
+                            ),
+                            AspectRatio(
+                              aspectRatio: 6 / 3,
+                              child: Swiper(
+                                autoplay: true,
+                                // itemWidth: 250,
+                                itemCount: cards.length,
+                                itemBuilder: (context, index) {
+                                  return ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image(
+                                      image: AssetImage(cards[index]),
+                                      fit: BoxFit.fill,
+                                    ),
+                                  );
+                                  // OnTap(index) {
+                                  //   // Navigator.push(
+                                  //   //     context,
+                                  //   //     MaterialPageRoute(
+                                  //   //         builder: (context) => Review()));
+                                  // }
+                                },
+                                viewportFraction: 0.8,
+                                scale: 0.8,
+                                pagination: SwiperPagination(),
+                                // itemWidth: 500,
+                                // layout: SwiperLayout.STACK,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            invoscreenbtn(),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

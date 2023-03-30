@@ -4,20 +4,18 @@
 // import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:card_swiper/card_swiper.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fyp/user/Controllers/data_controller.dart';
+import 'package:fyp/admin/screens/Orders.dart';
+import 'package:fyp/admin/screens/complaints.dart';
 import 'package:fyp/user/Screens/SearchScreen.dart';
 import 'package:fyp/admin/screens/inventory.dart';
 import '../../user/classes/CardItem.dart';
 import 'package:fyp/user/Bars/NavBar.dart';
 import '../../user/classes/images.dart';
-import 'package:get/get.dart';
 import '../../user/classes/global.dart' as global;
 
 class AdminHomeScreen extends StatefulWidget {
@@ -94,8 +92,8 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
             context, MaterialPageRoute(builder: (context) => inventory()));
       },
       child: Container(
-        height: 120,
-        width: 120,
+        height: 90,
+        width: 90,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.grey[350],
@@ -103,7 +101,71 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         alignment: Alignment.center,
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [Text('Upload Item'), Icon(Icons.upload_file)],
+          children: [
+            Text(
+              'Upload Item',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Icon(Icons.upload_file)
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget FetchComplaintsbtn() {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Complaints()));
+      },
+      child: Container(
+        height: 90,
+        width: 90,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.grey[350],
+        ),
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Warranty Claims',
+              style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            Icon(Icons.report)
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget Ordersbtn() {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Orders()));
+      },
+      child: Container(
+        height: 90,
+        width: 90,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.grey[350],
+        ),
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Orders',
+              style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            Icon(Icons.report)
+          ],
         ),
       ),
     );
@@ -247,7 +309,16 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                         ),
                       ],
                     ),
-                    uploaditembtn(),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        uploaditembtn(),
+                        Spacer(),
+                        FetchComplaintsbtn(),
+                        Spacer(),
+                        Ordersbtn(),
+                      ],
+                    ),
                   ],
                 ),
               ),

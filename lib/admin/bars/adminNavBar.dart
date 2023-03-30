@@ -6,8 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fyp/admin/screens/AdminHomeScreen.dart';
-import 'package:fyp/user/Screens/Homescreen.dart';
-import 'package:fyp/user/Screens/ManageProfile.dart';
+
 import '../../user/Controllers/bottomNavController.dart';
 import 'package:get/get.dart';
 

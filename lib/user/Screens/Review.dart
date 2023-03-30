@@ -2,14 +2,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:fyp/user/Screens/Signup.dart';
+// import 'package:fyp/user/Screens/Signup.dart';
 import 'package:fyp/user/classes/global.dart' as globals;
 import 'package:flutter/services.dart';
-import 'package:flutter_launcher_icons/custom_exceptions.dart';
-import 'package:get/get.dart';
+// import 'package:flutter_launcher_icons/custom_exceptions.dart';
+// import 'package:get/get.dart';
 import 'package:textfield_search/textfield_search.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -44,55 +44,57 @@ class _ReviewState extends State<Review> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('FeedBack'),
-          backgroundColor: const Color.fromARGB(255, 48, 10, 55),
-        ),
-        body: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle.dark,
-          child: Form(
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: const BoxDecoration(
-                    color: Color.fromRGBO(247, 247, 247, 1),
-                  ),
-                  child: SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 30, vertical: 30),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        // builditemname(),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        // fetchData(),
-                        searchtext(),
-                        const SizedBox(
-                          height: 39,
-                        ),
-                        builditemdesc(),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        buildratings(),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        submitbtn(),
-                      ],
+    return SafeArea(
+      child: Scaffold(
+          appBar: AppBar(
+            title: const Text('FeedBack'),
+            backgroundColor: const Color.fromARGB(255, 48, 10, 55),
+          ),
+          body: AnnotatedRegion<SystemUiOverlayStyle>(
+            value: SystemUiOverlayStyle.dark,
+            child: Form(
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: const BoxDecoration(
+                      color: Color.fromRGBO(247, 247, 247, 1),
+                    ),
+                    child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 30, vertical: 30),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          // builditemname(),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          // fetchData(),
+                          searchtext(),
+                          const SizedBox(
+                            height: 39,
+                          ),
+                          builditemdesc(),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          buildratings(),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          submitbtn(),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ));
+          )),
+    );
   }
 
   Widget buildratings() {

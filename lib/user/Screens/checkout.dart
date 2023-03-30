@@ -1,15 +1,17 @@
-// ignore_for_file: must_be_immutable, camel_case_types, use_key_in_widget_constructors, use_build_context_synchronously
+// ignore_for_file: must_be_immutable, camel_case_types, use_key_in_widget_constructors, use_build_context_synchronously, avoid_function_literals_in_foreach_calls
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fyp/user/Bars/cart.dart';
 import 'package:fyp/user/Screens/Homescreen.dart';
-import 'package:fyp/user/classes/cartcalc.dart';
+// import 'package:fyp/user/classes/cartcalc.dart';
 import '../classes/global.dart' as global;
 import 'dart:math';
 import 'dart:core';
 import '../classes/global.dart';
+
+int invoicenumber = 0;
 
 class checkoutscreen extends StatefulWidget {
   Map<String, dynamic> receivedMap;
@@ -40,62 +42,70 @@ class _checkoutscreenState extends State<checkoutscreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    invoicenumber = generateRandomNumber();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Check-Out'),
-          backgroundColor: const Color.fromARGB(255, 48, 10, 55),
-        ),
-        body: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle.dark,
-          child: Form(
-            key: formkey,
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: const BoxDecoration(
-                    color: Color(0xfff7f7f7),
-                  ),
-                  child: SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 30, vertical: 10),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          buildname(),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          buildAddress(),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          buildphone(),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          builditemdesc(),
-                          const SizedBox(
-                            height: 15,
-                          ),
-
-                          datatable(),
-
-                          // for (int i = 0; i < 3; i++)
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          checkoutbtn(),
-                        ]),
-                  ),
-                ),
-              ],
-            ),
+    return SafeArea(
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text('Check-Out : invoice: $invoicenumber'),
+            backgroundColor: const Color.fromARGB(255, 48, 10, 55),
           ),
-        ));
+          body: AnnotatedRegion<SystemUiOverlayStyle>(
+            value: SystemUiOverlayStyle.dark,
+            child: Form(
+              key: formkey,
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: const BoxDecoration(
+                      color: Color(0xfff7f7f7),
+                    ),
+                    child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 30, vertical: 10),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            buildname(),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            buildAddress(),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            buildphone(),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            builditemdesc(),
+                            const SizedBox(
+                              height: 15,
+                            ),
+
+                            datatable(),
+
+                            // for (int i = 0; i < 3; i++)
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            checkoutbtn(),
+                          ]),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )),
+    );
   }
 
   Widget checkoutbtn() {
@@ -354,7 +364,6 @@ class _checkoutscreenState extends State<checkoutscreen> {
   Future checkout() async {
     Timestamp timestamp = Timestamp.fromDate(DateTime.now());
 
-    int invoicenumber = generateRandomNumber();
     var ref = FirebaseFirestore.instance
         .collection('Orders')
         .doc(invoicenumber.toString());
@@ -365,7 +374,10 @@ class _checkoutscreenState extends State<checkoutscreen> {
       items.forEach((element) async {
         var dataa = {
           'Item $count': element['Item Name'],
-          'Quantity $count': element['Count']
+          'Quantity $count': element['Count'],
+          'invoice': invoicenumber.toString(),
+          'Username': user.displayName,
+          'contact': int.parse(user.phoneNumber.toString())
         };
         count++;
         if (count == 2) {

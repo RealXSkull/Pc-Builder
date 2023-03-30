@@ -11,7 +11,7 @@ import 'package:flutter/services.dart';
 import '../../admin/bars/adminNavBar.dart';
 import '../Bars/bottomNavBar.dart';
 import '../Controllers/Authpage.dart';
-import 'splash.dart' as splash;
+// import 'splash.dart' as splash;
 
 class LoginScreen extends StatefulWidget {
   final VoidCallback onClickedSignup;

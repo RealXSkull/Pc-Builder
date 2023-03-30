@@ -1,15 +1,12 @@
 // ignore_for_file: unused_local_variable, avoid_print, prefer_const_constructors, camel_case_types, sized_box_for_whitespace, non_constant_identifier_names, unnecessary_null_comparison, prefer_typing_uninitialized_variables, use_build_context_synchronously
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:csv/csv.dart';
-import '../../user/classes/global.dart' as global;
 // import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:insta_assets_picker/insta_assets_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 // import 'package:insta_assets_picker_demo/widgets/crop_result_view.dart';
 
@@ -24,7 +21,7 @@ class inventory extends StatefulWidget {
 
 class _inventoryState extends State<inventory> {
   final picker = ImagePicker();
-  bool _imageselected = false;
+  bool _imageselected = true;
   PlatformFile? pickedFile;
   final category = TextEditingController();
   final ItemName = TextEditingController();
@@ -60,35 +57,82 @@ class _inventoryState extends State<inventory> {
     if (!isValid) return;
     Reference reff =
         FirebaseStorage.instance.ref().child('Inventory').child(ItemName.text);
+    if (dropvisible == false) {
+      try {
+        Reference reff = FirebaseStorage.instance
+            .ref()
+            .child('Inventory')
+            .child(ItemName.text);
+        if (image != null) await reff.putFile(image);
 
-    try {
-      // if (name != null) {
-      final docuser =
-          FirebaseFirestore.instance.collection('Inventory').doc(ItemName.text);
-      final data = {
-        'Item Name': ItemName.text,
-        'Inventory': invo,
-        'Price': price,
-        'desc1': desc1.text,
-        'desc2': desc2.text,
-        'desc3': desc3.text,
-      };
-      await docuser.set(data);
-      // }
-      if (image != null) await reff.putFile(image);
-      final ref = FirebaseStorage.instance
-          .ref()
-          .child("Inventory")
-          .child(ItemName.text);
-      // Navigator.pop(context);
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Profile Updated!')));
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e.toString()),
-        ),
-      );
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child("Inventory")
+            .child(ItemName.text);
+        String imgurl = await ref.getDownloadURL();
+        // if (name != null) {
+        final docuser = FirebaseFirestore.instance
+            .collection('Inventory')
+            .doc(ItemName.text);
+        final data = {
+          'url': imgurl,
+          // 'url2': imgref,
+          'Category': dropdownvalue,
+          'Item Name': ItemName.text,
+          'Inventory': int.parse(invo.text),
+          'Price': int.parse(price.text),
+          'desc1': desc1.text,
+          'desc2': desc2.text,
+          'desc3': desc3.text,
+        };
+        await docuser.set(data);
+        // }
+
+        // Navigator.pop(context);
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Profile Updated!')));
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString()),
+          ),
+        );
+      }
+    } else {
+      try {
+        if (image != null) await reff.putFile(image);
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child("Inventory")
+            .child(ItemName.text);
+        String imgurl = await ref.getDownloadURL();
+        final docuser = FirebaseFirestore.instance
+            .collection('Inventory')
+            .doc(ItemName.text);
+        final data = {
+          'url': imgurl,
+          // 'url2': imgref,
+          'Category': category.text,
+          'Item Name': ItemName.text,
+          'Inventory': invo.text,
+          'Price': price.text,
+          'desc1': desc1.text,
+          'desc2': desc2.text,
+          'desc3': desc3.text,
+        };
+        await docuser.set(data);
+        // }
+
+        // Navigator.pop(context);
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Profile Updated!')));
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString()),
+          ),
+        );
+      }
     }
   }
 
@@ -457,19 +501,20 @@ class _inventoryState extends State<inventory> {
                       SizedBox(
                         height: 15,
                       ),
-                      Center(
-                        child: Visibility(
-                          visible: _imageselected,
-                          child: ClipRRect(
-                            child: Image.file(
-                              image,
-                              fit: BoxFit.fill,
-                              height: 200,
-                              width: 200,
+                      if (image != null)
+                        Center(
+                          child: Visibility(
+                            visible: _imageselected,
+                            child: ClipRRect(
+                              child: Image.file(
+                                image,
+                                fit: BoxFit.fill,
+                                height: 200,
+                                width: 200,
+                              ),
                             ),
                           ),
                         ),
-                      ),
                       SizedBox(
                         height: 15,
                       ),
