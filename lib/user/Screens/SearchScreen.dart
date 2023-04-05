@@ -7,6 +7,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/user/Screens/itemdetail.dart';
+import 'package:intl/intl.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -16,6 +17,11 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   var searchkey = "";
   TextEditingController searchController = TextEditingController();
   @override
@@ -93,7 +99,10 @@ class _SearchScreenState extends State<SearchScreen> {
                           itemBuilder: ((context, index) {
                             var data = snapshot.data!.docs[index].data()
                                 as Map<String, dynamic>;
-
+                            NumberFormat commaFormat = NumberFormat('#,###');
+                            String formattedNumber =
+                                commaFormat.format(data['Price']);
+                            // number = formattedNumber(data['Price'].toString());
                             // print(globals.data1);
                             // print(
                             //     "database data length${data['Item Name'].length}");
@@ -128,7 +137,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                     tileColor: Colors.grey[350],
                                     title: Text(data['Item Name']),
                                     subtitle: Text(data['Category']),
-                                    trailing: Text(data['Price'].toString()),
+                                    trailing: Text(formattedNumber),
                                     // leading: Image.network(src),
                                   ),
                                 ),

@@ -16,8 +16,10 @@ var itemurl = "";
 var address = "";
 var phone = "";
 var name = "";
+var inventory;
 List items = [];
 Image? img;
+
 // List inventory = {'Item Name': '', 'Category': ''} as List;
 
 Future<List> getinvo(String search) async {
@@ -35,18 +37,27 @@ Future<List> getinvo(String search) async {
   return invo;
 }
 
+Future<List<String>> getcategory2(BuildContext context) async {
+  final datagetter =
+      await FirebaseFirestore.instance.collection('Inventory').get();
+  inventory = [];
+  for (int i = 0; i < datagetter.docs.length; i++) {
+    if (!inventory.contains(datagetter.docs[i]['Category'].toString())) {
+      inventory.add(datagetter.docs[i]['Category']);
+    }
+  }
+  return inventory.cast<String>();
+}
+
 Future<List> getcategory(BuildContext context) async {
-  var invo = [];
   final datagetter =
       await FirebaseFirestore.instance.collection('Inventory').get();
   for (int i = 0; i < datagetter.docs.length; i++) {
-    if (!invo.contains(datagetter.docs[i]['Category'].toString())) {
-      invo.add(datagetter.docs[i]['Category']);
+    if (!inventory.contains(datagetter.docs[i]['Category'].toString())) {
+      inventory.add(datagetter.docs[i]['Category']);
     }
   }
-  ScaffoldMessenger.of(context)
-      .showSnackBar(SnackBar(content: Text(invo.toString())));
-  return invo;
+  return inventory;
 }
 
 Future<void> readdata(User user) async {

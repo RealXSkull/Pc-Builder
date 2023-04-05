@@ -9,6 +9,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fyp/admin/screens/AdminRights.dart';
 import 'package:fyp/admin/screens/Orders.dart';
 import 'package:fyp/admin/screens/complaints.dart';
 import 'package:fyp/user/Screens/SearchScreen.dart';
@@ -47,7 +48,8 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
   void initState() {
     super.initState();
     global.readdata(user);
-    global.getcategory(context);
+    global.inventory = global.getcategory(context);
+
     // global.getinvo();
     fetchimage();
     //getdata();
@@ -164,7 +166,38 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
               style: TextStyle(fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
-            Icon(Icons.report)
+            Icon(Icons.shopping_basket)
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget AdminRightsbtn() {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => AdminRights()));
+      },
+      child: Container(
+        height: 90,
+        width: 90,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.grey[350],
+        ),
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Center(
+              child: Text(
+                'Admin\nRights',
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Icon(Icons.admin_panel_settings)
           ],
         ),
       ),
@@ -224,106 +257,111 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.pink,
-      drawer: NavBar(),
-      appBar: AppBar(
-        title: Text('Home Page'),
-        backgroundColor: Color.fromARGB(255, 48, 10, 55),
-        // actions: [
-        //   IconButton(
-        //       onPressed: () {
-        //         Navigator.push(
-        //           context,
-        //           MaterialPageRoute(builder: (context) => const inventory()),
-        //         );
-        //       },
-        //       icon: Icon(Icons.inventory)),
-        // ],
-      ),
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.dark,
-        child: Stack(
-          children: <Widget>[
-            Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: Color(0xfff7f7f7),
-              ),
-              child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Searchbar(),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          "Categories",
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        AspectRatio(
-                          aspectRatio: 6 / 3,
-                          child: Swiper(
-                            autoplay: true,
-                            // itemWidth: 250,
-                            itemCount: cards.length,
-                            itemBuilder: (context, index) {
-                              return ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image(
-                                  image: AssetImage(cards[index]),
-                                  fit: BoxFit.fill,
-                                ),
-                              );
-                              // OnTap(index) {
-                              //   // Navigator.push(
-                              //   //     context,
-                              //   //     MaterialPageRoute(
-                              //   //         builder: (context) => Review()));
-                              // }
-                            },
-                            viewportFraction: 0.8,
-                            scale: 0.8,
-                            pagination: SwiperPagination(),
-                            // itemWidth: 500,
-                            // layout: SwiperLayout.STACK,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.pink,
+        drawer: NavBar(),
+        appBar: AppBar(
+          title: Text('Home Page'),
+          backgroundColor: Color.fromARGB(255, 48, 10, 55),
+          // actions: [
+          //   IconButton(
+          //       onPressed: () {
+          //         Navigator.push(
+          //           context,
+          //           MaterialPageRoute(builder: (context) => const inventory()),
+          //         );
+          //       },
+          //       icon: Icon(Icons.inventory)),
+          // ],
+        ),
+        body: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle.dark,
+          child: Stack(
+            children: <Widget>[
+              Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: Color(0xfff7f7f7),
+                ),
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Searchbar(),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            "Categories",
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
                           ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        uploaditembtn(),
-                        Spacer(),
-                        FetchComplaintsbtn(),
-                        Spacer(),
-                        Ordersbtn(),
-                      ],
-                    ),
-                  ],
+                          SizedBox(
+                            height: 10,
+                          ),
+                          AspectRatio(
+                            aspectRatio: 6 / 3,
+                            child: Swiper(
+                              autoplay: true,
+                              // itemWidth: 250,
+                              itemCount: cards.length,
+                              itemBuilder: (context, index) {
+                                return ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image(
+                                    image: AssetImage(cards[index]),
+                                    fit: BoxFit.fill,
+                                  ),
+                                );
+                                // OnTap(index) {
+                                //   // Navigator.push(
+                                //   //     context,
+                                //   //     MaterialPageRoute(
+                                //   //         builder: (context) => Review()));
+                                // }
+                              },
+                              viewportFraction: 0.8,
+                              scale: 0.8,
+                              pagination: SwiperPagination(),
+                              // itemWidth: 500,
+                              // layout: SwiperLayout.STACK,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      ),
+                      Wrap(
+                        alignment: WrapAlignment.center,
+                        spacing: 30.0,
+                        runSpacing: 16,
+                        // mainAxisSize: MainAxisSize.min,
+                        children: [
+                          uploaditembtn(),
+                          FetchComplaintsbtn(),
+                          Ordersbtn(),
+                          AdminRightsbtn(),
+                          Ordersbtn(),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

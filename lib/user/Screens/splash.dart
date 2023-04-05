@@ -102,25 +102,27 @@ class _SplashscreenState extends State<Splashscreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            Container(
-              color: const Color.fromARGB(255, 32, 45, 61),
-              height: MediaQuery.of(context).size.height * 0.25,
-            ),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.5,
-              width: MediaQuery.of(context).size.width,
-              color: const Color(0xff202c3c),
-              child: video(),
-            ),
-            Container(
-              color: const Color.fromARGB(255, 32, 45, 61),
-              height: MediaQuery.of(context).size.height * 0.25,
-            ),
-          ],
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            children: [
+              Container(
+                color: const Color.fromARGB(255, 32, 45, 61),
+                height: MediaQuery.of(context).size.height * 0.226,
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.5,
+                width: MediaQuery.of(context).size.width,
+                color: const Color(0xff202c3c),
+                child: video(),
+              ),
+              Container(
+                color: const Color.fromARGB(255, 32, 45, 61),
+                height: MediaQuery.of(context).size.height * 0.226,
+              ),
+            ],
+          ),
         ),
       ),
     );

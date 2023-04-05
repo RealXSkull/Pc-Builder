@@ -350,8 +350,11 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             );
           }
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text('Logged In!')));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Logged In!'),
+            ),
+          );
         } else {
           Navigator.pushReplacement(
             context,

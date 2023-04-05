@@ -375,9 +375,13 @@ class _checkoutscreenState extends State<checkoutscreen> {
         var dataa = {
           'Item $count': element['Item Name'],
           'Quantity $count': element['Count'],
+          'Price $count': element['price'],
           'invoice': invoicenumber.toString(),
           'Username': user.displayName,
-          'contact': int.parse(user.phoneNumber.toString())
+          'message': itemdesccontroller.text,
+          'contact': _phonecontroller.text,
+          'Address': _addcontroller.text,
+          'status': 'Requested'
         };
         count++;
         if (count == 2) {
@@ -398,8 +402,10 @@ class _checkoutscreenState extends State<checkoutscreen> {
       for (var doc in docref.docs) {
         doc.reference.delete();
       }
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Order Placed Successfully')));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Order Placed Successfully'),
+        duration: Duration(seconds: 2),
+      ));
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const HomeScreen()));
     } on FirebaseException catch (e) {

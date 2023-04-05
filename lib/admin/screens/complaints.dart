@@ -14,32 +14,33 @@ class Complaints extends StatefulWidget {
 class ComplaintsState extends State<Complaints> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Warranty Claims'),
-        backgroundColor: const Color.fromARGB(255, 48, 10, 55),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded),
-          onPressed: () => Navigator.pop(context, false),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Warranty Claims'),
+          backgroundColor: const Color.fromARGB(255, 48, 10, 55),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new_rounded),
+            onPressed: () => Navigator.pop(context, false),
+          ),
         ),
-      ),
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.dark,
-        child: Stack(
-          children: <Widget>[
-            SizedBox(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height,
-                      child: StreamBuilder(
+        body: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle.dark,
+          child: Stack(
+            children: <Widget>[
+              SizedBox(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height,
+                        child: StreamBuilder(
                           stream: FirebaseFirestore.instance
                               .collection('Warranty')
                               .snapshots(),
@@ -62,19 +63,16 @@ class ComplaintsState extends State<Complaints> {
                               );
                             } else {
                               return ListView.builder(
-                                  itemCount: snapshot.data!.docs.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    var data = snapshot.data!.docs[index].data()
-                                        as Map<String, dynamic>;
-                                    Timestamp timestamp =
-                                        data['Purchased Date'];
-                                    DateTime dateTime = timestamp.toDate();
-                                    String formattedDate =
-                                        DateFormat.yMMMMEEEEd()
-                                            .format(dateTime);
-                                    return Card(
-                                        child: InkWell(
+                                itemCount: snapshot.data!.docs.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  var data = snapshot.data!.docs[index].data()
+                                      as Map<String, dynamic>;
+                                  Timestamp timestamp = data['Purchased Date'];
+                                  DateTime dateTime = timestamp.toDate();
+                                  String formattedDate =
+                                      DateFormat.yMMMMEEEEd().format(dateTime);
+                                  return Card(
+                                    child: InkWell(
                                       onTap: () => Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -123,16 +121,20 @@ class ComplaintsState extends State<Complaints> {
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),
-                                    ));
-                                  });
+                                    ),
+                                  );
+                                },
+                              );
                             }
-                          }),
-                    ),
-                  ],
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

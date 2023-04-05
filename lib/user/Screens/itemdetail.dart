@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 // import 'package:fyp/user/classes/global.dart';
 
 class itemdetail extends StatefulWidget {
@@ -15,6 +16,18 @@ class itemdetail extends StatefulWidget {
 }
 
 class _itemdetailState extends State<itemdetail> {
+  String formattedNumber = '';
+  formatnumber() {
+    NumberFormat commaFormat = NumberFormat('#,###');
+    formattedNumber = commaFormat.format(widget.receivedMap["Price"]);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    formatnumber();
+  }
+
   final user = FirebaseAuth.instance.currentUser!;
   bool invochecker = false;
 
@@ -82,7 +95,7 @@ class _itemdetailState extends State<itemdetail> {
                           Expanded(
                             flex: 2,
                             child: Text(
-                              "Price: ${widget.receivedMap["Price"]}/- Rs",
+                              "Price: $formattedNumber/- Rs",
                               style: const TextStyle(
                                   fontSize: 13,
                                   color: Colors.black87,

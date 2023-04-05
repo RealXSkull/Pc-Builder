@@ -65,6 +65,7 @@ dependencies:
   # provider: ^6.0.5
   intl: ^0.17.0
   tabnavigator: ^1.0.0
+  syncfusion_flutter_datagrid: ^21.1.37
 
   # path_provider: ^2.0.11
   # permission_handler: ^10.2.0
