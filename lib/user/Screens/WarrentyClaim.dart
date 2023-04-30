@@ -133,7 +133,6 @@ class _WarrentyClaimState extends State<WarrentyClaim> {
               setState(() {
                 this.date = date;
               });
-              // Do something
             },
           ),
         ),

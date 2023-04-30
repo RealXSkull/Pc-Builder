@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_declarations, file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -13,15 +15,15 @@ class _AdminRightsState extends State<AdminRights> {
   String _selectedUserRole = 'admin';
   final List<String> _dropdownValues = ['admin', 'user'];
   var searchkey = "";
+
   @override
   void initState() {
     super.initState();
-    _fetchUserRole();
+    // _fetchUsersList();
   }
 
-  Future<void> _fetchUserRole() async {
-    final String userId =
-        'yxwkH307q7Z4DYTtvRL1XPIzV4L2'; // Replace with the actual user ID
+  Future<void> _fetchUserRole(String uid) async {
+    final String userId = uid; // Replace with the actual user ID
     final String role = await getUserRole(userId);
     setState(() {
       _selectedUserRole = role;
@@ -78,7 +80,7 @@ class _AdminRightsState extends State<AdminRights> {
                       // .collection("Users")
                       // .doc('Hardware')
                       // .collection('Gpu')
-                      .where("role", isEqualTo: 'user')
+                      // .where("role", isEqualTo: 'user')
                       // .where("Item Name", arrayContains: searchkey)
                       // .where("Item Name", isEqualTo: searchkey)
                       // .startAt("i")
@@ -106,7 +108,7 @@ class _AdminRightsState extends State<AdminRights> {
                         itemBuilder: ((context, index) {
                           var data = snapshot.data!.docs[index].data()
                               as Map<String, dynamic>;
-
+                          _fetchUserRole(data['userid']);
                           // print(globals.data1);
                           // print(
                           //     "database data length${data['Item Name'].length}");

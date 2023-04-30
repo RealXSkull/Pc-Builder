@@ -11,7 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import '../Bars/NavBar.dart';
+// import '../Bars/NavBar.dart';
 
 class Manageprofile extends StatefulWidget {
   const Manageprofile({super.key});
@@ -70,7 +70,7 @@ class _ManageprofileState extends State<Manageprofile> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          drawer: NavBar(),
+          // drawer: NavBar(),
           appBar: AppBar(
             title: Text('Manage Account'),
             backgroundColor: Color.fromARGB(255, 48, 10, 55),
@@ -139,7 +139,6 @@ class _ManageprofileState extends State<Manageprofile> {
                               ],
                             ),
                           ),
-
                           SizedBox(
                             height: 15,
                           ),
@@ -147,24 +146,16 @@ class _ManageprofileState extends State<Manageprofile> {
                           SizedBox(
                             height: 20,
                           ),
-
                           buildphone(),
-                          // const SizedBox(
-                          //   height: 20,
-                          // ),
-                          // buildpassword(),
                           SizedBox(
                             height: 20,
                           ),
-                          //buildconfirmpassword(),
                           SizedBox(
                             height: 20,
                           ),
-                          // Registerbtn(),
                           SizedBox(
                             height: 20,
                           ),
-
                           selectimage(),
                           SizedBox(
                             height: 20,
@@ -366,11 +357,11 @@ class _ManageprofileState extends State<Manageprofile> {
     if (!isValid) return;
 
     try {
-      // showDialog(
-      //   context: context,
-      //   barrierDismissible: false,
-      //   builder: (context) => Center(child: CircularProgressIndicator()),
-      // );
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => Center(child: CircularProgressIndicator()),
+      );
       if (name != null) {
         await user.updateDisplayName(name);
         final docuser =
@@ -378,8 +369,8 @@ class _ManageprofileState extends State<Manageprofile> {
         final data = {
           'Name': name,
           'Address': address,
-          'role': global.role,
-          'contactno': _phonecontroller.value
+          // 'role': global.role,
+          'contactno': _phonecontroller.text
         };
         await docuser.update(data);
       }
@@ -390,10 +381,14 @@ class _ManageprofileState extends State<Manageprofile> {
           .child(user.uid);
       global.url = await ref.getDownloadURL();
       // Navigator.pop(context);
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Profile Updated!')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Profile Updated!'),
+        ),
+      );
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(msg: e.message!, gravity: ToastGravity.BOTTOM);
     }
+    Navigator.pop(context);
   }
 }

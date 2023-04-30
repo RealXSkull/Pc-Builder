@@ -59,6 +59,11 @@ class _inventoryState extends State<inventory> {
   }
 
   Future upload() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Center(child: CircularProgressIndicator()),
+    );
     final isValid = formkey.currentState!.validate();
     if (!isValid) return;
     Reference reff =
@@ -96,7 +101,7 @@ class _inventoryState extends State<inventory> {
 
         // Navigator.pop(context);
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Profile Updated!')));
+            .showSnackBar(SnackBar(content: Text('Item Has Been Added!')));
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -140,6 +145,7 @@ class _inventoryState extends State<inventory> {
         );
       }
     }
+    Navigator.pop(context);
   }
 
   Future imagepicker() async {

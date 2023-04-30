@@ -19,10 +19,6 @@ class ComplaintsState extends State<Complaints> {
         appBar: AppBar(
           title: const Text('Warranty Claims'),
           backgroundColor: const Color.fromARGB(255, 48, 10, 55),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new_rounded),
-            onPressed: () => Navigator.pop(context, false),
-          ),
         ),
         body: AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle.dark,
@@ -74,27 +70,13 @@ class ComplaintsState extends State<Complaints> {
                                   return Card(
                                     child: InkWell(
                                       onTap: () => Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  Complaintdetail(
-                                                      receivedMap: data,
-                                                      date: formattedDate))),
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => Complaintdetail(
+                                              data: data, date: formattedDate),
+                                        ),
+                                      ),
                                       child: ListTile(
-                                        // leading: SizedBox(
-                                        //   height: 60,
-                                        //   width: 60,
-                                        //   child: (data['url'] == null)
-                                        //       ? Image.asset(
-                                        //           'assets/all_icon.jpg',
-                                        //           fit: BoxFit.fill,
-                                        //         )
-                                        //       : Image.network(
-                                        //           data['url'],
-                                        //           height: 60,
-                                        //           width: 60,
-                                        //         ),
-                                        // ),
                                         tileColor:
                                             (data['Status'] == 'Requested')
                                                 ? Colors.grey[350]
@@ -102,7 +84,6 @@ class ComplaintsState extends State<Complaints> {
                                                     ? Colors.green
                                                     : Colors.red,
                                         title: Text(data['Item Name']),
-
                                         subtitle: Text(
                                           formattedDate,
                                           style: TextStyle(

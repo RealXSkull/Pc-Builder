@@ -35,67 +35,66 @@ class _WarrantyListState extends State<WarrantyList> {
                     SizedBox(
                       height: MediaQuery.of(context).size.height,
                       child: StreamBuilder(
-                          stream: FirebaseFirestore.instance
-                              .collection('Warranty')
-                              .where('userid', isEqualTo: user.uid)
-                              .snapshots(),
-                          builder:
-                              (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                            if (snapshot.hasError) {
-                              return const Center(
-                                child: Text("Something Went Wrong"),
-                              );
-                            } else if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const Center(
-                                heightFactor: 3,
-                                widthFactor: 3,
-                                child: SizedBox(
-                                  height: 100,
-                                  width: 100,
-                                  child: CircularProgressIndicator(),
-                                ),
-                              );
-                            } else {
-                              return ListView.builder(
-                                  itemCount: snapshot.data!.docs.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    var data = snapshot.data!.docs[index].data()
-                                        as Map<String, dynamic>;
-                                    Timestamp timestamp =
-                                        data['Purchased Date'];
-                                    DateTime dateTime = timestamp.toDate();
-                                    String formattedDate =
-                                        DateFormat.yMMMMEEEEd()
-                                            .format(dateTime);
-                                    return Card(
-                                        child: ListTile(
-                                      tileColor: (data['Status'] == 'Requested')
-                                          ? Colors.grey[350]
-                                          : (data['Status'] == 'Approved')
-                                              ? Colors.green
-                                              : Colors.red,
-                                      title: Text(data['Item Name']),
-                                      subtitle: Text(
-                                        formattedDate,
-                                        style: TextStyle(
-                                            color: (data['Status'] == 'Decline')
-                                                ? Colors.white
-                                                : Colors.black),
-                                      ),
-                                      trailing: Text(
-                                        data['Status'],
-                                        style: TextStyle(
-                                            color: (data['Status'] == 'Decline')
-                                                ? Colors.white
-                                                : Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ));
-                                  });
-                            }
-                          }),
+                        stream: FirebaseFirestore.instance
+                            .collection('Warranty')
+                            .where('userid', isEqualTo: user.uid)
+                            .snapshots(),
+                        builder:
+                            (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (snapshot.hasError) {
+                            return const Center(
+                              child: Text("Something Went Wrong"),
+                            );
+                          } else if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              heightFactor: 3,
+                              widthFactor: 3,
+                              child: SizedBox(
+                                height: 100,
+                                width: 100,
+                                child: CircularProgressIndicator(),
+                              ),
+                            );
+                          } else {
+                            return ListView.builder(
+                              itemCount: snapshot.data!.docs.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                var data = snapshot.data!.docs[index].data()
+                                    as Map<String, dynamic>;
+                                Timestamp timestamp = data['Purchased Date'];
+                                DateTime dateTime = timestamp.toDate();
+                                String formattedDate =
+                                    DateFormat.yMMMMEEEEd().format(dateTime);
+                                return Card(
+                                    child: ListTile(
+                                  tileColor: (data['Status'] == 'Requested')
+                                      ? Colors.grey[350]
+                                      : (data['Status'] == 'Approved')
+                                          ? Colors.green
+                                          : Colors.red,
+                                  title: Text(data['Item Name']),
+                                  subtitle: Text(
+                                    formattedDate,
+                                    style: TextStyle(
+                                        color: (data['Status'] == 'Decline')
+                                            ? Colors.white
+                                            : Colors.black),
+                                  ),
+                                  trailing: Text(
+                                    data['Status'],
+                                    style: TextStyle(
+                                        color: (data['Status'] == 'Decline')
+                                            ? Colors.white
+                                            : Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ));
+                              },
+                            );
+                          }
+                        },
+                      ),
                     ),
                   ],
                 ),

@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class Complaintdetail extends StatefulWidget {
-  Map<String, dynamic> receivedMap;
+  Map<String, dynamic> data;
   String date;
 
-  Complaintdetail({required this.receivedMap, required this.date});
+  Complaintdetail({required this.data, required this.date});
 
   @override
   State<Complaintdetail> createState() => _ComplaintdetailState();
@@ -18,139 +18,137 @@ class _ComplaintdetailState extends State<Complaintdetail> {
   bool status = true;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Warranty Claims'),
-        backgroundColor: const Color.fromARGB(255, 48, 10, 55),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded),
-          onPressed: () => Navigator.pop(context, false),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Warranty Claims'),
+          backgroundColor: const Color.fromARGB(255, 48, 10, 55),
         ),
-      ),
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.dark,
-        child: Stack(
-          children: <Widget>[
-            SizedBox(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.3,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        image: (widget.receivedMap['url'] == null)
-                            ? const DecorationImage(
-                                image: AssetImage('assets/all_icon.jpg'),
-                                fit: BoxFit.fill,
-                              )
-                            : DecorationImage(
-                                image: NetworkImage(widget.receivedMap['url']),
-                                fit: BoxFit.fill,
-                              ),
+        body: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle.dark,
+          child: Stack(
+            children: <Widget>[
+              SizedBox(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          image: (widget.data['Url'] == null)
+                              ? const DecorationImage(
+                                  image: AssetImage('assets/all_icon.jpg'),
+                                  fit: BoxFit.fill,
+                                )
+                              : DecorationImage(
+                                  image: NetworkImage(widget.data['Url']),
+                                  fit: BoxFit.fill,
+                                ),
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    SizedBox(
-                      // color: Colors.grey,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Expanded(
-                            flex: 4,
-                            child: Text(
-                              "${widget.receivedMap["Item Name"]}",
-                              style: const TextStyle(
-                                  fontSize: 17, color: Colors.black87),
-                            ),
-                          ),
-                          const Spacer(),
-                          Expanded(
-                            flex: 4,
-                            child: Text(
-                              "Purchased Date: ${widget.date}",
-                              style: const TextStyle(
-                                  fontSize: 13,
-                                  color: Colors.black87,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ],
+                      const SizedBox(
+                        height: 10,
                       ),
-                    ),
-                    LayoutBuilder(
-                      builder: (context, constraints) {
-                        return Column(
+                      SizedBox(
+                        // color: Colors.grey,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(
-                                //change with cpu description
-                                "◉ Invoice: ${widget.receivedMap["invoice"]}\n◉ Complaint: ${widget.receivedMap["Message"]}\n◉ User: ${widget.receivedMap["Username"]}\n◉ Contact: ${widget.receivedMap["Contact"]}"),
-                            const SizedBox(
-                              height: 10,
+                            Expanded(
+                              flex: 4,
+                              child: Text(
+                                "${widget.data["Item Name"]}",
+                                style: const TextStyle(
+                                    fontSize: 17, color: Colors.black87),
+                              ),
+                            ),
+                            const Spacer(),
+                            Expanded(
+                              flex: 4,
+                              child: Text(
+                                "Purchased Date: ${widget.date}",
+                                style: const TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
                           ],
-                        );
-                      },
+                        ),
+                      ),
+                      LayoutBuilder(
+                        builder: (context, constraints) {
+                          return Column(
+                            children: [
+                              Text(
+                                  //change with cpu description
+                                  "◉ Invoice: ${widget.data["invoice"]}\n◉ Complaint: ${widget.data["Message"]}\n◉ User: ${widget.data["Username"]}\n◉ Contact: ${widget.data["Contact"]}"),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        floatingActionButton: Visibility(
+          visible: (widget.data['Status'] == 'Requested')
+              ? status = true
+              : status = false,
+          child: Padding(
+            padding: const EdgeInsets.all(18),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                height: 50.0,
+                width: double.infinity,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.44,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red),
+                        onPressed: () {
+                          reject();
+                        },
+                        child: const Text('Reject'),
+                      ),
+                    ),
+                    const Spacer(),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.44,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green),
+                        onPressed: () {
+                          accept();
+                        },
+                        child: const Text('Claim'),
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
-          ],
-        ),
-      ),
-      floatingActionButton: Visibility(
-        visible: (widget.receivedMap['Status'] == 'Requested')
-            ? status = true
-            : status = false,
-        child: Padding(
-          padding: const EdgeInsets.all(18),
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: SizedBox(
-              height: 50.0,
-              width: double.infinity,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.44,
-                    child: ElevatedButton(
-                      style:
-                          ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                      onPressed: () {
-                        reject();
-                      },
-                      child: const Text('Reject'),
-                    ),
-                  ),
-                  const Spacer(),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.44,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green),
-                      onPressed: () {
-                        accept();
-                      },
-                      child: const Text('Claim'),
-                    ),
-                  ),
-                ],
-              ),
-            ),
           ),
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
@@ -158,7 +156,7 @@ class _ComplaintdetailState extends State<Complaintdetail> {
     try {
       final docuser = await FirebaseFirestore.instance
           .collection('Warranty')
-          .where('Item Name', isEqualTo: widget.receivedMap['Item Name'])
+          .where('Item Name', isEqualTo: widget.data['Item Name'])
           .get();
       final docSnapshot = docuser.docs.first;
       final docid = docSnapshot.id;
@@ -173,6 +171,7 @@ class _ComplaintdetailState extends State<Complaintdetail> {
       });
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text('Succesfully Declined!')));
+      Navigator.pop(context);
     } catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.toString())));
@@ -183,7 +182,7 @@ class _ComplaintdetailState extends State<Complaintdetail> {
     try {
       final docuser = await FirebaseFirestore.instance
           .collection('Warranty')
-          .where('Item Name', isEqualTo: widget.receivedMap['Item Name'])
+          .where('Item Name', isEqualTo: widget.data['Item Name'])
           .get();
       final docSnapshot = docuser.docs.first;
       final docid = docSnapshot.id;
@@ -198,6 +197,7 @@ class _ComplaintdetailState extends State<Complaintdetail> {
       });
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text('Succesfully Approved!')));
+      Navigator.pop(context);
     } catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.toString())));

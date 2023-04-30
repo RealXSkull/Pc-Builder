@@ -206,26 +206,21 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
 
   Widget Searchbar() {
     return Container(
-      height: 45,
-      alignment: Alignment.center,
-      color: Colors.grey,
-      child: Container(
-        decoration: BoxDecoration(
-            border: Border.all(), borderRadius: BorderRadius.circular(5)),
-        child: TextFormField(
-          decoration: const InputDecoration(
-              border: InputBorder.none,
-              suffixIcon: Icon(Icons.search),
-              filled: true,
-              fillColor: Colors.white,
-              hintText: 'Search Anything..',
-              hintStyle: TextStyle(color: Colors.grey)),
-          textInputAction: TextInputAction.search,
-          onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => SearchScreen()));
-          },
-        ),
+      decoration: BoxDecoration(
+          border: Border.all(), borderRadius: BorderRadius.circular(5)),
+      child: TextField(
+        decoration: const InputDecoration(
+            border: InputBorder.none,
+            suffixIcon: Icon(Icons.search),
+            filled: true,
+            fillColor: Colors.white,
+            hintText: 'Search Anything..',
+            hintStyle: TextStyle(color: Colors.grey)),
+        textInputAction: TextInputAction.search,
+        onTap: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => SearchScreen()));
+        },
       ),
     );
   }
@@ -339,7 +334,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                             ),
                           ),
                           SizedBox(
-                            height: 20,
+                            height: 50,
                           ),
                         ],
                       ),
