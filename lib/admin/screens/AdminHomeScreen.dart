@@ -105,8 +105,9 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Upload Item',
+              'Upload\nItem',
               style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
             ),
             Icon(Icons.upload_file)
           ],
@@ -138,6 +139,35 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
               textAlign: TextAlign.center,
             ),
             Icon(Icons.report)
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget Editinvobtn() {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Orders()));
+      },
+      child: Container(
+        height: 90,
+        width: 90,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.grey[350],
+        ),
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Edit\nInventory',
+              style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            Icon(Icons.shopping_basket)
           ],
         ),
       ),
@@ -306,7 +336,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                             height: 10,
                           ),
                           AspectRatio(
-                            aspectRatio: 6 / 3,
+                            aspectRatio: 5 / 3,
                             child: Swiper(
                               autoplay: true,
                               // itemWidth: 250,
@@ -345,11 +375,11 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                           runSpacing: 14,
                           // mainAxisSize: MainAxisSize.min,
                           children: [
-                            uploaditembtn(),
+                            AdminRightsbtn(),
                             FetchComplaintsbtn(),
                             Ordersbtn(),
-                            AdminRightsbtn(),
-                            Ordersbtn(),
+                            uploaditembtn(),
+                            Editinvobtn(),
                           ],
                         ),
                       ),

@@ -165,12 +165,19 @@ class _SearchScreenState extends State<SearchScreen> {
                                     },
                                     child: ListTile(
                                       leading: SizedBox(
-                                          height: 60,
-                                          width: 60,
-                                          child: Image.asset(
-                                            'assets/all_icon.jpg',
-                                            fit: BoxFit.fill,
-                                          )),
+                                        height: 60,
+                                        width: 60,
+                                        child: (data['url'] == null)
+                                            ? Image.asset(
+                                                'assets/all_icon.jpg',
+                                                fit: BoxFit.fill,
+                                              )
+                                            : Image.network(
+                                                data['url'],
+                                                height: 60,
+                                                width: 60,
+                                              ),
+                                      ),
                                       title: Text(data['Item Name']),
                                       subtitle: Text(data['Category']),
                                       trailing: Text(data['Price'].toString()),

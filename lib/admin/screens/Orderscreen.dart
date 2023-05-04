@@ -76,11 +76,6 @@ class _OrderscreenState extends State<Orderscreen> {
       },
     );
 
-    // List<Map<String, dynamic>> orders = [
-    //   {'Item 1': 'Shirt', 'Quantity 1': 2, 'Total': 200},
-    //   {'Item 2': 'Pants', 'Quantity 2': 1, 'Total': 100},
-    //   {'Item 3': 'Socks', 'Quantity 3': 5, 'Total': 50},
-    // ];
     for (int i = 0; i < orders.length; i++) {
       Map<String, dynamic> order = orders[i];
 
