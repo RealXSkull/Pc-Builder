@@ -282,7 +282,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                 ),
                 child: SingleChildScrollView(
                   physics: AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -338,18 +338,20 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                           ),
                         ],
                       ),
-                      Wrap(
-                        alignment: WrapAlignment.center,
-                        spacing: 30.0,
-                        runSpacing: 16,
-                        // mainAxisSize: MainAxisSize.min,
-                        children: [
-                          uploaditembtn(),
-                          FetchComplaintsbtn(),
-                          Ordersbtn(),
-                          AdminRightsbtn(),
-                          Ordersbtn(),
-                        ],
+                      Center(
+                        child: Wrap(
+                          alignment: WrapAlignment.center,
+                          spacing: 28.0,
+                          runSpacing: 14,
+                          // mainAxisSize: MainAxisSize.min,
+                          children: [
+                            uploaditembtn(),
+                            FetchComplaintsbtn(),
+                            Ordersbtn(),
+                            AdminRightsbtn(),
+                            Ordersbtn(),
+                          ],
+                        ),
                       ),
                     ],
                   ),

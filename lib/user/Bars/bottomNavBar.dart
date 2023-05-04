@@ -59,24 +59,30 @@ class _MainMenuState extends State<MainMenu> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Obx(() => Expanded(
-              child: navbody.elementAt(controller.currentNavIndex.value)))
-        ],
-      ),
-      bottomNavigationBar: Obx(
-        () => BottomNavigationBar(
-          currentIndex: controller.currentNavIndex.value,
-          selectedItemColor: Colors.red,
-          selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
-          type: BottomNavigationBarType.fixed,
-          items: navbaritem,
-          backgroundColor: Color.fromARGB(35, 0, 0, 0),
-          onTap: ((value) {
-            controller.currentNavIndex.value = value;
-          }),
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          children: [
+            Obx(
+              () => Expanded(
+                flex: 1,
+                child: navbody.elementAt(controller.currentNavIndex.value),
+              ),
+            )
+          ],
+        ),
+        bottomNavigationBar: Obx(
+          () => BottomNavigationBar(
+            currentIndex: controller.currentNavIndex.value,
+            selectedItemColor: Colors.red,
+            selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
+            type: BottomNavigationBarType.fixed,
+            items: navbaritem,
+            backgroundColor: Color.fromARGB(35, 0, 0, 0),
+            onTap: ((value) {
+              controller.currentNavIndex.value = value;
+            }),
+          ),
         ),
       ),
     );

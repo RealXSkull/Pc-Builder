@@ -95,7 +95,7 @@ class _itemdetailState extends State<itemdetail> {
                               ),
                             ),
                             Expanded(
-                              flex: 2,
+                              flex: 3,
                               child: Text(
                                 "Price: $formattedNumber/- Rs",
                                 style: const TextStyle(
