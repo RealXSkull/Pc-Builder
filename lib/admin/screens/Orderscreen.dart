@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable, use_key_in_widget_constructors, file_names, use_build_context_synchronously
+// ignore_for_file: must_be_immutable, use_key_in_widget_constructors, file_names, use_build_context_synchronously, unused_import, avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
