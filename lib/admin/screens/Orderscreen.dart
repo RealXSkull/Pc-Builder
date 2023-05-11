@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // ignore_for_file: must_be_immutable, use_key_in_widget_constructors, file_names, use_build_context_synchronously, unused_import, avoid_print
+=======
+// ignore_for_file: must_be_immutable, use_key_in_widget_constructors, file_names, use_build_context_synchronously, unused_import
+>>>>>>> fc80cb28453c0b142d4a612a2999766c0204a4f3
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -76,11 +80,6 @@ class _OrderscreenState extends State<Orderscreen> {
       },
     );
 
-    // List<Map<String, dynamic>> orders = [
-    //   {'Item 1': 'Shirt', 'Quantity 1': 2, 'Total': 200},
-    //   {'Item 2': 'Pants', 'Quantity 2': 1, 'Total': 100},
-    //   {'Item 3': 'Socks', 'Quantity 3': 5, 'Total': 50},
-    // ];
     for (int i = 0; i < orders.length; i++) {
       Map<String, dynamic> order = orders[i];
 
@@ -286,7 +285,6 @@ class _OrderscreenState extends State<Orderscreen> {
 
       return orders;
     } catch (e) {
-      print(e.toString());
       return [];
     }
   }

@@ -27,7 +27,7 @@ class _WarrentyClaimState extends State<WarrentyClaim> {
   var data;
   final itemname = TextEditingController();
   final formkey = GlobalKey<FormState>();
-
+  bool invocheck = false;
   final invoiceno = TextEditingController();
   final itemdesccontroller = TextEditingController();
   final phonenumber = TextEditingController();
@@ -133,7 +133,6 @@ class _WarrentyClaimState extends State<WarrentyClaim> {
               setState(() {
                 this.date = date;
               });
-              // Do something
             },
           ),
         ),
@@ -341,6 +340,8 @@ class _WarrentyClaimState extends State<WarrentyClaim> {
                 validator: (value) {
                   if (value == "" || value == null) {
                     return 'Value cannot be Empty';
+                  } else if (invocheck == true) {
+                    return 'No Invoice Found';
                   } else {
                     return null;
                   }
@@ -363,35 +364,52 @@ class _WarrentyClaimState extends State<WarrentyClaim> {
 
   Future warranty() async {
     String message;
-    final isValid = formkey.currentState!.validate();
-    if (!isValid) return;
-    try {
-      final ref = FirebaseStorage.instance
-          .ref()
-          .child("Inventory")
-          .child(itemname.text);
-      String imgurl = await ref.getDownloadURL();
-      final docuser = FirebaseFirestore.instance.collection('Warranty');
-      final data = {
-        'Item Name': itemname.text,
-        'Message': itemdesccontroller.text,
-        'Purchased Date': date,
-        'Contact': phonenumber.text,
-        'invoice': invoiceno.text,
-        'Username': user.displayName,
-        'Url': imgurl,
-        'Status': 'Requested',
-        'userid': user.uid
-      };
-      await docuser.add(data);
-      // await docuser.doc().set({
-      //   'Item Name': 'G.Skill Aegis 16 GB (2 x 8 GB) DDR4-2133 CL15',
-      //   'Message': itemdesccontroller.text,
-      // });
-      message = 'Your Request has been Sent Succesfully';
-    } catch (e) {
-      message = 'Error On your Request';
+    setState(() {
+      invocheck = false;
+    });
+    final docuser = FirebaseFirestore.instance.collection('Warranty');
+    final itemchecker = FirebaseFirestore.instance
+        .collection('Orders')
+        .where(FieldPath.documentId, isEqualTo: invoiceno.text);
+    final result = await itemchecker.get();
+    if (result.docs.isEmpty) {
+      setState(() {
+        invocheck = true;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Error: No Invoice Found')));
+      final isValid = formkey.currentState!.validate();
+      if (!isValid) return;
+    } else {
+      try {
+        final isValid = formkey.currentState!.validate();
+        if (!isValid) return;
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child("Inventory")
+            .child(itemname.text);
+
+        String imgurl = await ref.getDownloadURL();
+
+        final data = {
+          'Item Name': itemname.text,
+          'Message': itemdesccontroller.text,
+          'Purchased Date': date,
+          'Contact': phonenumber.text,
+          'invoice': invoiceno.text,
+          'Username': user.displayName,
+          'Url': imgurl,
+          'Status': 'Requested',
+          'userid': user.uid
+        };
+        await docuser.add(data);
+
+        message = 'Your Request has been Sent Succesfully';
+      } catch (e) {
+        message = 'Error On your Request';
+      }
+      Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_SHORT);
     }
-    Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_SHORT);
   }
 }

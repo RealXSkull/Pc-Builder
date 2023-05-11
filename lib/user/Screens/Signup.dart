@@ -481,6 +481,7 @@ class SignupArea extends State<Signup> {
       final docuser =
           FirebaseFirestore.instance.collection('Users').doc(user.uid);
       final data = {
+        'userid': user.uid,
         'Name': name,
         'role': 'user',
         'Email': emailcontroller.text,

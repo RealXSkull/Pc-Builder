@@ -105,8 +105,9 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Upload Item',
+              'Upload\nItem',
               style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
             ),
             Icon(Icons.upload_file)
           ],
@@ -138,6 +139,35 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
               textAlign: TextAlign.center,
             ),
             Icon(Icons.report)
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget Editinvobtn() {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Orders()));
+      },
+      child: Container(
+        height: 90,
+        width: 90,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.grey[350],
+        ),
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Edit\nInventory',
+              style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            Icon(Icons.shopping_basket)
           ],
         ),
       ),
@@ -206,26 +236,21 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
 
   Widget Searchbar() {
     return Container(
-      height: 45,
-      alignment: Alignment.center,
-      color: Colors.grey,
-      child: Container(
-        decoration: BoxDecoration(
-            border: Border.all(), borderRadius: BorderRadius.circular(5)),
-        child: TextFormField(
-          decoration: const InputDecoration(
-              border: InputBorder.none,
-              suffixIcon: Icon(Icons.search),
-              filled: true,
-              fillColor: Colors.white,
-              hintText: 'Search Anything..',
-              hintStyle: TextStyle(color: Colors.grey)),
-          textInputAction: TextInputAction.search,
-          onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => SearchScreen()));
-          },
-        ),
+      decoration: BoxDecoration(
+          border: Border.all(), borderRadius: BorderRadius.circular(5)),
+      child: TextField(
+        decoration: const InputDecoration(
+            border: InputBorder.none,
+            suffixIcon: Icon(Icons.search),
+            filled: true,
+            fillColor: Colors.white,
+            hintText: 'Search Anything..',
+            hintStyle: TextStyle(color: Colors.grey)),
+        textInputAction: TextInputAction.search,
+        onTap: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => SearchScreen()));
+        },
       ),
     );
   }
@@ -287,7 +312,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                 ),
                 child: SingleChildScrollView(
                   physics: AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -311,7 +336,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                             height: 10,
                           ),
                           AspectRatio(
-                            aspectRatio: 6 / 3,
+                            aspectRatio: 5 / 3,
                             child: Swiper(
                               autoplay: true,
                               // itemWidth: 250,
@@ -339,22 +364,24 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                             ),
                           ),
                           SizedBox(
-                            height: 20,
+                            height: 50,
                           ),
                         ],
                       ),
-                      Wrap(
-                        alignment: WrapAlignment.center,
-                        spacing: 30.0,
-                        runSpacing: 16,
-                        // mainAxisSize: MainAxisSize.min,
-                        children: [
-                          uploaditembtn(),
-                          FetchComplaintsbtn(),
-                          Ordersbtn(),
-                          AdminRightsbtn(),
-                          Ordersbtn(),
-                        ],
+                      Center(
+                        child: Wrap(
+                          alignment: WrapAlignment.center,
+                          spacing: 28.0,
+                          runSpacing: 14,
+                          // mainAxisSize: MainAxisSize.min,
+                          children: [
+                            AdminRightsbtn(),
+                            FetchComplaintsbtn(),
+                            Ordersbtn(),
+                            uploaditembtn(),
+                            Editinvobtn(),
+                          ],
+                        ),
                       ),
                     ],
                   ),

@@ -72,7 +72,11 @@ class NavBar extends StatelessWidget {
             title: Text('Warranty Claim'),
             onTap: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Warranty()));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Warranty(),
+                ),
+              );
             },
           ),
           ListTile(

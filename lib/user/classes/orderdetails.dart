@@ -10,7 +10,6 @@ class Orderdetails {
   final String contact;
   final String invoice;
   final String username;
- 
 
   Orderdetails({
     required this.item,
@@ -20,7 +19,6 @@ class Orderdetails {
     required this.contact,
     required this.invoice,
     required this.username,
-
   });
   factory Orderdetails.fromMap(Map<String, dynamic> data) {
     return Orderdetails(
@@ -31,7 +29,6 @@ class Orderdetails {
       contact: data['contact'],
       invoice: data['invoice'],
       username: data['username'],
-    
     );
   }
 }
