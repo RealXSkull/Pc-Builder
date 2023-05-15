@@ -241,65 +241,67 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // title: const Text('Login'),
-        backgroundColor: const Color.fromARGB(255, 48, 10, 55),
-      ),
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.dark,
-        child: Form(
-          key: formkey,
-          child: Stack(
-            children: <Widget>[
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Color.fromRGBO(247, 247, 247, 1),
-                ),
-                child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Color.fromARGB(255, 11, 4, 109),
-                        ),
-                        child: Image(
-                          image: AssetImage('assets/Pc_builder_logo.png'),
-                          // height: 250,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        '𝐋𝐎𝐆𝐈𝐍',
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black87),
-                      ),
-                      buildemail(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      buildpassword(),
-                      buildforgotpw(),
-                      buildloginbtn(),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Singupbtn()
-                    ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          // title: const Text('Login'),
+          backgroundColor: const Color.fromARGB(255, 48, 10, 55),
+        ),
+        body: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle.dark,
+          child: Form(
+            key: formkey,
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                    color: Color.fromRGBO(247, 247, 247, 1),
                   ),
-                ),
-              )
-            ],
+                  child: SingleChildScrollView(
+                    physics: AlwaysScrollableScrollPhysics(),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Color.fromARGB(255, 11, 4, 109),
+                          ),
+                          child: Image(
+                            image: AssetImage('assets/Pc_builder_logo.png'),
+                            // height: 250,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          '𝐋𝐎𝐆𝐈𝐍',
+                          style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87),
+                        ),
+                        buildemail(),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        buildpassword(),
+                        buildforgotpw(),
+                        buildloginbtn(),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Singupbtn()
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

@@ -137,7 +137,7 @@ class _CartState extends State<Cart> {
           children: [
             Container(
               color: Colors.blue,
-              height: MediaQuery.of(context).size.height * 0.07,
+              height: MediaQuery.of(context).size.height * 0.05, //zawat
               child: Center(
                 child: Text(
                   'My Cart',
@@ -147,7 +147,7 @@ class _CartState extends State<Cart> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.657,
+              height: MediaQuery.of(context).size.height * 0.657, //zawat
               child: ListView(
                 shrinkWrap: true,
                 padding:
@@ -293,74 +293,17 @@ class _CartState extends State<Cart> {
                 ],
               ),
             ),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.16,
-              padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
-              width: MediaQuery.of(context).size.width,
-              color: Color(0xfff4f4f4),
-              child: Column(
-                children: [
-                  Row(children: [
-                    Text(
-                      'Price:',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                    Spacer(),
-                    Text(
-                      NumberFormat.simpleCurrency(
-                        locale: 'ur_PK',
-                        decimalDigits: 2,
-                      ).format(checker),
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ]),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    children: [
+            Expanded(
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.10, //zawat
+                padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+                width: MediaQuery.of(context).size.width,
+                color: Color(0xfff4f4f4),
+                child: Column(
+                  children: [
+                    Row(children: [
                       Text(
-                        'Delivery Charges:',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.start,
-                      ),
-                      Spacer(),
-                      Text(
-                        dc.toString(),
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.start,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 2,
-                    color: Colors.black,
-                  ),
-                  SizedBox(
-                    height: 1,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 2,
-                    color: Colors.black,
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        'Total:',
+                        'Price:',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.start,
@@ -370,24 +313,83 @@ class _CartState extends State<Cart> {
                         NumberFormat.simpleCurrency(
                           locale: 'ur_PK',
                           decimalDigits: 2,
-                        ).format(total),
+                        ).format(checker),
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.start,
                       ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    children: [
-                      clearcart(),
-                      Spacer(),
-                      checkoutbtn(),
-                    ],
-                  ),
-                ],
+                    ]),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'Delivery Charges:',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.start,
+                        ),
+                        Spacer(),
+                        Text(
+                          dc.toString(),
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.start,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 2,
+                      color: Colors.black,
+                    ),
+                    SizedBox(
+                      height: 1,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 2,
+                      color: Colors.black,
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'Total:',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.start,
+                        ),
+                        Spacer(),
+                        Text(
+                          NumberFormat.simpleCurrency(
+                            locale: 'ur_PK',
+                            decimalDigits: 2,
+                          ).format(total),
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.start,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      children: [
+                        clearcart(),
+                        Spacer(),
+                        checkoutbtn(),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
