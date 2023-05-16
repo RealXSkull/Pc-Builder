@@ -383,9 +383,12 @@ class _CartState extends State<Cart> {
                     ),
                     Row(
                       children: [
-                        clearcart(),
-                        Spacer(),
-                        checkoutbtn(),
+                        Expanded(flex: 2, child: clearcart()),
+                        // Spacer(),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(flex: 2, child: checkoutbtn()),
                       ],
                     ),
                   ],
@@ -401,7 +404,7 @@ class _CartState extends State<Cart> {
   Widget checkoutbtn() {
     return SizedBox(
       height: 40,
-      width: MediaQuery.of(context).size.width * 0.3,
+      width: MediaQuery.of(context).size.width * 0.4,
       child: ElevatedButton.icon(
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlue),
@@ -433,7 +436,7 @@ class _CartState extends State<Cart> {
   Widget clearcart() {
     return SizedBox(
       height: 40,
-      width: MediaQuery.of(context).size.width * 0.3,
+      width: MediaQuery.of(context).size.width * 0.4,
       child: ElevatedButton.icon(
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
