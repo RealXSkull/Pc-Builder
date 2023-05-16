@@ -73,6 +73,8 @@ class _SplashscreenState extends State<Splashscreen> {
         .then((DocumentSnapshot documentsnapshot) {
       if (documentsnapshot.exists) {
         if (documentsnapshot.get('role') == 'admin') {
+          globals.isAdmin = true;
+
           globals.role = 'admin';
           Navigator.pushReplacement(
             context,
@@ -81,6 +83,8 @@ class _SplashscreenState extends State<Splashscreen> {
             ),
           );
         } else {
+          globals.isAdmin = false;
+
           globals.role = 'user';
           Navigator.pushReplacement(
             context,
@@ -107,19 +111,25 @@ class _SplashscreenState extends State<Splashscreen> {
         body: Center(
           child: Column(
             children: [
-              Container(
-                color: const Color.fromARGB(255, 32, 45, 61),
-                height: MediaQuery.of(context).size.height * 0.226,
+              Expanded(
+                child: Container(
+                  color: const Color.fromARGB(255, 32, 45, 61),
+                  height: MediaQuery.of(context).size.height * 0.226,
+                ),
               ),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.5,
-                width: MediaQuery.of(context).size.width,
-                color: const Color(0xff202c3c),
-                child: video(),
+              Expanded(
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  width: MediaQuery.of(context).size.width,
+                  color: const Color(0xff202c3c),
+                  child: video(),
+                ),
               ),
-              Container(
-                color: const Color.fromARGB(255, 32, 45, 61),
-                height: MediaQuery.of(context).size.height * 0.226,
+              Expanded(
+                child: Container(
+                  color: const Color.fromARGB(255, 32, 45, 61),
+                  height: MediaQuery.of(context).size.height * 0.226,
+                ),
               ),
             ],
           ),

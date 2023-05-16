@@ -10,6 +10,8 @@ import 'package:fyp/user/Screens/ManageProfile.dart';
 import '../Controllers/bottomNavController.dart';
 import 'package:get/get.dart';
 
+import 'cartfullpage.dart';
+
 class MainMenu extends StatefulWidget {
   const MainMenu({super.key});
 
@@ -25,9 +27,7 @@ class _MainMenuState extends State<MainMenu> {
     Container(
       color: Colors.amber,
     ),
-    Container(
-      color: Colors.purple,
-    ),
+    CartFullPage(),
     Manageprofile()
   ];
   var navbaritem = [

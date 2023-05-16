@@ -60,12 +60,14 @@ dependencies:
   flutter_typeahead: ^4.1.1
   video_player: ^2.4.10
   shared_preferences: ^2.0.17
-  path_provider: ^2.0.12
+  path_provider: ^2.0.15
   badges: ^3.0.2
   # provider: ^6.0.5
   intl: ^0.17.0
   tabnavigator: ^1.0.0
   syncfusion_flutter_datagrid: ^21.1.37
+  image_gallery_saver: ^1.7.1
+  flutter_redux: ^0.10.0
 
   # path_provider: ^2.0.11
   # permission_handler: ^10.2.0

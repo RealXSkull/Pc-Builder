@@ -18,6 +18,7 @@ var phone = "";
 var name = "";
 var inventory;
 List items = [];
+bool isAdmin = false;
 Image? img;
 
 // List inventory = {'Item Name': '', 'Category': ''} as List;

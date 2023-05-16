@@ -385,74 +385,76 @@ class SignupArea extends State<Signup> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('REGISTRATION'),
-        backgroundColor: const Color.fromARGB(255, 48, 10, 55),
-      ),
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.dark,
-        child: Form(
-          key: formkey,
-          child: Stack(
-            children: <Widget>[
-              Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                decoration: const BoxDecoration(
-                  color: Color.fromRGBO(247, 247, 247, 1),
-                ),
-                child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: const Color.fromARGB(255, 11, 4, 109),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('REGISTRATION'),
+          backgroundColor: const Color.fromARGB(255, 48, 10, 55),
+        ),
+        body: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle.dark,
+          child: Form(
+            key: formkey,
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(
+                    color: Color.fromRGBO(247, 247, 247, 1),
+                  ),
+                  child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: const Color.fromARGB(255, 11, 4, 109),
+                          ),
+                          child: const Image(
+                            image: AssetImage('assets/Pc_builder_logo.png'),
+                            height: 180,
+                            width: double.infinity,
+                          ),
                         ),
-                        child: const Image(
-                          image: AssetImage('assets/Pc_builder_logo.png'),
-                          height: 180,
-                          width: double.infinity,
+                        const SizedBox(
+                          height: 10,
                         ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      buildname(),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      buildemail(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      buildphone(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      buildpassword(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      buildconfirmpassword(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      registerbtn(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      alreadyaccountbtn()
-                    ],
+                        buildname(),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        buildemail(),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        buildphone(),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        buildpassword(),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        buildconfirmpassword(),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        registerbtn(),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        alreadyaccountbtn()
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

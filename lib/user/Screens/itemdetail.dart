@@ -1,10 +1,10 @@
-// ignore_for_file: use_key_in_widget_constructors, must_be_immutable, camel_case_types, unnecessary_null_comparison, use_build_context_synchronously
+// ignore_for_file: use_key_in_widget_constructors, must_be_immutable, camel_case_types, unnecessary_null_comparison, use_build_context_synchronously, non_constant_identifier_names
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-// import 'package:fyp/user/classes/global.dart';
+import 'package:fyp/user/classes/global.dart' as globals;
 
 class itemdetail extends StatefulWidget {
   Map<String, dynamic> receivedMap;
@@ -26,11 +26,12 @@ class _itemdetailState extends State<itemdetail> {
   void initState() {
     super.initState();
     formatnumber();
+    isAdmin();
   }
 
   final user = FirebaseAuth.instance.currentUser!;
   bool invochecker = false;
-
+  bool CartbtnVisible = true;
   bool _visible = true;
   // bool isopen = false;
   // var zawat = FirebaseFirestore.instance.collection('Feedback').snapshots();
@@ -107,31 +108,35 @@ class _itemdetailState extends State<itemdetail> {
                           ],
                         ),
                       ),
-                      LayoutBuilder(
-                        builder: (context, constraints) {
-                          return Column(
-                            children: [
-                              Visibility(
-                                visible: (widget.receivedMap['Inventory'] <= 10)
-                                    ? true
-                                    : false,
-                                child: Text(
-                                  'Only ${widget.receivedMap["Inventory"]} Left in Stock, Hurry UP!',
-                                  style: const TextStyle(color: Colors.red),
-                                ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Visibility(
+                            visible: (widget.receivedMap['Inventory'] <= 10)
+                                ? true
+                                : false,
+                            child: Center(
+                              child: Text(
+                                'Only ${widget.receivedMap["Inventory"]} Left in Stock, Hurry UP!',
+                                style: const TextStyle(color: Colors.red),
                               ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                  //change with cpu description
-                                  "◉ ${widget.receivedMap["desc1"]}\n◉ ${widget.receivedMap["desc2"]}\n◉ ${widget.receivedMap["desc3"]}"),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          );
-                        },
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              //change with cpu description
+                              "◉ ${widget.receivedMap["desc1"]}\n◉ ${widget.receivedMap["desc2"]}\n◉ ${widget.receivedMap["desc3"]}",
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
                       ),
                       const SizedBox(
                         height: 70,
@@ -217,14 +222,29 @@ class _itemdetailState extends State<itemdetail> {
             ],
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            addtocart();
-          },
-          child: const Icon(Icons.shopping_cart),
+        floatingActionButton: Visibility(
+          visible: CartbtnVisible,
+          child: FloatingActionButton(
+            onPressed: () {
+              addtocart();
+            },
+            child: const Icon(Icons.shopping_cart),
+          ),
         ),
       ),
     );
+  }
+
+  void isAdmin() {
+    if (globals.isAdmin == true) {
+      CartbtnVisible = false;
+      // ScaffoldMessenger.of(context)
+      //     .showSnackBar(SnackBar(content: Text('${globals.isAdmin}')));
+    } else {
+      // ScaffoldMessenger.of(context)
+      //     .showSnackBar(SnackBar(content: Text('${globals.isAdmin}')));
+      CartbtnVisible = true;
+    }
   }
 
   Future addtocart() async {

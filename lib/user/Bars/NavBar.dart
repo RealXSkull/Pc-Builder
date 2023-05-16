@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, file_names, unused_import, use_build_context_synchronously
 
 import 'package:fyp/user/Screens/WarrentyClaim.dart';
+import 'package:fyp/user/Screens/orderhistory.dart';
 import 'package:fyp/user/Screens/warranty.dart';
 import '../Controllers/Authpage.dart';
 import '../classes/global.dart' as globals;
@@ -85,6 +86,14 @@ class NavBar extends StatelessWidget {
             onTap: () {
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => Review()));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.shopping_bag_sharp),
+            title: Text('Order History'),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Orderhistory()));
             },
           ),
           ListTile(

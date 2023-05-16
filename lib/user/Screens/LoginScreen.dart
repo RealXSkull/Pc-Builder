@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 import '../../admin/bars/adminNavBar.dart';
 import '../Bars/bottomNavBar.dart';
 import '../Controllers/Authpage.dart';
+import '../../user/classes/global.dart' as globals;
 // import 'splash.dart' as splash;
 
 class LoginScreen extends StatefulWidget {
@@ -243,10 +244,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          // title: const Text('Login'),
-          backgroundColor: const Color.fromARGB(255, 48, 10, 55),
-        ),
         body: AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle.dark,
           child: Form(
@@ -338,6 +335,7 @@ class _LoginScreenState extends State<LoginScreen> {
           .then((DocumentSnapshot documentsnapshot) {
         if (documentsnapshot.exists) {
           if (documentsnapshot.get('role') == 'admin') {
+            globals.isAdmin = true;
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
@@ -345,6 +343,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             );
           } else {
+            globals.isAdmin = false;
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(

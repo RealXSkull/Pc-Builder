@@ -26,7 +26,7 @@ class _ManageprofileState extends State<Manageprofile> {
   PlatformFile? pickedFile;
   var dataa;
   final user = FirebaseAuth.instance.currentUser!;
-  final _phonecontroller = TextEditingController();
+  final _phonecontroller = TextEditingController(text: '0${global.phone}');
   int maxLength = 11;
   var contactno = "";
   final _namecontroller = TextEditingController(text: global.name);

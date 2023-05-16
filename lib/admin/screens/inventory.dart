@@ -31,9 +31,9 @@ class _inventoryState extends State<inventory> {
   final desc3 = TextEditingController();
   final price = TextEditingController();
   final invo = TextEditingController();
-
+  List<String> dropdownvaluelist = [];
   var image;
-  String dropdownvalue = 'Monitor';
+  String dropdownvalue = '';
   bool dropvisible = false;
   bool light0 = false;
   List<List<dynamic>> data = [];
@@ -56,6 +56,11 @@ class _inventoryState extends State<inventory> {
   void initState() {
     super.initState();
     _futureItems = globals.getcategory2(context);
+    assignitems();
+  }
+
+  void assignitems() async {
+    dropdownvaluelist = (await _futureItems)!;
   }
 
   Future upload() async {
@@ -541,7 +546,7 @@ class _inventoryState extends State<inventory> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return DropdownButton<String>(
-            value: dropdownvalue,
+            value: dropdownvaluelist[0].toString(),
             icon: const Icon(Icons.keyboard_arrow_down),
             items: snapshot.data!.map((item) {
               return DropdownMenuItem<String>(

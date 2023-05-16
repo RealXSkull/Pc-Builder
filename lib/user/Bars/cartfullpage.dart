@@ -29,14 +29,14 @@ List itemprices = [];
 var data;
 final user = FirebaseAuth.instance.currentUser!;
 
-class Cart extends StatefulWidget {
-  const Cart({super.key});
+class CartFullPage extends StatefulWidget {
+  const CartFullPage({super.key});
 
   @override
-  State<Cart> createState() => _CartState();
+  State<CartFullPage> createState() => _CartfullpageState();
 }
 
-class _CartState extends State<Cart> {
+class _CartfullpageState extends State<CartFullPage> {
   @override
   void initState() {
     globals.items.clear();
@@ -132,20 +132,13 @@ class _CartState extends State<Cart> {
     }
 
     return SafeArea(
-      child: Drawer(
-        child: Column(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('My Cart'),
+          backgroundColor: const Color.fromARGB(255, 48, 10, 55),
+        ),
+        body: Column(
           children: [
-            Container(
-              color: Colors.blue,
-              height: MediaQuery.of(context).size.height * 0.05, //zawat
-              child: Center(
-                child: Text(
-                  'My Cart',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.657, //zawat
               child: ListView(

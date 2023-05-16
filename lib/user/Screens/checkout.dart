@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fyp/user/Bars/cart.dart';
 import 'package:fyp/user/Screens/Homescreen.dart';
+import 'package:intl/intl.dart';
 // import 'package:fyp/user/classes/cartcalc.dart';
 import '../classes/global.dart' as global;
 import 'dart:math';
-import 'dart:core';
 import '../classes/global.dart';
 
 int invoicenumber = 0;
@@ -16,6 +16,7 @@ int invoicenumber = 0;
 class checkoutscreen extends StatefulWidget {
   Map<String, dynamic> receivedMap;
   double total;
+
   List items;
   checkoutscreen(
       {required this.receivedMap, required this.total, required this.items});
@@ -25,6 +26,8 @@ class checkoutscreen extends StatefulWidget {
 }
 
 class _checkoutscreenState extends State<checkoutscreen> {
+  GlobalKey containerKey = GlobalKey();
+
   final formkey = GlobalKey<FormState>();
   final _namecontroller = TextEditingController(text: global.name);
   final _phonecontroller = TextEditingController(text: '0${global.phone}');
@@ -87,17 +90,50 @@ class _checkoutscreenState extends State<checkoutscreen> {
                               height: 20,
                             ),
                             builditemdesc(),
-                            const SizedBox(
-                              height: 15,
-                            ),
 
                             datatable(),
 
                             // for (int i = 0; i < 3; i++)
+                            // const SizedBox(
+                            //   height: 15,
+                            // ),
+                            const Text(
+                              '*SWIPE TO SEE FULL INVOICE --> ',
+                              style: TextStyle(fontSize: 10, color: Colors.red),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  'Total Amount: ',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  NumberFormat.simpleCurrency(
+                                    locale: 'ur_PK',
+                                    decimalDigits: 0,
+                                  ).format(total),
+                                  style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const Text(
+                                  '/-',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+
                             const SizedBox(
                               height: 15,
                             ),
                             checkoutbtn(),
+
+                            // if (bytes != null) Image.memory(bytes!),
                           ]),
                     ),
                   ),
@@ -171,6 +207,7 @@ class _checkoutscreenState extends State<checkoutscreen> {
           ),
           height: 40,
           child: TextField(
+            enabled: false,
             controller: _namecontroller,
             keyboardType: TextInputType.text,
             style: const TextStyle(color: Colors.black87),
@@ -303,6 +340,7 @@ class _checkoutscreenState extends State<checkoutscreen> {
               }
             },
             // maxLength: 11,
+            enabled: false,
             keyboardType: TextInputType.number,
             style: const TextStyle(color: Colors.black87),
             decoration: const InputDecoration(
@@ -346,6 +384,7 @@ class _checkoutscreenState extends State<checkoutscreen> {
           height: 40,
           child: TextField(
             controller: _addcontroller,
+            enabled: false,
             keyboardType: TextInputType.text,
             style: const TextStyle(color: Colors.black87),
             decoration: const InputDecoration(
@@ -381,6 +420,7 @@ class _checkoutscreenState extends State<checkoutscreen> {
           'message': itemdesccontroller.text,
           'contact': _phonecontroller.text,
           'Address': _addcontroller.text,
+          'uid': user.uid,
           'status': 'Requested'
         };
         count++;

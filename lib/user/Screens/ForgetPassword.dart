@@ -109,44 +109,46 @@ class RecoverPassword extends State<ForgetPassword> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          title: Text('FORGOT PASSWORD?'),
-          backgroundColor: const Color.fromARGB(255, 48, 10, 55),
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_new_rounded),
-            onPressed: () => Navigator.pop(context, false),
-          )),
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.dark,
-        child: Form(
-          key: formkey,
-          child: Stack(
-            children: <Widget>[
-              Container(
-                alignment: Alignment.center,
-                height: double.infinity,
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Color(0xfff7f7f7),
-                ),
-                child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.all(16),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      EmailText(),
-                      buildemail(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      recoverpas(),
-                    ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+            title: Text('FORGOT PASSWORD?'),
+            backgroundColor: const Color.fromARGB(255, 48, 10, 55),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios_new_rounded),
+              onPressed: () => Navigator.pop(context, false),
+            )),
+        body: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle.dark,
+          child: Form(
+            key: formkey,
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  alignment: Alignment.center,
+                  height: double.infinity,
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                    color: Color(0xfff7f7f7),
                   ),
-                ),
-              )
-            ],
+                  child: SingleChildScrollView(
+                    physics: AlwaysScrollableScrollPhysics(),
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        EmailText(),
+                        buildemail(),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        recoverpas(),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
