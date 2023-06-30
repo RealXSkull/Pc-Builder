@@ -107,11 +107,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               NumberFormat commaFormat = NumberFormat('#,###');
                               String formattedNumber =
                                   commaFormat.format(data['Price']);
-                              // number = formattedNumber(data['Price'].toString());
-                              // print(globals.data1);
-                              // print(
-                              //     "database data length${data['Item Name'].length}");
-                              // print("local data length${globals.data1.length}");
+
                               if (searchkey.isEmpty) {
                                 return Card(
                                   color: Colors.white,
@@ -126,8 +122,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                     },
                                     child: ListTile(
                                       leading: SizedBox(
-                                        height: 60,
-                                        width: 60,
+                                        height: 50,
+                                        width: 50,
                                         child: (data['url'] == null)
                                             ? Image.asset(
                                                 'assets/all_icon.jpg',
@@ -139,10 +135,12 @@ class _SearchScreenState extends State<SearchScreen> {
                                                 width: 60,
                                               ),
                                       ),
-                                      tileColor: Colors.grey[350],
                                       title: Text(data['Item Name']),
                                       subtitle: Text(data['Category']),
+                                      enableFeedback: true,
+
                                       trailing: Text(formattedNumber),
+
                                       // leading: Image.network(src),
                                     ),
                                   ),
@@ -180,7 +178,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                       ),
                                       title: Text(data['Item Name']),
                                       subtitle: Text(data['Category']),
-                                      trailing: Text(data['Price'].toString()),
+                                      enableFeedback: true,
+
+                                      trailing: Text(formattedNumber),
+
                                       // leading: Image.network(src),
                                     ),
                                   ),
@@ -188,41 +189,6 @@ class _SearchScreenState extends State<SearchScreen> {
                               }
                               return Container();
                             }),
-                            // children: snapshot.data!.docs
-                            //     .map((DocumentSnapshot document) {
-                            //   Map<String, dynamic> data =
-                            //       document.data() as Map<String, dynamic>;
-                            //   return Card(
-                            //     elevation: 5,
-                            //     child: InkWell(
-                            //       onTap: () {
-                            //         // print(data);
-                            //         Navigator.of(context).push(
-                            //           MaterialPageRoute(
-                            //             builder: (context) => itemdetail(
-                            //               receivedMap: data,
-                            //               url: globals.url,
-                            //             ),
-                            //           ),
-                            //         );
-                            //       },
-                            //       child: ListTile(
-                            //         leading: SizedBox(
-                            //             height: 60,
-                            //             width: 60,
-                            //             child: Image.asset(
-                            //               'assets/all_icon.jpg',
-                            //               fit: BoxFit.fill,
-                            //             )),
-                            //         title: Text(data['Item Name']),
-                            //         subtitle: Text(data['Category']),
-                            //         trailing: Text(data['Price'].toString()),
-                            //         // leading: Image.network(src),
-                            //       ),
-                            //       if(data['Item Name'].toString)
-                            //     ),
-                            //   );
-                            // }).toList(),
                           );
                         }
                       },

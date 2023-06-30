@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fyp/user/Screens/Homescreen.dart';
+import 'package:fyp/user/Screens/Categories.dart';
 import 'package:fyp/user/Screens/ManageProfile.dart';
 import '../Controllers/bottomNavController.dart';
 import 'package:get/get.dart';
@@ -24,9 +25,10 @@ class _MainMenuState extends State<MainMenu> {
 
   var navbody = [
     HomeScreen(),
-    Container(
-      color: Colors.amber,
-    ),
+    categories(),
+    // Container(
+    //   color: Colors.amber,
+    // ),
     CartFullPage(),
     Manageprofile()
   ];

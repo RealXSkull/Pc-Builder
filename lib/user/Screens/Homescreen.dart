@@ -113,7 +113,6 @@ class _HomeScreenState extends State<HomeScreen> {
         label: Text('update invo'),
         onPressed: () {
           // global.getcategory1(context);
-          global.getcategory(context);
         },
         icon: Icon(
           Icons.lock,

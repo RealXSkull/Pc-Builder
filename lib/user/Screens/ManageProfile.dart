@@ -70,105 +70,105 @@ class _ManageprofileState extends State<Manageprofile> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          // drawer: NavBar(),
-          appBar: AppBar(
-            title: Text('Manage Account'),
-            backgroundColor: Color.fromARGB(255, 48, 10, 55),
-          ),
-          body: AnnotatedRegion<SystemUiOverlayStyle>(
-            value: SystemUiOverlayStyle.dark,
-            child: Form(
-              key: formkey,
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: const BoxDecoration(
-                      color: Color.fromRGBO(247, 247, 247, 1),
-                    ),
-                    child: SingleChildScrollView(
-                      physics: AlwaysScrollableScrollPhysics(),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          SizedBox(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                (image != null)
-                                    ? Expanded(
-                                        flex: 1,
-                                        child: Visibility(
-                                          visible: true,
-                                          child: ClipRRect(
-                                            child: Image.file(
-                                              image,
-                                              fit: BoxFit.fill,
-                                              height: 54,
-                                              width: 54,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(27),
+        // drawer: NavBar(),
+        appBar: AppBar(
+          title: Text('Manage Account'),
+          backgroundColor: Color.fromARGB(255, 48, 10, 55),
+        ),
+        body: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle.dark,
+          child: Form(
+            key: formkey,
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(
+                    color: Color.fromRGBO(247, 247, 247, 1),
+                  ),
+                  child: SingleChildScrollView(
+                    physics: AlwaysScrollableScrollPhysics(),
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              (image != null)
+                                  ? Expanded(
+                                      flex: 1,
+                                      child: Visibility(
+                                        visible: true,
+                                        child: ClipRRect(
+                                          child: Image.file(
+                                            image,
+                                            fit: BoxFit.fill,
+                                            height: 54,
+                                            width: 54,
                                           ),
-                                        ),
-                                      )
-                                    : Expanded(
-                                        flex: 1,
-                                        child: Visibility(
-                                          visible: true,
-                                          child: ClipRRect(
-                                            child: Image.network(
-                                              global.url,
-                                              fit: BoxFit.fill,
-                                              height: 54,
-                                              width: 54,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(27),
-                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(27),
                                         ),
                                       ),
-                                Spacer(),
-                                Expanded(
-                                  flex: 5,
-                                  child: buildname(),
-                                ),
-                              ],
-                            ),
+                                    )
+                                  : Expanded(
+                                      flex: 1,
+                                      child: Visibility(
+                                        visible: true,
+                                        child: ClipRRect(
+                                          child: Image.network(
+                                            global.url,
+                                            fit: BoxFit.fill,
+                                            height: 54,
+                                            width: 54,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(27),
+                                        ),
+                                      ),
+                                    ),
+                              Spacer(),
+                              Expanded(
+                                flex: 5,
+                                child: buildname(),
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          buildAddress(),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          buildphone(),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          selectimage(),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          updateprof()
-                        ],
-                      ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        buildAddress(),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        buildphone(),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        selectimage(),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        updateprof()
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 

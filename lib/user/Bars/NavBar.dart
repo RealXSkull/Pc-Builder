@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, file_names, unused_import, use_build_context_synchronously
 
+import 'package:fyp/user/Screens/Changepassword.dart';
 import 'package:fyp/user/Screens/WarrentyClaim.dart';
 import 'package:fyp/user/Screens/orderhistory.dart';
 import 'package:fyp/user/Screens/warranty.dart';
@@ -53,21 +54,14 @@ class NavBar extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.edit),
-            title: Text('Update Profile'),
+            leading: Icon(Icons.password),
+            title: Text('Change Password'),
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Manageprofile()));
+                  MaterialPageRoute(builder: (context) => changepassword()));
             },
           ),
-          ListTile(
-            leading: Icon(Icons.favorite),
-            title: Text('Favorites'),
-            onTap: () {
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: (context) => LoginScreen()));
-            },
-          ),
+        
           ListTile(
             leading: Icon(Icons.support_agent_outlined),
             title: Text('Warranty Claim'),
