@@ -68,7 +68,6 @@ dependencies:
   syncfusion_flutter_datagrid: ^21.1.37
   image_gallery_saver: ^1.7.1
   flutter_redux: ^0.10.0
-
   # path_provider: ^2.0.11
   # permission_handler: ^10.2.0
   # open_file_plus: ^3.3.0

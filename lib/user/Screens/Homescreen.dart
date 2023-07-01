@@ -1,23 +1,24 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, file_names, prefer_final_fields, unnecessary_new, use_key_in_widget_constructors, avoid_print, non_constant_identifier_names, sized_box_for_whitespace, must_call_super, unnecessary_import, depend_on_referenced_packages, dead_code, unnecessary_null_comparison, prefer_conditional_assignment, prefer_typing_uninitialized_variables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, file_names, prefer_final_fields, unnecessary_new, use_key_in_widget_constructors, avoid_print, non_constant_identifier_names, sized_box_for_whitespace, must_call_super, unnecessary_import, depend_on_referenced_packages, dead_code, unnecessary_null_comparison, prefer_conditional_assignment, prefer_typing_uninitialized_variables, avoid_types_as_parameter_names
 
 // import 'package:fyp/LoginScreen.dart';
 // import 'package:fluttertoast/fluttertoast.dart';
+
+import 'dart:math';
 
 import 'package:badges/badges.dart' as badges;
 
 import 'package:card_swiper/card_swiper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 // import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fyp/user/Bars/cart.dart';
+import 'package:fyp/user/Screens/Categoriesdetail.dart';
 // import 'package:fyp/user/Controllers/data_controller.dart';
 import 'package:fyp/user/Screens/SearchScreen.dart';
 // import 'package:fyp/admin/screens/inventory.dart';
-
 import '../classes/CardItem.dart';
 import 'package:fyp/user/Bars/NavBar.dart';
 import '../classes/images.dart';
@@ -94,6 +95,108 @@ class _HomeScreenState extends State<HomeScreen> {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => SearchScreen()));
           },
+        ),
+      ),
+    );
+  }
+
+  Widget cpubtn() {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => cat_detail(
+              Category: 'CPU',
+            ),
+          ),
+        );
+      },
+      child: Container(
+        height: 80,
+        width: 80,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: Color.fromARGB(250, 211, 209, 209),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/icons/cpu.png',
+              height: 40,
+              width: 40,
+            ),
+            Text('CPU')
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget rambtn() {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => cat_detail(
+              Category: 'GPU',
+            ),
+          ),
+        );
+      },
+      child: Container(
+        height: 80,
+        width: 80,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: Color.fromARGB(250, 211, 209, 209),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/icons/gpu.png',
+              height: 50,
+              width: 50,
+            ),
+            Text('GPU')
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget psubtn() {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => cat_detail(
+              Category: 'PSU',
+            ),
+          ),
+        );
+      },
+      child: Container(
+        height: 80,
+        width: 80,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: Color.fromARGB(250, 211, 209, 209),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/icons/psu.png',
+              height: 50,
+              width: 50,
+            ),
+            Text('PSU')
+          ],
         ),
       ),
     );
@@ -274,7 +377,27 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(
                               height: 20,
                             ),
-                            invoscreenbtn(),
+                            Divider(thickness: 2),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Center(
+                              child: Wrap(
+                                alignment: WrapAlignment.center,
+                                spacing: 28.0,
+                                runSpacing: 14,
+                                // mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  cpubtn(),
+                                  rambtn(),
+                                  psubtn(),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Divider(thickness: 2),
                           ],
                         ),
                       ],
