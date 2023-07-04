@@ -219,7 +219,7 @@ class _inventoryState extends State<inventory> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('UPDATE INVENTORY'),
+          title: Text('Add Item'),
           backgroundColor: Color.fromARGB(255, 48, 10, 55),
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios_new_rounded),

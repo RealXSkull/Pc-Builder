@@ -4,6 +4,7 @@
 // import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:card_swiper/card_swiper.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +15,7 @@ import 'package:fyp/admin/screens/Orders.dart';
 import 'package:fyp/admin/screens/complaints.dart';
 import 'package:fyp/user/Screens/SearchScreen.dart';
 import 'package:fyp/admin/screens/inventory.dart';
+import 'package:intl/intl.dart';
 import '../../user/Screens/Categoriesdetail.dart';
 import '../../user/classes/CardItem.dart';
 import 'package:fyp/user/Bars/NavBar.dart';
@@ -37,26 +39,69 @@ class HomePage {
 }
 
 class _AdminHomeScreenState extends State<AdminHomeScreen> {
-  // CollectionReference cf = FirebaseFirestore.instance.collection('Inventory');
-  // DatabaseReference postListRef = FirebaseDatabase.instance.ref("Inventory");
-
-  // void tryprintdata() {
-  //   global.inventory['Item Name'] = postListRef;
-  //   print('Item Name is: ${global.inventory['Item Name']}');
-  //   // print('Inventory $postListRef');
-  // }
-
+  List<dynamic> cardsData = [];
+  Future<List<String>>? _futureItems;
   @override
   void initState() {
     super.initState();
     global.readdata(user);
-    global.inventory = global.getcategory(context);
-
+    // global.inventory = global.getcategory(context);
+    fetchData();
+    _futureItems = global.getcategory2(context);
     // global.getinvo();
     fetchimage();
     //getdata();
     // tryprintdata();
   }
+
+  Future<void> fetchData() async {
+    List<dynamic> data = await fetchCardsData();
+    setState(() {
+      cardsData = data;
+    });
+  }
+
+  Future<List<dynamic>> fetchCardsData() async {
+    List<dynamic> cardsData = [];
+
+    try {
+      List<String> categories =
+          await global.getcategory2(context); // Add all your categories here
+
+      for (String category in categories) {
+        QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+            .collection('Inventory')
+            .where('Category', isEqualTo: category)
+            .limit(1) // Limit to 1 item per category
+            .get();
+
+        if (querySnapshot.docs.isNotEmpty) {
+          cardsData.add(querySnapshot.docs.first.data());
+        }
+      }
+    } catch (e) {
+      print("Error fetching data: $e");
+    }
+
+    return cardsData;
+  }
+  // Future<List<dynamic>> fetchCardsData() async {
+  //   List<dynamic> cardsData = [];
+
+  //   try {
+  //     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+  //         .collection('Inventory')
+  //         .where('Category', isEqualTo: 'PSU')
+  //         .limit(3)
+  //         .get();
+
+  //     cardsData = querySnapshot.docs.map((doc) => doc.data()).toList();
+  //   } catch (e) {
+  //     print("Error fetching data: $e");
+  //   }
+
+  //   return cardsData;
+  // }
 
   // void getdata() {
   //   cf.doc().get().then(
@@ -75,20 +120,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
   User user = FirebaseAuth.instance.currentUser!;
 
   // String name = "";
-  List<CardItem> item = [
-    CardItem(
-        image: 'assets/icons/all_icon.jpg', title: 'ALL', subtitle: '\$100'),
-    CardItem(
-        image: 'assets/icons/all_icon.jpg', title: 'ALL', subtitle: '\$100'),
-    CardItem(
-        image: 'assets/icons/all_icon.jpg', title: 'ALL', subtitle: '\$100'),
-    CardItem(
-        image: 'assets/icons/all_icon.jpg', title: 'ALL', subtitle: '\$100'),
-    CardItem(
-        image: 'assets/icons/all_icon.jpg', title: 'ALL', subtitle: '\$100'),
-    CardItem(
-        image: 'assets/icons/all_icon.jpg', title: 'ALL', subtitle: '\$100'),
-  ];
+
   Widget uploaditembtn() {
     return InkWell(
       onTap: () {
@@ -359,30 +391,116 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
     );
   }
 
-  // List<int> data = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
-  Widget Buildcards(CardItem item) => Container(
-        width: 200,
-        child: Column(
-          children: [
-            Expanded(
-                child: AspectRatio(
-              aspectRatio: 4 / 3,
-              child: Image.asset(
-                item.image,
-                fit: BoxFit.cover,
-              ),
-            )),
-            Text(
-              item.title,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+  Widget swipercards() {
+    return Swiper(
+        itemCount: cardsData.length,
+        pagination: SwiperPagination(),
+        viewportFraction: 0.9,
+        itemBuilder: (context, index) {
+          NumberFormat commaFormat = NumberFormat('#,###');
+          String formattedNumber =
+              commaFormat.format(cardsData[index]['Price']);
+          return Card(
+            child: Column(
+              children: [
+                if (cardsData[index]['url'] != null ||
+                    cardsData[index]['url'] != "")
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: Image.network(
+                      cardsData[index]['url'],
+                      fit: BoxFit.contain,
+                      height: 150,
+                      width: 150,
+                      errorBuilder: (BuildContext context, Object error,
+                          StackTrace? stackTrace) {
+                        // This builder is called when the image fails to load.
+                        // You can return the alternate AssetImage widget here.
+                        return Image.asset(
+                          'assets/all_icon.jpg',
+                          fit: BoxFit.contain,
+                          height: 180,
+                          width: 180,
+                        );
+                      },
+                    ),
+                  ),
+                // if (cardsData[index]['url'] == null ||
+                //     cardsData[index]['url'] == "")
+                //   ClipRRect(
+                //     borderRadius: BorderRadius.circular(5),
+                //     child: Image(
+                //       image: AssetImage('assets/all_icon.jpg'),
+                //       fit: BoxFit.contain,
+                //       height: 150,
+                //       width: 150,
+                //     ),
+                //   ),
+                Align(
+                  child: Text(
+                    cardsData[index]['Item Name'],
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                Row(
+                  children: [
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                        child: Text(
+                          cardsData[index]['Category'],
+                          // textAlign: TextAlign.left,
+                          style: TextStyle(
+                              color: Colors.grey, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                        child: Text(
+                          formattedNumber.toString(),
+                          // textAlign: TextAlign.left,
+                          style: TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-            Text(
-              item.subtitle,
-              style: TextStyle(fontSize: 12, color: Colors.red),
-            )
-          ],
-        ),
-      );
+            // child: ListTile(
+            //   leading: Image.network(cardsData[index]['url']),
+            //   title: Text(cardsData[index]['Item Name']),
+            //   subtitle: Text(cardsData[index]['Category']),
+            //   // You can customize the card's content according to your data structure
+            //   // For example, you can use an Image widget to display an image if 'imageUrl' exists in the data.
+            //   // Or you can add more Text widgets for other fields in your data.
+            // ),
+          );
+        });
+  }
+
+  // Widget cards2() {
+  //   return Swiper(
+  //     viewportFraction: 0.9,
+  //     itemBuilder: (context, index) {
+  //       return Card(
+  //         child: Column(
+  //           children: [
+  //             Text(cardsData[index]['Item Name']),
+  //           ],
+  //         ),
+  //       );
+  //     },
+  //     itemCount: cardsData.length,
+  //     pagination: SwiperPagination(),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -439,36 +557,47 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                           SizedBox(
                             height: 10,
                           ),
+                          // AspectRatio(
+                          //   aspectRatio: 5 / 3,
+                          //   child: cards2(),
+                          // ),
+
                           AspectRatio(
                             aspectRatio: 5 / 3,
-                            child: Swiper(
-                              autoplay: true,
-                              // itemWidth: 250,
-                              itemCount: cards.length,
-                              itemBuilder: (context, index) {
-                                return ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image(
-                                    image: AssetImage(cards[index]),
-                                    fit: BoxFit.fill,
-                                  ),
-                                );
-                                // OnTap(index) {
-                                //   // Navigator.push(
-                                //   //     context,
-                                //   //     MaterialPageRoute(
-                                //   //         builder: (context) => Review()));
-                                // }
-                              },
-                              viewportFraction: 0.8,
-                              scale: 0.8,
-                              pagination: SwiperPagination(),
-                              // itemWidth: 500,
-                              // layout: SwiperLayout.STACK,
-                            ),
+                            child: swipercards(),
                           ),
+
+                          // cards2(),
+                          // AspectRatio(
+                          //   aspectRatio: 5 / 3,
+                          //   child: Swiper(
+                          //     autoplay: true,
+                          //     // itemWidth: 250,
+                          //     itemCount: cards.length,
+                          //     itemBuilder: (context, index) {
+                          //       return ClipRRect(
+                          //         borderRadius: BorderRadius.circular(10),
+                          //         child: Image(
+                          //           image: AssetImage(cards[index]),
+                          //           fit: BoxFit.fill,
+                          //         ),
+                          //       );
+                          //       // OnTap(index) {
+                          //       //   // Navigator.push(
+                          //       //   //     context,
+                          //       //   //     MaterialPageRoute(
+                          //       //   //         builder: (context) => Review()));
+                          //       // }
+                          //     },
+                          //     viewportFraction: 0.8,
+                          //     scale: 0.8,
+                          //     pagination: SwiperPagination(),
+                          //     // itemWidth: 500,
+                          //     // layout: SwiperLayout.STACK,
+                          //   ),
+                          // ),
                           SizedBox(
-                            height: 50,
+                            height: 10,
                           ),
                         ],
                       ),

@@ -76,7 +76,7 @@ class _cat_detailState extends State<cat_detail> {
                           leading: SizedBox(
                             height: 60,
                             width: 60,
-                            child: (data['url'] == null)
+                            child: (data['url'] == null || data['url'] == "")
                                 ? Image.asset(
                                     'assets/all_icon.jpg',
                                     fit: BoxFit.fill,
