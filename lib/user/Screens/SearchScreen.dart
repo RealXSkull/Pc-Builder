@@ -136,7 +136,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                                 width: 60,
                                               ),
                                       ),
-                                      title: Text(data['Item Name']),
+                                      title: Text(
+                                        data['Item Name'],
+                                        maxLines: 2,
+                                      ),
                                       subtitle: Text(data['Category']),
                                       enableFeedback: true,
 

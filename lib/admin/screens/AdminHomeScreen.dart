@@ -1,8 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, file_names, prefer_final_fields, unnecessary_new, use_key_in_widget_constructors, avoid_print, non_constant_identifier_names, sized_box_for_whitespace, must_call_super, unnecessary_import, depend_on_referenced_packages, dead_code, unnecessary_null_comparison, prefer_conditional_assignment
 
-// import 'package:fyp/LoginScreen.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
-
 import 'package:card_swiper/card_swiper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,9 +14,8 @@ import 'package:fyp/user/Screens/SearchScreen.dart';
 import 'package:fyp/admin/screens/inventory.dart';
 import 'package:intl/intl.dart';
 import '../../user/Screens/Categoriesdetail.dart';
-import '../../user/classes/CardItem.dart';
 import 'package:fyp/user/Bars/NavBar.dart';
-import '../../user/classes/images.dart';
+import '../../user/Screens/itemdetail.dart';
 import '../../user/classes/global.dart' as global;
 import 'Editinvo.dart';
 
@@ -40,18 +36,12 @@ class HomePage {
 
 class _AdminHomeScreenState extends State<AdminHomeScreen> {
   List<dynamic> cardsData = [];
-  Future<List<String>>? _futureItems;
   @override
   void initState() {
     super.initState();
     global.readdata(user);
-    // global.inventory = global.getcategory(context);
     fetchData();
-    _futureItems = global.getcategory2(context);
-    // global.getinvo();
     fetchimage();
-    //getdata();
-    // tryprintdata();
   }
 
   Future<void> fetchData() async {
@@ -65,14 +55,13 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
     List<dynamic> cardsData = [];
 
     try {
-      List<String> categories =
-          await global.getcategory2(context); // Add all your categories here
+      List<String> categories = await global.getcategory2(context);
 
       for (String category in categories) {
         QuerySnapshot querySnapshot = await FirebaseFirestore.instance
             .collection('Inventory')
             .where('Category', isEqualTo: category)
-            .limit(1) // Limit to 1 item per category
+            .limit(1)
             .get();
 
         if (querySnapshot.docs.isNotEmpty) {
@@ -82,44 +71,10 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
     } catch (e) {
       print("Error fetching data: $e");
     }
-
     return cardsData;
   }
-  // Future<List<dynamic>> fetchCardsData() async {
-  //   List<dynamic> cardsData = [];
-
-  //   try {
-  //     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-  //         .collection('Inventory')
-  //         .where('Category', isEqualTo: 'PSU')
-  //         .limit(3)
-  //         .get();
-
-  //     cardsData = querySnapshot.docs.map((doc) => doc.data()).toList();
-  //   } catch (e) {
-  //     print("Error fetching data: $e");
-  //   }
-
-  //   return cardsData;
-  // }
-
-  // void getdata() {
-  //   cf.doc().get().then(
-  //     (value) {
-  //       setState(() {
-  //         global.inventory['Item Name'] = value.data();
-  //         // ['Item Name']
-  //       });
-  //     },
-  //   );
-  //   print(global.inventory['Item Name']);
-  // }
-
-  // final data_controller controller = Get.put(data_controller());
 
   User user = FirebaseAuth.instance.currentUser!;
-
-  // String name = "";
 
   Widget uploaditembtn() {
     return InkWell(
@@ -132,7 +87,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         width: 90,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Colors.grey[350],
+          color: Color.fromARGB(255, 151, 33, 171),
         ),
         alignment: Alignment.center,
         child: Column(
@@ -140,10 +95,14 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
           children: [
             Text(
               'Upload\nItem',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
               textAlign: TextAlign.center,
             ),
-            Icon(Icons.upload_file)
+            Icon(
+              Icons.upload_file,
+              color: Colors.white,
+            )
           ],
         ),
       ),
@@ -161,7 +120,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         width: 90,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Colors.grey[350],
+          color: Color.fromARGB(255, 151, 33, 171),
         ),
         alignment: Alignment.center,
         child: Column(
@@ -169,10 +128,14 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
           children: [
             Text(
               'Warranty Claims',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
               textAlign: TextAlign.center,
             ),
-            Icon(Icons.report)
+            Icon(
+              Icons.report,
+              color: Colors.white,
+            )
           ],
         ),
       ),
@@ -196,7 +159,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         width: 80,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          color: Color.fromARGB(250, 211, 209, 209),
+          color: Color.fromARGB(255, 151, 33, 171),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -206,7 +169,10 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
               height: 40,
               width: 40,
             ),
-            Text('CPU')
+            Text(
+              'CPU',
+              style: TextStyle(color: Colors.white),
+            )
           ],
         ),
       ),
@@ -230,7 +196,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         width: 80,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          color: Color.fromARGB(250, 211, 209, 209),
+          color: Color.fromARGB(255, 151, 33, 171),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -240,7 +206,10 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
               height: 50,
               width: 50,
             ),
-            Text('GPU')
+            Text(
+              'GPU',
+              style: TextStyle(color: Colors.white),
+            )
           ],
         ),
       ),
@@ -264,7 +233,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         width: 80,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          color: Color.fromARGB(250, 211, 209, 209),
+          color: Color.fromARGB(255, 151, 33, 171),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -274,7 +243,10 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
               height: 50,
               width: 50,
             ),
-            Text('PSU')
+            Text(
+              'PSU',
+              style: TextStyle(color: Colors.white),
+            )
           ],
         ),
       ),
@@ -292,7 +264,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         width: 90,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Colors.grey[350],
+          color: Color.fromARGB(255, 151, 33, 171),
         ),
         alignment: Alignment.center,
         child: Column(
@@ -300,10 +272,14 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
           children: [
             Text(
               'Edit\nInventory',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
               textAlign: TextAlign.center,
             ),
-            Icon(Icons.shopping_basket)
+            Icon(
+              Icons.shopping_basket,
+              color: Colors.white,
+            )
           ],
         ),
       ),
@@ -321,7 +297,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         width: 90,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Colors.grey[350],
+          color: Color.fromARGB(255, 151, 33, 171),
         ),
         alignment: Alignment.center,
         child: Column(
@@ -329,10 +305,14 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
           children: [
             Text(
               'Orders',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
               textAlign: TextAlign.center,
             ),
-            Icon(Icons.shopping_basket)
+            Icon(
+              Icons.shopping_basket,
+              color: Colors.white,
+            )
           ],
         ),
       ),
@@ -350,7 +330,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         width: 90,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Colors.grey[350],
+          color: Color.fromARGB(255, 151, 33, 171),
         ),
         alignment: Alignment.center,
         child: Column(
@@ -359,11 +339,15 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
             Center(
               child: Text(
                 'Admin\nRights',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style:
+                    TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
                 textAlign: TextAlign.center,
               ),
             ),
-            Icon(Icons.admin_panel_settings)
+            Icon(
+              Icons.admin_panel_settings,
+              color: Colors.white,
+            )
           ],
         ),
       ),
@@ -393,9 +377,18 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
 
   Widget swipercards() {
     return Swiper(
+        onTap: (index) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => itemdetail(receivedMap: cardsData[index]),
+            ),
+          );
+        },
         itemCount: cardsData.length,
-        pagination: SwiperPagination(),
-        viewportFraction: 0.9,
+        pagination: SwiperPagination(
+            // margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+            builder: DotSwiperPaginationBuilder(color: Colors.grey)),
+        viewportFraction: 0.95,
         itemBuilder: (context, index) {
           NumberFormat commaFormat = NumberFormat('#,###');
           String formattedNumber =
@@ -410,8 +403,8 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                     child: Image.network(
                       cardsData[index]['url'],
                       fit: BoxFit.contain,
-                      height: 150,
-                      width: 150,
+                      height: 180,
+                      width: 180,
                       errorBuilder: (BuildContext context, Object error,
                           StackTrace? stackTrace) {
                         // This builder is called when the image fails to load.
@@ -419,26 +412,16 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                         return Image.asset(
                           'assets/all_icon.jpg',
                           fit: BoxFit.contain,
-                          height: 180,
-                          width: 180,
+                          height: 200,
+                          width: 200,
                         );
                       },
                     ),
                   ),
-                // if (cardsData[index]['url'] == null ||
-                //     cardsData[index]['url'] == "")
-                //   ClipRRect(
-                //     borderRadius: BorderRadius.circular(5),
-                //     child: Image(
-                //       image: AssetImage('assets/all_icon.jpg'),
-                //       fit: BoxFit.contain,
-                //       height: 150,
-                //       width: 150,
-                //     ),
-                //   ),
                 Align(
                   child: Text(
                     cardsData[index]['Item Name'],
+                    maxLines: 2,
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -450,7 +433,6 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                         margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
                         child: Text(
                           cardsData[index]['Category'],
-                          // textAlign: TextAlign.left,
                           style: TextStyle(
                               color: Colors.grey, fontWeight: FontWeight.bold),
                         ),
@@ -463,7 +445,6 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                         margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
                         child: Text(
                           formattedNumber.toString(),
-                          // textAlign: TextAlign.left,
                           style: TextStyle(
                               color: Colors.black, fontWeight: FontWeight.bold),
                         ),
@@ -473,34 +454,9 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                 ),
               ],
             ),
-            // child: ListTile(
-            //   leading: Image.network(cardsData[index]['url']),
-            //   title: Text(cardsData[index]['Item Name']),
-            //   subtitle: Text(cardsData[index]['Category']),
-            //   // You can customize the card's content according to your data structure
-            //   // For example, you can use an Image widget to display an image if 'imageUrl' exists in the data.
-            //   // Or you can add more Text widgets for other fields in your data.
-            // ),
           );
         });
   }
-
-  // Widget cards2() {
-  //   return Swiper(
-  //     viewportFraction: 0.9,
-  //     itemBuilder: (context, index) {
-  //       return Card(
-  //         child: Column(
-  //           children: [
-  //             Text(cardsData[index]['Item Name']),
-  //           ],
-  //         ),
-  //       );
-  //     },
-  //     itemCount: cardsData.length,
-  //     pagination: SwiperPagination(),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -510,17 +466,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         drawer: NavBar(),
         appBar: AppBar(
           title: Text('Home Page'),
-          backgroundColor: Color.fromARGB(255, 48, 10, 55),
-          // actions: [
-          //   IconButton(
-          //       onPressed: () {
-          //         Navigator.push(
-          //           context,
-          //           MaterialPageRoute(builder: (context) => const inventory()),
-          //         );
-          //       },
-          //       icon: Icon(Icons.inventory)),
-          // ],
+          backgroundColor: Color.fromARGB(255, 60, 13, 68),
         ),
         body: AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle.dark,
@@ -557,45 +503,10 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                           SizedBox(
                             height: 10,
                           ),
-                          // AspectRatio(
-                          //   aspectRatio: 5 / 3,
-                          //   child: cards2(),
-                          // ),
-
                           AspectRatio(
-                            aspectRatio: 5 / 3,
+                            aspectRatio: 4 / 3,
                             child: swipercards(),
                           ),
-
-                          // cards2(),
-                          // AspectRatio(
-                          //   aspectRatio: 5 / 3,
-                          //   child: Swiper(
-                          //     autoplay: true,
-                          //     // itemWidth: 250,
-                          //     itemCount: cards.length,
-                          //     itemBuilder: (context, index) {
-                          //       return ClipRRect(
-                          //         borderRadius: BorderRadius.circular(10),
-                          //         child: Image(
-                          //           image: AssetImage(cards[index]),
-                          //           fit: BoxFit.fill,
-                          //         ),
-                          //       );
-                          //       // OnTap(index) {
-                          //       //   // Navigator.push(
-                          //       //   //     context,
-                          //       //   //     MaterialPageRoute(
-                          //       //   //         builder: (context) => Review()));
-                          //       // }
-                          //     },
-                          //     viewportFraction: 0.8,
-                          //     scale: 0.8,
-                          //     pagination: SwiperPagination(),
-                          //     // itemWidth: 500,
-                          //     // layout: SwiperLayout.STACK,
-                          //   ),
-                          // ),
                           SizedBox(
                             height: 10,
                           ),
@@ -610,7 +521,6 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                           alignment: WrapAlignment.center,
                           spacing: 28.0,
                           runSpacing: 14,
-                          // mainAxisSize: MainAxisSize.min,
                           children: [
                             AdminRightsbtn(),
                             FetchComplaintsbtn(),
@@ -632,7 +542,6 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                           alignment: WrapAlignment.center,
                           spacing: 28.0,
                           runSpacing: 14,
-                          // mainAxisSize: MainAxisSize.min,
                           children: [
                             cpubtn(),
                             rambtn(),
@@ -666,10 +575,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         global.url =
             "https://firebasestorage.googleapis.com/v0/b/pc-builder-2c0a4.appspot.com/o/DisplayPicture%2Fdefaultimage.jpg?alt=media&token=af41bdaf-f5f4-4f0d-ad96-78734f8eb73a";
         print("${global.url} \n defauly image");
-      } //  global.img = Image(image: NetworkImage(global.url));
+      }
     }
-    // print(" this is done ${global.topUserPostsRef}");
-    // print(global.url);
-    // print(user.uid);
   }
 }

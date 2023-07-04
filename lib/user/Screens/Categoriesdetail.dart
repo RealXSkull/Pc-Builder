@@ -55,11 +55,6 @@ class _cat_detailState extends State<cat_detail> {
                         as Map<String, dynamic>;
                     NumberFormat commaFormat = NumberFormat('#,###');
                     String formattedNumber = commaFormat.format(data['Price']);
-                    // number = formattedNumber(data['Price'].toString());
-                    // print(globals.data1);
-                    // print(
-                    //     "database data length${data['Item Name'].length}");
-                    // print("local data length${globals.data1.length}");
 
                     return Card(
                       color: Colors.white,
@@ -72,27 +67,30 @@ class _cat_detailState extends State<cat_detail> {
                             ),
                           );
                         },
-                        child: ListTile(
-                          leading: SizedBox(
-                            height: 60,
-                            width: 60,
-                            child: (data['url'] == null || data['url'] == "")
-                                ? Image.asset(
-                                    'assets/all_icon.jpg',
-                                    fit: BoxFit.fill,
-                                  )
-                                : Image.network(
-                                    data['url'],
-                                    height: 60,
-                                    width: 60,
-                                  ),
-                          ),
-                          tileColor: Colors.grey[350],
-                          title: Text(data['Item Name']),
-                          subtitle: Text(data['Category']),
-                          trailing: Text(formattedNumber),
-                          // leading: Image.network(src),
-                        ),
+                        child: (data['Inventory'] > 0)
+                            ? ListTile(
+                                leading: SizedBox(
+                                  height: 60,
+                                  width: 60,
+                                  child:
+                                      (data['url'] == null || data['url'] == "")
+                                          ? Image.asset(
+                                              'assets/all_icon.jpg',
+                                              fit: BoxFit.fill,
+                                            )
+                                          : Image.network(
+                                              data['url'],
+                                              height: 60,
+                                              width: 60,
+                                            ),
+                                ),
+                                tileColor: Colors.grey[350],
+                                title: Text(data['Item Name']),
+                                subtitle: Text(data['Category']),
+                                trailing: Text(formattedNumber),
+                                // leading: Image.network(src),
+                              )
+                            : Container(),
                       ),
                     );
                   }),

@@ -34,29 +34,28 @@ class _MainMenuState extends State<MainMenu> {
   ];
   var navbaritem = [
     BottomNavigationBarItem(
-        icon: Image.asset(
-          'assets/home.png',
-          width: 26,
+        icon: Icon(
+          Icons.home,
         ),
         label: 'Home'),
     BottomNavigationBarItem(
-        icon: Image.asset(
-          'assets/menu.png',
-          width: 26,
-        ),
-        label: 'Categories'),
+      icon: Icon(
+        Icons.category_rounded,
+      ),
+      label: 'Categories',
+    ),
     BottomNavigationBarItem(
-        icon: Image.asset(
-          'assets/shopping-cart.png',
-          width: 26,
-        ),
-        label: 'Cart'),
+      icon: Icon(
+        Icons.shopping_cart,
+      ),
+      label: 'Cart',
+    ),
     BottomNavigationBarItem(
-        icon: Image.asset(
-          'assets/user.png',
-          width: 26,
-        ),
-        label: 'Account'),
+      icon: Icon(
+        Icons.person,
+      ),
+      label: 'Account',
+    ),
   ];
 
   @override
@@ -75,8 +74,10 @@ class _MainMenuState extends State<MainMenu> {
         ),
         bottomNavigationBar: Obx(
           () => BottomNavigationBar(
+            unselectedItemColor: Colors.white,
+            // selectedIconTheme: IconThemeData(color: Colors.blue),
             currentIndex: controller.currentNavIndex.value,
-            selectedItemColor: Colors.red,
+            selectedItemColor: Color.fromARGB(255, 60, 13, 68),
             selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
             type: BottomNavigationBarType.fixed,
             items: navbaritem,

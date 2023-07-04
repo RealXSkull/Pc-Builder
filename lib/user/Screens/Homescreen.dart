@@ -1,28 +1,19 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, file_names, prefer_final_fields, unnecessary_new, use_key_in_widget_constructors, avoid_print, non_constant_identifier_names, sized_box_for_whitespace, must_call_super, unnecessary_import, depend_on_referenced_packages, dead_code, unnecessary_null_comparison, prefer_conditional_assignment, prefer_typing_uninitialized_variables, avoid_types_as_parameter_names
 
-// import 'package:fyp/LoginScreen.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
-
 import 'package:badges/badges.dart' as badges;
-
 import 'package:card_swiper/card_swiper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fyp/user/Bars/cart.dart';
 import 'package:fyp/user/Screens/Categoriesdetail.dart';
-// import 'package:fyp/user/Controllers/data_controller.dart';
 import 'package:fyp/user/Screens/SearchScreen.dart';
-// import 'package:fyp/admin/screens/inventory.dart';
-import '../classes/CardItem.dart';
+import 'package:intl/intl.dart';
 import 'package:fyp/user/Bars/NavBar.dart';
-import '../classes/images.dart';
-// import 'package:get/get.dart';
 import '../classes/global.dart' as global;
-// import 'splash.dart' as splash;
+import 'itemdetail.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -41,7 +32,7 @@ class HomePage {
 
 class _HomeScreenState extends State<HomeScreen> {
   final user = FirebaseAuth.instance.currentUser!;
-
+  List<dynamic> cardsData = [];
   final GlobalKey<ScaffoldState> _key = GlobalKey();
 
   var doclength;
@@ -51,26 +42,41 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     global.readdata(user);
     global.getcategory(context);
-
     fetchimage();
-    //getdata();
-    // tryprintdata();
+    fetchData();
   }
 
-  List<CardItem> item = [
-    CardItem(
-        image: 'assets/icons/all_icon.jpg', title: 'ALL', subtitle: '\$100'),
-    CardItem(
-        image: 'assets/icons/all_icon.jpg', title: 'ALL', subtitle: '\$100'),
-    CardItem(
-        image: 'assets/icons/all_icon.jpg', title: 'ALL', subtitle: '\$100'),
-    CardItem(
-        image: 'assets/icons/all_icon.jpg', title: 'ALL', subtitle: '\$100'),
-    CardItem(
-        image: 'assets/icons/all_icon.jpg', title: 'ALL', subtitle: '\$100'),
-    CardItem(
-        image: 'assets/icons/all_icon.jpg', title: 'ALL', subtitle: '\$100'),
-  ];
+  Future<void> fetchData() async {
+    List<dynamic> data = await fetchCardsData();
+    setState(() {
+      cardsData = data;
+    });
+  }
+
+  Future<List<dynamic>> fetchCardsData() async {
+    List<dynamic> cardsData = [];
+
+    try {
+      List<String> categories =
+          await global.getcategory2(context); // Add all your categories here
+
+      for (String category in categories) {
+        QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+            .collection('Inventory')
+            .where('Category', isEqualTo: category)
+            .limit(1) // Limit to 1 item per category
+            .get();
+
+        if (querySnapshot.docs.isNotEmpty) {
+          cardsData.add(querySnapshot.docs.first.data());
+        }
+      }
+    } catch (e) {
+      print("Error fetching data: $e");
+    }
+
+    return cardsData;
+  }
 
   Widget Searchbar() {
     return Container(
@@ -115,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
         width: 80,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          color: Color.fromARGB(250, 211, 209, 209),
+          color: Color.fromARGB(255, 151, 33, 171),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -125,7 +131,10 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 40,
               width: 40,
             ),
-            Text('CPU')
+            Text(
+              'CPU',
+              style: TextStyle(color: Colors.white),
+            )
           ],
         ),
       ),
@@ -149,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
         width: 80,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          color: Color.fromARGB(250, 211, 209, 209),
+          color: Color.fromARGB(255, 151, 33, 171),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -159,7 +168,10 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 50,
               width: 50,
             ),
-            Text('GPU')
+            Text(
+              'GPU',
+              style: TextStyle(color: Colors.white),
+            )
           ],
         ),
       ),
@@ -183,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
         width: 80,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          color: Color.fromARGB(250, 211, 209, 209),
+          color: Color.fromARGB(255, 151, 33, 171),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -193,11 +205,97 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 50,
               width: 50,
             ),
-            Text('PSU')
+            Text(
+              'PSU',
+              style: TextStyle(color: Colors.white),
+            )
           ],
         ),
       ),
     );
+  }
+
+  Widget swipercards() {
+    return Swiper(
+        onTap: (index) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => itemdetail(receivedMap: cardsData[index]),
+            ),
+          );
+        },
+        itemCount: cardsData.length,
+        pagination: SwiperPagination(
+            // margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+            builder: DotSwiperPaginationBuilder(color: Colors.grey)),
+        viewportFraction: 0.95,
+        itemBuilder: (context, index) {
+          NumberFormat commaFormat = NumberFormat('#,###');
+          String formattedNumber =
+              commaFormat.format(cardsData[index]['Price']);
+          return Card(
+            child: Column(
+              children: [
+                if (cardsData[index]['url'] != null ||
+                    cardsData[index]['url'] != "")
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: Image.network(
+                      cardsData[index]['url'],
+                      fit: BoxFit.contain,
+                      height: 180,
+                      width: 180,
+                      errorBuilder: (BuildContext context, Object error,
+                          StackTrace? stackTrace) {
+                        // This builder is called when the image fails to load.
+                        // You can return the alternate AssetImage widget here.
+                        return Image.asset(
+                          'assets/all_icon.jpg',
+                          fit: BoxFit.contain,
+                          height: 200,
+                          width: 200,
+                        );
+                      },
+                    ),
+                  ),
+                Align(
+                  child: Text(
+                    cardsData[index]['Item Name'],
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                Row(
+                  children: [
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                        child: Text(
+                          cardsData[index]['Category'],
+                          style: TextStyle(
+                              color: Colors.grey, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                        child: Text(
+                          formattedNumber.toString(),
+                          style: TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        });
   }
 
   Widget invoscreenbtn() {
@@ -212,9 +310,7 @@ class _HomeScreenState extends State<HomeScreen> {
               borderRadius: BorderRadius.circular(10.0),
             ))),
         label: Text('update invo'),
-        onPressed: () {
-          // global.getcategory1(context);
-        },
+        onPressed: () {},
         icon: Icon(
           Icons.lock,
           size: 24,
@@ -222,31 +318,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
-  // List<int> data = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
-  Widget Buildcards(CardItem item) => Container(
-        width: 200,
-        child: Column(
-          children: [
-            Expanded(
-                child: AspectRatio(
-              aspectRatio: 4 / 3,
-              child: Image.asset(
-                item.image,
-                fit: BoxFit.cover,
-              ),
-            )),
-            Text(
-              item.title,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              item.subtitle,
-              style: TextStyle(fontSize: 12, color: Colors.red),
-            )
-          ],
-        ),
-      );
 
   @override
   Widget build(BuildContext context) {
@@ -345,35 +416,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 10,
                             ),
                             AspectRatio(
-                              aspectRatio: 6 / 3,
-                              child: Swiper(
-                                autoplay: true,
-                                // itemWidth: 250,
-                                itemCount: cards.length,
-                                itemBuilder: (context, index) {
-                                  return ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image(
-                                      image: AssetImage(cards[index]),
-                                      fit: BoxFit.fill,
-                                    ),
-                                  );
-                                  // OnTap(index) {
-                                  //   // Navigator.push(
-                                  //   //     context,
-                                  //   //     MaterialPageRoute(
-                                  //   //         builder: (context) => Review()));
-                                  // }
-                                },
-                                viewportFraction: 0.8,
-                                scale: 0.8,
-                                pagination: SwiperPagination(),
-                                // itemWidth: 500,
-                                // layout: SwiperLayout.STACK,
-                              ),
+                              aspectRatio: 4 / 3,
+                              child: swipercards(),
                             ),
                             SizedBox(
-                              height: 20,
+                              height: 10,
                             ),
                             Divider(thickness: 2),
                             SizedBox(

@@ -29,29 +29,14 @@ class _AdminMenuState extends State<AdminMenu> {
   ];
   var navbaritem = [
     BottomNavigationBarItem(
-        icon: Image.asset(
-          'assets/home.png',
-          width: 26,
-        ),
-        label: 'Home'),
+      icon: Icon(
+        Icons.home,
+      ),
+      label: 'Home',
+    ),
     BottomNavigationBarItem(
-        icon: Image.asset(
-          'assets/menu.png',
-          width: 26,
-        ),
-        label: 'Categories'),
-    // BottomNavigationBarItem(
-    //     icon: Image.asset(
-    //       'assets/shopping-cart.png',
-    //       width: 26,
-    //     ),
-    //     label: 'Cart'),
-    BottomNavigationBarItem(
-        icon: Image.asset(
-          'assets/user.png',
-          width: 26,
-        ),
-        label: 'Account'),
+        icon: Icon(Icons.category_rounded), label: 'Categories'),
+    BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Account'),
   ];
 
   @override
@@ -66,12 +51,13 @@ class _AdminMenuState extends State<AdminMenu> {
         ),
         bottomNavigationBar: Obx(
           () => BottomNavigationBar(
+            unselectedItemColor: Colors.white,
             currentIndex: controller.admincurrentIndex.value,
-            selectedItemColor: Colors.red,
+            selectedItemColor: Color.fromARGB(255, 151, 33, 171),
             selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
             type: BottomNavigationBarType.fixed,
             items: navbaritem,
-            backgroundColor: Color.fromARGB(35, 0, 0, 0),
+            backgroundColor: Color.fromARGB(35, 60, 13, 68),
             onTap: ((value) {
               controller.admincurrentIndex.value = value;
             }),
