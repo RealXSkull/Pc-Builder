@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable, avoid_print, prefer_const_constructors, camel_case_types, sized_box_for_whitespace, non_constant_identifier_names, unnecessary_null_comparison, prefer_typing_uninitialized_variables, use_build_context_synchronously
+// ignore_for_file: unused_local_variable, avoid_print, prefer_const_constructors, camel_case_types, sized_box_for_whitespace, non_constant_identifier_names, unnecessary_null_comparison, prefer_typing_uninitialized_variables, use_build_context_synchronously, must_be_immutable, use_key_in_widget_constructors
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:file_picker/file_picker.dart';
@@ -13,24 +13,26 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 var image;
 
-class inventory extends StatefulWidget {
-  const inventory({super.key});
+class Edit_invo_detail extends StatefulWidget {
+  Map<String, dynamic> receivedMap;
 
+  Edit_invo_detail({required this.receivedMap});
   @override
-  State<inventory> createState() => _inventoryState();
+  State<Edit_invo_detail> createState() => _Edit_invo_detailState();
 }
 
-class _inventoryState extends State<inventory> {
+class _Edit_invo_detailState extends State<Edit_invo_detail> {
   final picker = ImagePicker();
-  bool _imageselected = true;
+  bool _imageselected = false;
   PlatformFile? pickedFile;
   final category = TextEditingController();
-  final ItemName = TextEditingController();
-  final desc1 = TextEditingController();
-  final desc2 = TextEditingController();
-  final desc3 = TextEditingController();
-  final price = TextEditingController();
-  final invo = TextEditingController();
+  late TextEditingController ItemName;
+  late TextEditingController desc1;
+  late TextEditingController desc2;
+  late TextEditingController desc3;
+  late TextEditingController price;
+  late TextEditingController invo;
+
   List<String> dropdownvaluelist = [];
   var image;
   String dropdownvalue = '';
@@ -49,20 +51,33 @@ class _inventoryState extends State<inventory> {
     desc3.dispose();
     desc2.dispose();
     invo.dispose();
+
     price.dispose();
   }
 
   @override
   void initState() {
     super.initState();
+    dropdownvalue = widget.receivedMap['Category'];
+    String initialItemName = widget.receivedMap['Item Name'];
+    String initialdesc1 = widget.receivedMap['desc1'];
+    String initialdesc2 = widget.receivedMap['desc2'];
+    String initialdesc3 = widget.receivedMap['desc3'];
+    String initialprice = widget.receivedMap['Price'].toString();
+    String initialinvo = widget.receivedMap['Inventory'].toString();
+    ItemName = TextEditingController(text: initialItemName);
+    desc1 = TextEditingController(text: initialdesc1);
+    desc2 = TextEditingController(text: initialdesc2);
+    price = TextEditingController(text: initialprice.toString());
+    invo = TextEditingController(text: initialinvo.toString());
+    desc3 = TextEditingController(text: initialdesc3);
     _futureItems = globals.getcategory2(context);
-    assignitems();
+    // assignitems();
   }
 
-  void assignitems() async {
-    dropdownvaluelist = (await _futureItems)!;
-    dropdownvalue = dropdownvaluelist[0].toString();
-  }
+  // void assignitems() async {
+  //   dropdownvaluelist = widget.receivedMap['Category'];
+  // }
 
   Future upload() async {
     showDialog(
@@ -87,11 +102,13 @@ class _inventoryState extends State<inventory> {
             .child("Inventory")
             .child(ItemName.text);
         String imgurl = await ref.getDownloadURL();
-
         // if (name != null) {
         final docuser = FirebaseFirestore.instance
             .collection('Inventory')
             .doc(ItemName.text);
+        if (_imageselected == false) {
+          imgurl = widget.receivedMap['url'];
+        }
         if (imgurl == null || imgurl == "") {
           imgurl = "";
         }
@@ -107,11 +124,12 @@ class _inventoryState extends State<inventory> {
           'desc3': desc3.text,
         };
         await docuser.set(data);
+
         // }
 
         // Navigator.pop(context);
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Item Has Been Added!')));
+            .showSnackBar(SnackBar(content: Text('Item Has Been Updated!')));
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -146,7 +164,7 @@ class _inventoryState extends State<inventory> {
 
         // Navigator.pop(context);
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Item has been Added!')));
+            .showSnackBar(SnackBar(content: Text('Item Updated!')));
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -202,7 +220,7 @@ class _inventoryState extends State<inventory> {
                 RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ))),
-        label: const Text('Upload'),
+        label: const Text('Update'),
         onPressed: () {
           upload();
         },
@@ -508,6 +526,20 @@ class _inventoryState extends State<inventory> {
                         SizedBox(
                           height: 15,
                         ),
+                        if (widget.receivedMap['url'] != "")
+                          Visibility(
+                            visible: !_imageselected,
+                            child: Center(
+                              child: ClipRRect(
+                                child: Image.network(
+                                  widget.receivedMap['url'],
+                                  fit: BoxFit.fill,
+                                  height: 200,
+                                  width: 200,
+                                ),
+                              ),
+                            ),
+                          ),
                         if (image != null)
                           Center(
                             child: Visibility(

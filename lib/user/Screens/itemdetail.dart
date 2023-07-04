@@ -65,7 +65,8 @@ class _itemdetailState extends State<itemdetail> {
                         height: MediaQuery.of(context).size.height * 0.3,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          image: (widget.receivedMap['url'] == null)
+                          image: (widget.receivedMap['url'] == null ||
+                                  widget.receivedMap['url'] == "")
                               ? const DecorationImage(
                                   image: AssetImage('assets/all_icon.jpg'),
                                   fit: BoxFit.fill,

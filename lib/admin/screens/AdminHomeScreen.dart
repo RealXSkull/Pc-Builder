@@ -18,6 +18,7 @@ import '../../user/classes/CardItem.dart';
 import 'package:fyp/user/Bars/NavBar.dart';
 import '../../user/classes/images.dart';
 import '../../user/classes/global.dart' as global;
+import 'Editinvo.dart';
 
 class AdminHomeScreen extends StatefulWidget {
   const AdminHomeScreen({super.key});
@@ -149,7 +150,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Orders()));
+            context, MaterialPageRoute(builder: (context) => Edit_invo()));
       },
       child: Container(
         height: 90,

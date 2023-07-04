@@ -124,7 +124,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                       leading: SizedBox(
                                         height: 50,
                                         width: 50,
-                                        child: (data['url'] == null)
+                                        child: (data['url'] == null ||
+                                                data['url'] == "")
                                             ? Image.asset(
                                                 'assets/all_icon.jpg',
                                                 fit: BoxFit.fill,
