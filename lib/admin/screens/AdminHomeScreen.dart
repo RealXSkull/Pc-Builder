@@ -14,6 +14,7 @@ import 'package:fyp/admin/screens/Orders.dart';
 import 'package:fyp/admin/screens/complaints.dart';
 import 'package:fyp/user/Screens/SearchScreen.dart';
 import 'package:fyp/admin/screens/inventory.dart';
+import '../../user/Screens/Categoriesdetail.dart';
 import '../../user/classes/CardItem.dart';
 import 'package:fyp/user/Bars/NavBar.dart';
 import '../../user/classes/images.dart';
@@ -140,6 +141,108 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
               textAlign: TextAlign.center,
             ),
             Icon(Icons.report)
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget cpubtn() {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => cat_detail(
+              Category: 'CPU',
+            ),
+          ),
+        );
+      },
+      child: Container(
+        height: 80,
+        width: 80,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: Color.fromARGB(250, 211, 209, 209),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/icons/cpu.png',
+              height: 40,
+              width: 40,
+            ),
+            Text('CPU')
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget rambtn() {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => cat_detail(
+              Category: 'GPU',
+            ),
+          ),
+        );
+      },
+      child: Container(
+        height: 80,
+        width: 80,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: Color.fromARGB(250, 211, 209, 209),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/icons/gpu.png',
+              height: 50,
+              width: 50,
+            ),
+            Text('GPU')
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget psubtn() {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => cat_detail(
+              Category: 'PSU',
+            ),
+          ),
+        );
+      },
+      child: Container(
+        height: 80,
+        width: 80,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: Color.fromARGB(250, 211, 209, 209),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/icons/psu.png',
+              height: 50,
+              width: 50,
+            ),
+            Text('PSU')
           ],
         ),
       ),
@@ -369,6 +472,10 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                           ),
                         ],
                       ),
+                      Divider(thickness: 2),
+                      SizedBox(
+                        height: 10,
+                      ),
                       Center(
                         child: Wrap(
                           alignment: WrapAlignment.center,
@@ -384,6 +491,30 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                           ],
                         ),
                       ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Divider(thickness: 2),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Center(
+                        child: Wrap(
+                          alignment: WrapAlignment.center,
+                          spacing: 28.0,
+                          runSpacing: 14,
+                          // mainAxisSize: MainAxisSize.min,
+                          children: [
+                            cpubtn(),
+                            rambtn(),
+                            psubtn(),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Divider(thickness: 2),
                     ],
                   ),
                 ),

@@ -26,7 +26,8 @@ class _itemdetailState extends State<itemdetail> {
   void initState() {
     super.initState();
     formatnumber();
-    isAdmin();
+    if (globals.isAdmin == true) CartbtnVisible = false;
+    // isAdmin();
   }
 
   final user = FirebaseAuth.instance.currentUser!;

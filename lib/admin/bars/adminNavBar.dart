@@ -10,6 +10,8 @@ import 'package:fyp/user/Screens/Categories.dart';
 import '../../user/Controllers/bottomNavController.dart';
 import 'package:get/get.dart';
 
+import '../../user/Screens/ManageProfile.dart';
+
 class AdminMenu extends StatefulWidget {
   const AdminMenu({super.key});
 
@@ -23,11 +25,7 @@ class _AdminMenuState extends State<AdminMenu> {
   var navbody = [
     AdminHomeScreen(),
     categories(),
-
-    //Manageprofile()
-    Container(
-      color: Colors.brown,
-    ),
+    Manageprofile(),
   ];
   var navbaritem = [
     BottomNavigationBarItem(
