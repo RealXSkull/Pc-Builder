@@ -6,7 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fyp/admin/screens/AdminHomeScreen.dart';
-
+import 'package:fyp/user/Screens/Categories.dart';
 import '../../user/Controllers/bottomNavController.dart';
 import 'package:get/get.dart';
 
@@ -22,9 +22,7 @@ class _AdminMenuState extends State<AdminMenu> {
 
   var navbody = [
     AdminHomeScreen(),
-    Container(
-      color: Colors.amber,
-    ),
+    categories(),
 
     //Manageprofile()
     Container(

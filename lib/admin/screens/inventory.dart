@@ -546,7 +546,8 @@ class _inventoryState extends State<inventory> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return DropdownButton<String>(
-            value: dropdownvaluelist[0].toString(),
+            value: dropdownvalue,
+            // value: dropdownvaluelist[0].toString(),
             icon: const Icon(Icons.keyboard_arrow_down),
             items: snapshot.data!.map((item) {
               return DropdownMenuItem<String>(
@@ -560,6 +561,7 @@ class _inventoryState extends State<inventory> {
             onChanged: (String? newValue) {
               setState(() {
                 dropdownvalue = newValue!;
+                // dropdownvaluelist[0] = newValue;
               });
             },
           );

@@ -3,8 +3,6 @@
 // import 'package:fyp/LoginScreen.dart';
 // import 'package:fluttertoast/fluttertoast.dart';
 
-import 'dart:math';
-
 import 'package:badges/badges.dart' as badges;
 
 import 'package:card_swiper/card_swiper.dart';
