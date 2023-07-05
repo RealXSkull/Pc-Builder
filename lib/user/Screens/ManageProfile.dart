@@ -362,24 +362,26 @@ class _ManageprofileState extends State<Manageprofile> {
         barrierDismissible: false,
         builder: (context) => Center(child: CircularProgressIndicator()),
       );
-      if (name != null) {
-        await user.updateDisplayName(name);
-        final docuser =
-            FirebaseFirestore.instance.collection('Users').doc(user.uid);
-        final data = {
-          'Name': name,
-          'Address': address,
-          // 'role': global.role,
-          'contactno': _phonecontroller.text
-        };
-        await docuser.update(data);
-      }
       if (image != null) await reff.putFile(image);
       final ref = FirebaseStorage.instance
           .ref()
           .child("DisplayPicture")
           .child(user.uid);
       global.url = await ref.getDownloadURL();
+      if (name != null) {
+        await user.updateDisplayName(name);
+        final docuser =
+            FirebaseFirestore.instance.collection('Users').doc(user.uid);
+        final data = {
+          'url': global.url,
+          'Name': name,
+          'Address': address,
+          // 'role': global.role,
+          'Phone': _phonecontroller.text
+        };
+        await docuser.update(data);
+      }
+
       // Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

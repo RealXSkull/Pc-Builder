@@ -598,7 +598,6 @@ class _Edit_invo_detailState extends State<Edit_invo_detail> {
             onChanged: (String? newValue) {
               setState(() {
                 dropdownvalue = newValue!;
-                // dropdownvaluelist[0] = newValue;
               });
             },
           );

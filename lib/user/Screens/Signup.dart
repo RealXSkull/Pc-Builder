@@ -483,6 +483,8 @@ class SignupArea extends State<Signup> {
       final docuser =
           FirebaseFirestore.instance.collection('Users').doc(user.uid);
       final data = {
+        'url':
+            'https://firebasestorage.googleapis.com/v0/b/pc-builder-2c0a4.appspot.com/o/DisplayPicture%2Fdefaultimage.jpg?alt=media&token=af41bdaf-f5f4-4f0d-ad96-78734f8eb73a',
         'userid': user.uid,
         'Name': name,
         'role': 'user',

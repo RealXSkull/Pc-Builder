@@ -74,13 +74,7 @@ class _Edit_invoState extends State<Edit_invo> {
                     child: StreamBuilder(
                       stream: FirebaseFirestore.instance
                           .collection("Inventory")
-                          // .collection("Users")
-                          // .doc('Hardware')
-                          // .collection('Gpu')
                           .where("Inventory", isGreaterThan: 0)
-                          // .where("Item Name", arrayContains: searchkey)
-                          // .where("Item Name", isEqualTo: searchkey)
-                          // .startAt("i")
                           .snapshots(),
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -182,10 +176,7 @@ class _Edit_invoState extends State<Edit_invo> {
                                       title: Text(data['Item Name']),
                                       subtitle: Text(data['Category']),
                                       enableFeedback: true,
-
                                       trailing: Text(formattedNumber),
-
-                                      // leading: Image.network(src),
                                     ),
                                   ),
                                 );
