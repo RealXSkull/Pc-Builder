@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, file_names, prefer_final_fields, unnecessary_new, use_key_in_widget_constructors, avoid_print, non_constant_identifier_names, sized_box_for_whitespace, must_call_super, unnecessary_import, depend_on_referenced_packages, dead_code
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, file_names, prefer_final_fields, unnecessary_new, use_key_in_widget_constructors, avoid_print, non_constant_identifier_names, sized_box_for_whitespace, must_call_super, unnecessary_import, depend_on_referenced_packages, dead_code, prefer_typing_uninitialized_variables
 
 // import 'package:fyp/LoginScreen.dart';
 // import 'package:fluttertoast/fluttertoast.dart';
@@ -10,7 +10,7 @@ import 'package:fyp/user/Screens/Categories.dart';
 import 'package:fyp/user/Screens/ManageProfile.dart';
 import '../Controllers/bottomNavController.dart';
 import 'package:get/get.dart';
-
+// import 'package:badges/badges.dart' as badges;
 import 'cartfullpage.dart';
 
 class MainMenu extends StatefulWidget {
@@ -22,7 +22,7 @@ class MainMenu extends StatefulWidget {
 
 class _MainMenuState extends State<MainMenu> {
   var controller = Get.put(HomeController());
-
+  var doclength;
   var navbody = [
     HomeScreen(),
     categories(),
@@ -45,6 +45,25 @@ class _MainMenuState extends State<MainMenu> {
       label: 'Categories',
     ),
     BottomNavigationBarItem(
+      // badge: StreamBuilder(
+      //     stream: FirebaseFirestore.instance
+      //         .collection('Users')
+      //         .doc(user.uid)
+      //         .collection('Cart')
+      //         .snapshots(),
+      //     builder: (context, snapshot) {
+      //       // if (!snapshot.hasData) {
+      //       //   doclength = 0;
+      //       // } else {
+      //       //   doclength = snapshot.data!.docs.length;
+      //       // }
+      //       return Badge(
+      //         // label: Text(doclength.toString()),
+      //         alignment: AlignmentDirectional.topEnd,
+      //         child: Icon(Icons.shopping_cart),
+      //         //position: badges.BadgePosition.topEnd(top: -10, end: -12),
+      //       );
+      //     }),
       icon: Icon(
         Icons.shopping_cart,
       ),

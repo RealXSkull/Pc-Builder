@@ -174,12 +174,17 @@ class _inventoryState extends State<inventory> {
       width: double.infinity,
       child: ElevatedButton.icon(
         style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlue),
+            backgroundColor: MaterialStateProperty.all<Color>(
+              Color.fromARGB(255, 151, 33, 171),
+            ),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ))),
-        label: Text('Select Image'),
+        label: Text(
+          'Select Image',
+          style: TextStyle(color: Colors.white),
+        ),
         onPressed: () {
           imagepicker();
         },
@@ -197,12 +202,17 @@ class _inventoryState extends State<inventory> {
       width: double.infinity,
       child: ElevatedButton.icon(
         style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlue),
+            backgroundColor: MaterialStateProperty.all<Color>(
+              Color.fromARGB(255, 151, 33, 171),
+            ),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ))),
-        label: const Text('Upload'),
+        label: const Text(
+          'Upload',
+          style: TextStyle(color: Colors.white),
+        ),
         onPressed: () {
           upload();
         },

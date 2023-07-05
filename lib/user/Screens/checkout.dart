@@ -442,9 +442,9 @@ class _checkoutscreenState extends State<checkoutscreen> {
       for (var doc in docref.docs) {
         doc.reference.delete();
       }
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Order Placed Successfully'),
-        duration: Duration(seconds: 2),
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Order Placed Successfully with OrderId :$invoicenumber'),
+        duration: const Duration(seconds: 2),
       ));
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const HomeScreen()));

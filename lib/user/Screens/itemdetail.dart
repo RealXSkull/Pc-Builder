@@ -227,6 +227,7 @@ class _itemdetailState extends State<itemdetail> {
         floatingActionButton: Visibility(
           visible: CartbtnVisible,
           child: FloatingActionButton(
+            backgroundColor: const Color.fromARGB(255, 151, 33, 171),
             onPressed: () {
               addtocart();
             },

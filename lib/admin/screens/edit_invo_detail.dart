@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable, avoid_print, prefer_const_constructors, camel_case_types, sized_box_for_whitespace, non_constant_identifier_names, unnecessary_null_comparison, prefer_typing_uninitialized_variables, use_build_context_synchronously, must_be_immutable, use_key_in_widget_constructors
+// ignore_for_file: unused_local_variable, avoid_print, prefer_const_constructors, camel_case_types, sized_box_for_whitespace, non_constant_identifier_names, unnecessary_null_comparison, prefer_typing_uninitialized_variables, use_build_context_synchronously, must_be_immutable, use_key_in_widget_constructors, unused_import
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:file_picker/file_picker.dart';
@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
+import 'package:fyp/user/Screens/Categories.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fyp/user/classes/global.dart' as globals;
 import 'package:firebase_storage/firebase_storage.dart';
@@ -192,12 +193,17 @@ class _Edit_invo_detailState extends State<Edit_invo_detail> {
       width: double.infinity,
       child: ElevatedButton.icon(
         style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlue),
+            backgroundColor: MaterialStateProperty.all<Color>(
+              Color.fromARGB(255, 151, 33, 171),
+            ),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ))),
-        label: Text('Select Image'),
+        label: Text(
+          'Select Image',
+          style: TextStyle(color: Colors.white),
+        ),
         onPressed: () {
           imagepicker();
         },
@@ -215,12 +221,17 @@ class _Edit_invo_detailState extends State<Edit_invo_detail> {
       width: double.infinity,
       child: ElevatedButton.icon(
         style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlue),
+            backgroundColor: MaterialStateProperty.all<Color>(
+              Color.fromARGB(255, 151, 33, 171),
+            ),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ))),
-        label: const Text('Update'),
+        label: const Text(
+          'Update',
+          style: TextStyle(color: Colors.white),
+        ),
         onPressed: () {
           upload();
         },
@@ -237,7 +248,7 @@ class _Edit_invo_detailState extends State<Edit_invo_detail> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('UPDATE INVENTORY'),
+          title: Text('EDIT ITEM'),
           backgroundColor: Color.fromARGB(255, 48, 10, 55),
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios_new_rounded),

@@ -178,12 +178,17 @@ class _ManageprofileState extends State<Manageprofile> {
       width: double.infinity,
       child: ElevatedButton.icon(
         style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlue),
+            backgroundColor: MaterialStateProperty.all<Color>(
+              Color.fromARGB(255, 151, 33, 171),
+            ),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ))),
-        label: Text('Select Image'),
+        label: Text(
+          'Select Image',
+          style: TextStyle(color: Colors.white),
+        ),
         onPressed: () {
           imagepicker();
         },
@@ -248,12 +253,17 @@ class _ManageprofileState extends State<Manageprofile> {
       width: double.infinity,
       child: ElevatedButton.icon(
         style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlue),
+            backgroundColor: MaterialStateProperty.all<Color>(
+              Color.fromARGB(255, 151, 33, 171),
+            ),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ))),
-        label: Text('Update Profile'),
+        label: Text(
+          'Update Profile',
+          style: TextStyle(color: Colors.white),
+        ),
         onPressed: () {
           update();
         },
