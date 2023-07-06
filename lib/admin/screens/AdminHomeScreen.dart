@@ -377,6 +377,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
 
   Widget swipercards() {
     return Swiper(
+        autoplay: true,
         onTap: (index) {
           Navigator.of(context).push(
             MaterialPageRoute(

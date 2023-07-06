@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, camel_case_types, use_build_context_synchronously, unused_local_variable, unused_element
+// ignore_for_file: file_names, camel_case_types, use_build_context_synchronously, unused_local_variable, unused_element, unrelated_type_equality_checks
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +17,11 @@ class _changepasswordState extends State<changepassword> {
   final formkey = GlobalKey<FormState>();
   bool obscureTextt = true;
   bool _passwordVisible = false;
+  bool _passwordVisible1 = false;
   bool _passwordVisible2 = false;
   final passcontroller = TextEditingController();
   final confirmpasscontroller = TextEditingController();
+  final newpassController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     Widget buildpassword() {
@@ -84,12 +86,76 @@ class _changepasswordState extends State<changepassword> {
       );
     }
 
-    Widget buildconfirmpassword() {
+    Widget buildnewpassword() {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           const Text(
             'New Password',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 15),
+          Container(
+            alignment: Alignment.centerLeft,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(5),
+              border: Border.all(),
+            ),
+            height: 60,
+            child: TextFormField(
+              controller: newpassController,
+              obscureText: !_passwordVisible1,
+              validator: (value) {
+                if (value == "") {
+                  return 'Field Cannot be left Empty';
+                } else if (value.toString().length < 6) {
+                  return 'Enter Minimum 6 characters';
+                } else if (value != confirmpasscontroller) {
+                  return 'Passwords Donot Match!';
+                } else {
+                  return null;
+                }
+              },
+              style: const TextStyle(color: Colors.black87),
+              decoration: InputDecoration(
+                  border: InputBorder.none,
+                  prefixIcon: const Icon(
+                    Icons.lock,
+                    color: Color(0xff5ac18e),
+                  ),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _passwordVisible2
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                      color: Colors.grey,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _passwordVisible1 = !_passwordVisible1;
+                      });
+                    },
+                  ),
+                  hintText: 'New Password',
+                  errorStyle: const TextStyle(height: 0.1),
+                  hintStyle: const TextStyle(color: Colors.black38)),
+            ),
+          )
+        ],
+      );
+    }
+
+    Widget buildconfirmpassword() {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          const Text(
+            'Confirm Password',
             style: TextStyle(
               color: Colors.black,
               fontSize: 16,
@@ -113,6 +179,8 @@ class _changepasswordState extends State<changepassword> {
                   return 'Field Cannot be left Empty';
                 } else if (value.toString().length < 6) {
                   return 'Enter Minimum 6 characters';
+                } else if (value != newpassController) {
+                  return 'Passwords Donot Match!';
                 } else {
                   return null;
                 }
@@ -137,7 +205,7 @@ class _changepasswordState extends State<changepassword> {
                       });
                     },
                   ),
-                  hintText: 'New Password',
+                  hintText: 'Confirm Password',
                   errorStyle: const TextStyle(height: 0.1),
                   hintStyle: const TextStyle(color: Colors.black38)),
             ),
@@ -150,15 +218,20 @@ class _changepasswordState extends State<changepassword> {
       return SizedBox(
         height: 40,
         width: double.infinity,
-        child: ElevatedButton(
+        child: ElevatedButton.icon(
+            icon: const Icon(Icons.password),
             style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(Colors.lightBlue),
+                backgroundColor: MaterialStateProperty.all<Color>(
+                  const Color.fromARGB(255, 151, 33, 171),
+                ),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ))),
-            child: const Text('Change Password'),
+            label: const Text(
+              'Change Password',
+              style: TextStyle(color: Colors.white),
+            ),
             onPressed: () {
               signup();
             }),
@@ -169,6 +242,7 @@ class _changepasswordState extends State<changepassword> {
     void dispose() {
       passcontroller.dispose();
       confirmpasscontroller.dispose();
+      newpassController.dispose();
       super.dispose();
     }
 
@@ -210,11 +284,24 @@ class _changepasswordState extends State<changepassword> {
                           ),
                           buildpassword(),
                           const SizedBox(
+                            height: 10,
+                          ),
+                          const Divider(
+                            thickness: 2,
+                          ),
+                          buildnewpassword(),
+                          const SizedBox(
                             height: 20,
                           ),
                           buildconfirmpassword(),
                           const SizedBox(
-                            height: 20,
+                            height: 10,
+                          ),
+                          const Divider(
+                            thickness: 2,
+                          ),
+                          const SizedBox(
+                            height: 10,
                           ),
                           registerbtn(),
                         ],

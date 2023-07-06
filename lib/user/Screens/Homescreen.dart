@@ -217,6 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget swipercards() {
     return Swiper(
+        autoplay: true,
         onTap: (index) {
           Navigator.of(context).push(
             MaterialPageRoute(
@@ -392,7 +393,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   child: SingleChildScrollView(
                     physics: AlwaysScrollableScrollPhysics(),
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -411,9 +412,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   fontSize: 20,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(
-                              height: 10,
                             ),
                             AspectRatio(
                               aspectRatio: 4 / 3,

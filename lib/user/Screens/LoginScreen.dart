@@ -223,12 +223,17 @@ class _LoginScreenState extends State<LoginScreen> {
       width: double.infinity,
       child: ElevatedButton.icon(
         style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlue),
+            backgroundColor: MaterialStateProperty.all<Color>(
+              Color.fromARGB(255, 151, 33, 171),
+            ),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5.0),
             ))),
-        label: Text('Login'),
+        label: Text(
+          'Login',
+          style: TextStyle(color: Colors.white),
+        ),
         onPressed: () {
           signin();
         },

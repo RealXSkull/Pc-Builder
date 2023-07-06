@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, prefer_const_declarations, use_build_context_synchronously
+// ignore_for_file: file_names, prefer_const_declarations, use_build_context_synchronously, non_constant_identifier_names
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

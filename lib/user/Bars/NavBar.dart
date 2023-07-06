@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, file_names, unused_import, use_build_context_synchronously
 
+import 'package:fyp/user/Screens/AboutUs.dart';
 import 'package:fyp/user/Screens/Changepassword.dart';
 import 'package:fyp/user/Screens/WarrentyClaim.dart';
 import 'package:fyp/user/Screens/orderhistory.dart';
@@ -48,7 +49,7 @@ class NavBar extends StatelessWidget {
               // ),
             ),
             decoration: BoxDecoration(
-              color: Colors.blue,
+              color: Color.fromARGB(255, 151, 33, 171),
               image:
                   DecorationImage(image: NetworkImage(''), fit: BoxFit.cover),
             ),
@@ -61,7 +62,6 @@ class NavBar extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => changepassword()));
             },
           ),
-        
           ListTile(
             leading: Icon(Icons.support_agent_outlined),
             title: Text('Warranty Claim'),
@@ -94,8 +94,8 @@ class NavBar extends StatelessWidget {
             leading: Icon(Icons.contact_support),
             title: Text('About Us'),
             onTap: () {
-              // Navigator.push(context,
-              // MaterialPageRoute(builder: (context) => LoginScreen()));
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => aboutUs()));
             },
           ),
           ListTile(

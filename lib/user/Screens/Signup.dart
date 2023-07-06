@@ -370,13 +370,17 @@ class SignupArea extends State<Signup> {
       width: double.infinity,
       child: ElevatedButton(
           style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all<Color>(Colors.lightBlue),
+              backgroundColor: MaterialStateProperty.all<Color>(
+                const Color.fromARGB(255, 151, 33, 171),
+              ),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ))),
-          child: const Text('Register'),
+          child: const Text(
+            'Register',
+            style: TextStyle(color: Colors.white),
+          ),
           onPressed: () {
             signup();
           }),

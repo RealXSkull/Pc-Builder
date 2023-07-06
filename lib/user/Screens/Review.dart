@@ -132,13 +132,17 @@ class _ReviewState extends State<Review> {
       width: double.infinity,
       child: ElevatedButton(
           style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all<Color>(Colors.lightBlue),
+              backgroundColor: MaterialStateProperty.all<Color>(
+                const Color.fromARGB(255, 151, 33, 171),
+              ),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ))),
-          child: const Text('Submit Feedback'),
+          child: const Text(
+            'Submit Feedback',
+            style: TextStyle(color: Colors.white),
+          ),
           onPressed: () {
             addfeedback();
           }),

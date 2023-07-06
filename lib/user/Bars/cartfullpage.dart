@@ -140,7 +140,7 @@ class _CartfullpageState extends State<CartFullPage> {
         body: Column(
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.657, //zawat
+              height: MediaQuery.of(context).size.height * 0.61, //zawat
               child: ListView(
                 shrinkWrap: true,
                 padding:
@@ -371,9 +371,9 @@ class _CartfullpageState extends State<CartFullPage> {
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
+                    // SizedBox(
+                    //   height: 5,
+                    // ),
                     Row(
                       children: [
                         Expanded(flex: 2, child: clearcart()),
