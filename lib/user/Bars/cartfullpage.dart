@@ -407,16 +407,24 @@ class _CartfullpageState extends State<CartFullPage> {
             ))),
         label: Text('Checkout'),
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => checkoutscreen(
-                receivedMap: data,
-                total: total,
-                items: globals.items,
+          if (data != null) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => checkoutscreen(
+                  receivedMap: data,
+                  total: total,
+                  items: globals.items,
+                ),
               ),
-            ),
-          );
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Cart is Empty'),
+              ),
+            );
+          }
         },
         icon: Icon(
           Icons.shopping_cart_checkout,
