@@ -74,7 +74,7 @@ class _Edit_invoState extends State<Edit_invo> {
                     child: StreamBuilder(
                       stream: FirebaseFirestore.instance
                           .collection("Inventory")
-                          .where("Inventory", isGreaterThan: 0)
+                          .orderBy('Category', descending: false)
                           .snapshots(),
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {

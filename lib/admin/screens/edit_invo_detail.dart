@@ -110,8 +110,10 @@ class _Edit_invo_detailState extends State<Edit_invo_detail> {
         if (_imageselected == false) {
           imgurl = widget.receivedMap['url'];
         }
-        if (imgurl == null || imgurl == "") {
-          imgurl = "";
+        if (imgurl == null ||
+            imgurl == "" && widget.receivedMap['url'] != null ||
+            widget.receivedMap['url'] != "") {
+          imgurl = widget.receivedMap['url'];
         }
         final data = {
           'url': imgurl,
@@ -124,7 +126,7 @@ class _Edit_invo_detailState extends State<Edit_invo_detail> {
           'desc2': desc2.text,
           'desc3': desc3.text,
         };
-        await docuser.set(data);
+        await docuser.update(data);
 
         // }
 
